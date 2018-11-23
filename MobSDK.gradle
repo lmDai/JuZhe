@@ -51,7 +51,7 @@ MobSDK {
     PaySDK {
         info {
             AliPay {}
-            Wechat {}
+//            Wechat {}
         }
     }
 }
