@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_bar_one" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:srlEnableLoadMore="false">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_round_white"
+                app:elevation="@dimen/dp_0">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_scrollFlags="scroll">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_order_head"
+                        android:gravity="center|top"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_20"
+                            android:text="累计为你省钱"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_12" />
+
+                        <TextView
+                            android:id="@+id/txt_couponmoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:text="0.0"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_36" />
+
+                        <Button
+                            android:id="@+id/btn_team_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/bg_scan_tame"
+                            android:minHeight="@dimen/dp_36"
+                            android:paddingLeft="@dimen/dp_20"
+                            android:paddingRight="@dimen/dp_20"
+                            android:paddingBottom="@dimen/dp_10"
+                            android:text="查看团队数据"
+                            android:textColor="@color/color_scan_team"
+                            android:textSize="@dimen/sp_16" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_commission"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="@dimen/dp_180"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="待到账订单0.0元"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/sp_22" />
+
+                        <Button
+                            android:id="@+id/btn_own_commission"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_order_purchase"
+                            android:text="含自购0.0"
+                            android:textColor="@color/text_yellow"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorWhite"
+                    app:tl_indicator_color="@color/tab_underline_color"
+                    app:tl_indicator_height="@dimen/dp_4"
+                    app:tl_indicator_margin_bottom="@dimen/dp_6"
+                    app:tl_indicator_margin_top="@dimen/dp_4"
+                    app:tl_indicator_width="@dimen/dp_25"
+                    app:tl_indicator_width_equal_title="false"
+                    app:tl_tab_space_equal="true"
+                    app:tl_textSelectColor="@color/colorBlack"
+                    app:tl_textUnselectColor="@color/colorBlack"
+                    app:tl_textsize="@dimen/sp_16" />
+
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </android.support.design.widget.CoordinatorLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</android.support.design.widget.CoordinatorLayout>

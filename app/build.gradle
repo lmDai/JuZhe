@@ -1,0 +1,130 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+apply from: '../MobSDK.gradle'
+def ext = rootProject.ext
+def version = ext.versions
+def appPackage = ext.appID
+def dependencie = ext.dependencies
+android {
+    compileSdkVersion version.compileSdkVersion
+    defaultConfig {
+        applicationId appPackage.app
+        minSdkVersion version.minSdkVersion
+        targetSdkVersion version.targetSdkVersion
+        versionCode version.versionCode
+        versionName version.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        packagingOptions {
+            exclude 'META-INF/proguard/androidx-annotations.pro'
+        }
+        multiDexEnabled true
+    }
+    greendao {
+        schemaVersion 2//版本号
+        daoPackage 'com.juzhe.www.gen'//一般写包名.gen
+        targetGenDir 'src/main/java'
+    }
+    signingConfigs {
+        release {
+            storeFile file("taobaoke.jks")
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:design:28.0.0'
+    //butterknife
+    implementation('com.alibaba.android:vlayout:1.2.2@aar') {
+        transitive = true
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40') {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+    implementation dependencie.butterknife
+    annotationProcessor dependencie.butterknife_compiler
+    implementation dependencie.smartRefreshLayout
+    implementation project(':common')
+    implementation project(':banner')
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+    implementation 'com.wang.avi:library:2.1.3'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc12'
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.5.0'
+    implementation 'org.greenrobot:greendao:3.2.2'
+    //支付
+//    implementation 'com.alibaba.alipay:alipaySingle:20160825@jar'
+    //登陆
+    implementation 'com.ali.auth.sdk:alibabauth_core:1.5.1.6@jar'
+    implementation 'com.ali.auth.sdk:alibabauth_ui:1.5.1.6@aar'
+    implementation 'com.ali.auth.sdk:alibabauth_ext:1.5.1.6@jar'
+    //【可选】仅供特殊合作伙伴使用
+    implementation 'com.ali.auth.sdk:alibabauth_accountlink:1.4.2@jar'
+    //安全基础
+    implementation 'com.taobao.android:securityguardaar3:5.4.67@aar'
+    //【可选】安全高级，如使用了发放红包、优惠券高级功能，则必须引入
+    implementation 'com.taobao.android:securitybodyaar3:5.4.42@aar'
+    //Mtop网关
+    implementation 'com.taobao.android:mtopsdk_allinone_open:1.3.1@jar'
+
+    //applink
+    implementation 'com.taobao.android:alibc_applink:2.0.0.9@jar'
+
+    //UT
+    implementation 'com.taobao.android:utdid4all:1.1.5.3_proguard@jar'
+    implementation 'com.alibaba.mtl:app-monitor-sdk:2.5.1.3_for_bc_proguard@jar'
+
+    //电商SDK
+    implementation 'com.alibaba.sdk.android:alibc_trade_sdk:3.1.1.11@aar'
+
+
+    implementation 'com.alibaba:fastjson:1.2.9'
+    //支付
+//    implementation 'com.alibaba.alipay:alipaySingle:20160825@jar'
+//    //登陆
+//    implementation 'com.ali.auth.sdk:alibabauth_core:1.5.1.6@jar'
+//    implementation 'com.ali.auth.sdk:alibabauth_ui:1.5.1.6@aar'
+//    implementation 'com.ali.auth.sdk:alibabauth_ext:1.5.1.6@jar'
+//    //【可选】仅供特殊合作伙伴使用
+//    implementation 'com.ali.auth.sdk:alibabauth_accountlink:1.4.2@jar'
+//    //Mtop网关
+//    implementation 'com.taobao.android:mtopsdk_allinone_open:1.3.1@jar'
+//    //安全基础  V5的安全图片
+//    implementation 'com.taobao.android:securityguardaar3:5.4.67@aar'
+//    //【可选】安全高级，如使用了发放红包、优惠券高级功能，则必须引入
+//    implementation 'com.taobao.android:securitybodyaar3:5.4.42@aar'
+//    //applink
+//    implementation 'com.alibaba.sdk.android:alibc_link_partner:1.1.0.6'
+//    //UT
+//    implementation 'com.taobao.android:utdid4all:1.1.5.3_proguard@jar'
+//    implementation 'com.alibaba.mtl:app-monitor-sdk:2.5.1_for_bc_proguard@jar'
+//    //联盟SDK
+//    implementation 'com.alimama.tunion.sdk:tuniontradesdk:0.3.2'
+//    //电商SDK
+////    implementation 'com.alibaba.sdk.android:alibc_trade_common:3.1.1.210'
+////    implementation 'com.alibaba.sdk.android:alibc_trade_biz:3.1.1.210'
+//    implementation 'com.alibaba.sdk.android:alibc_trade_sdk:3.1.1.11@aar'
+
+}
