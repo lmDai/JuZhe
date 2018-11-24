@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,7 +17,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.Constant;
 import com.juzhe.www.MainActivity;
-import com.juzhe.www.MyApplication;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.ThirdLoginModel;
@@ -30,7 +28,7 @@ import com.juzhe.www.utils.DialogListener;
 import com.juzhe.www.utils.DialogUtils;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.RuntimeRationale;
-import com.juzhe.www.utils.SpUtils;
+import com.juzhe.www.utils.SharePreUtils;
 import com.juzhe.www.utils.TextFontUtils;
 import com.juzhe.www.utils.UserUtils;
 import com.yanzhenjie.permission.Action;
@@ -41,7 +39,6 @@ import com.yanzhenjie.permission.Setting;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -269,7 +266,7 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.View, LoginPres
         if (model.getErrorcode() == 2) {
             showRegisterDialog();
         } else if (model.getErrorcode() == 0) {
-            SpUtils.setParam(mContext, Constant.isLOGIN, true);
+            SharePreUtils.put(mContext, Constant.isLOGIN, true);
             Log.i("single", JSON.toJSONString(model.getData()) + "");
             UserUtils.saveUserInfo(mContext, model.getData());
             Log.i("single", JSON.toJSONString(UserUtils.getUser(mContext)));

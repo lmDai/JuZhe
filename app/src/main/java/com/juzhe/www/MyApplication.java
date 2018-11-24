@@ -5,10 +5,7 @@ import android.util.Log;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
-import com.alibaba.fastjson.JSON;
-import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.BaseApplication;
-import com.juzhe.www.utils.SpUtils;
 import com.mob.MobSDK;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;

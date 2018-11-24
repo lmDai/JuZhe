@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.Constant;
 import com.juzhe.www.MainActivity;
-import com.juzhe.www.MyApplication;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.CodeModel;
@@ -18,7 +17,7 @@ import com.juzhe.www.mvp.contract.RegisterContract;
 import com.juzhe.www.mvp.presenter.RegisterPresenter;
 import com.juzhe.www.ui.widget.VerifyCodeView;
 import com.juzhe.www.utils.IntentUtils;
-import com.juzhe.www.utils.SpUtils;
+import com.juzhe.www.utils.SharePreUtils;
 import com.juzhe.www.utils.UserUtils;
 
 import butterknife.BindView;
@@ -113,7 +112,7 @@ public class InputCodeActivity extends BaseMvpActivity<RegisterContract.View, Re
 
     @Override
     public void registerSuccess(UserModel result) {
-        SpUtils.setParam(mContext, Constant.isLOGIN, true);
+        SharePreUtils.put(mContext, Constant.isLOGIN, true);
         UserUtils.saveUserInfo(mContext,result);
         IntentUtils.get().goActivityKill(mContext, MainActivity.class);//手机号登录
     }

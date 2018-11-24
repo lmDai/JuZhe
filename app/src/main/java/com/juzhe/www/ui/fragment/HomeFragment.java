@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -73,8 +74,6 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
     TextView txtTitle;
     @BindView(R.id.img_message)
     ImageView imgMessage;
-    //    @BindView(R.id.recycler_home)
-//    RecyclerView recyclerHome;
     @BindView(R.id.tabs)
     SlidingTabLayout tabs;
     @BindView(R.id.viewpager)

@@ -12,7 +12,6 @@ import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.Constant;
 import com.juzhe.www.MainActivity;
-import com.juzhe.www.MyApplication;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.UserModel;
@@ -22,7 +21,7 @@ import com.juzhe.www.mvp.contract.PhoneLoginContract;
 import com.juzhe.www.mvp.presenter.PhoneLoginPresenter;
 import com.juzhe.www.ui.widget.ClearEditText;
 import com.juzhe.www.utils.IntentUtils;
-import com.juzhe.www.utils.SpUtils;
+import com.juzhe.www.utils.SharePreUtils;
 import com.juzhe.www.utils.UserUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -105,7 +104,7 @@ public class PhoneLoginActivity extends BaseMvpActivity<PhoneLoginContract.View,
 
     @Override
     public void loginSuccess(UserModel userModel) {
-        SpUtils.setParam(mContext, Constant.isLOGIN, true);
+        SharePreUtils.put(mContext, Constant.isLOGIN, true);
         UserUtils.saveUserInfo(mContext, userModel);
         IntentUtils.get().goActivityKill(mContext, MainActivity.class);//手机号登录
     }

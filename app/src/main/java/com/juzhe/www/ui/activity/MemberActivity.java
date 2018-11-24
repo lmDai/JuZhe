@@ -69,7 +69,7 @@ public class MemberActivity extends BaseMvpActivity<UpgradeContract.View, Upgrad
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        userModel=UserUtils.getUser(mContext);
+        userModel = UserUtils.getUser(mContext);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerEntrance.setLayoutManager(linearLayoutManager);
@@ -140,14 +140,12 @@ public class MemberActivity extends BaseMvpActivity<UpgradeContract.View, Upgrad
 
     @Override
     public void setUserModel(UserModel userModel) {
-        UserUtils.saveUserInfo(mContext,userModel);
-        EventBus.getDefault().post(new RxEvent(1, Constant.UPDATE_USER));
+        UserUtils.saveUserInfo(mContext, userModel);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

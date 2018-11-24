@@ -15,7 +15,7 @@ import com.juzhe.www.bean.UserModel;
  **/
 public class UserUtils {
     public static UserModel getUser(Context mContext) {
-        String user = (String) SpUtils.getParam(mContext, Constant.USER, "");
+        String user = (String) SharePreUtils.get(mContext, Constant.USER, "");
         if (TextUtils.isEmpty(user)) {
             return null;
         }
@@ -24,6 +24,6 @@ public class UserUtils {
 
     public static void saveUserInfo(Context mContext, UserModel userModel) {
         String userResult = JSON.toJSONString(userModel);
-        SpUtils.setParam(mContext, Constant.USER, userResult);
+        SharePreUtils.put(mContext, Constant.USER, userResult);
     }
 }

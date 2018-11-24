@@ -17,8 +17,10 @@ import com.alibaba.baichuan.android.trade.model.OpenType;
 import com.alibaba.baichuan.android.trade.model.TradeResult;
 import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
 import com.alibaba.baichuan.android.trade.page.AlibcPage;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.juzhe.www.MainActivity;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.OrderConfirmModel;
@@ -32,6 +34,7 @@ import com.juzhe.www.ui.widget.GlideImageLoader;
 import com.juzhe.www.utils.GlideUtil;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.UserUtils;
+import com.mob.tools.utils.SharePrefrenceHelper;
 import com.youth.banner.Banner;
 
 import java.util.HashMap;
@@ -114,7 +117,7 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
         if (bundle != null) {
             itemId = bundle.getString("item_id");
         }
-        userModel=UserUtils.getUser(mContext);
+        userModel = UserUtils.getUser(mContext);
         getMvpPresenter().getHaoDetail(itemId, userModel.getId(), userModel.getUser_channel_id());
         if (userModel.getLevel() == 1) {
             txtUpgrade.setVisibility(View.GONE);
@@ -183,7 +186,7 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
         }
     }
 
-    @OnClick({R.id.img_back, R.id.txt_confirm, R.id.btn_buy, R.id.btn_share})
+    @OnClick({R.id.img_back, R.id.txt_confirm, R.id.btn_buy, R.id.btn_share, R.id.ll_home})
     public void onViewClicked(View view) {
         String pic = result.getItem_pic() == null ? "" : result.getItem_pic().get(0);
         switch (view.getId()) {
@@ -193,7 +196,6 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
             case R.id.txt_confirm:
 //                type = 0;
 //                openTaoBao();
-
                 getMvpPresenter().orderConfirm(result.getItem_id(), pic, result.getItem_title(), result.getItem_price()
                         , result.getItem_end_price(), result.getTkrates(), result.getTkmoney() + "", userModel.getId(), userModel.getUser_channel_id()
                         , result.getCouponmoney());
@@ -205,10 +207,12 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
                         , result.getCouponmoney());
                 break;
             case R.id.btn_share:
-
                 Bundle bundle = new Bundle();
                 bundle.putString("item_id", itemId);
                 IntentUtils.get().goActivity(mContext, ProductDetails2Activity.class, bundle);
+                break;
+            case R.id.ll_home:
+                IntentUtils.get().goActivityKill(mContext, MainActivity.class);
                 break;
         }
     }

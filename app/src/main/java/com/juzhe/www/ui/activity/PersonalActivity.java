@@ -22,7 +22,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.Constant;
-import com.juzhe.www.MyApplication;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.UserModel;
@@ -38,18 +37,13 @@ import com.juzhe.www.utils.DialogListener;
 import com.juzhe.www.utils.DialogUtils;
 import com.juzhe.www.utils.GlideUtil;
 import com.juzhe.www.utils.IntentUtils;
-import com.juzhe.www.utils.SpUtils;
+import com.juzhe.www.utils.SharePreUtils;
 import com.juzhe.www.utils.UserUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.wechat.friends.Wechat;
 
 @CreatePresenterAnnotation(PersonalPresenter.class)
 public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, PersonalPresenter> implements PersonalContract.View {
@@ -155,7 +149,7 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
                 break;
             case R.id.btn_logout:
                 AppManager.getAppManager().finishAllActivity();
-                SpUtils.clear(mContext, Constant.isLOGIN);
+                SharePreUtils.clear(mContext);
                 ActivityUtils.startActivity(LoginActivity.class);
                 break;
         }

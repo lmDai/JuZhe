@@ -343,6 +343,7 @@
         android:background="@color/colorWhite">
 
         <LinearLayout
+            android:id="@+id/ll_home"
             android:layout_width="@dimen/dp_60"
             android:layout_height="wrap_content"
             android:gravity="center"
