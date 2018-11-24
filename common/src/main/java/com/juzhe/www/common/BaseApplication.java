@@ -7,7 +7,7 @@ import android.support.multidex.MultiDex;
 import com.juzhe.www.common.utils.Utils;
 
 /**
- * @package: com.bestsoft.common
+ * @package: com.juzhe.www.common
  * @user:xhkj
  * @date:2018/10/29 BaseApplication
  * @description:

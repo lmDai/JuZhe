@@ -20,7 +20,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 /**
- * @package: com.bestsoft
+ * @package: com.juzhe.www
  * @user:xhkj
  * @date:2018/10/29
  * @description:

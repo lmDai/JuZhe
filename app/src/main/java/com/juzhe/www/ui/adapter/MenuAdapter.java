@@ -12,7 +12,7 @@ import com.alibaba.android.vlayout.LayoutHelper;
 import com.juzhe.www.R;
 
 /**
- * @package: com.bestsoft.ui.adapter
+ * @package: com.juzhe.www.ui.adapter
  * @user:xhkj
  * @date:2018/11/8
  * @description:

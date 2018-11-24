@@ -25,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * @package: com.bestsoft.ui.fragment
+ * @package: com.juzhe.www.ui.fragment
  * @user:xhkj
  * @date:2018/11/2
  * @description: 订单列表

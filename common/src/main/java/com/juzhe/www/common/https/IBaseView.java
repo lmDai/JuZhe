@@ -3,7 +3,7 @@ package com.juzhe.www.common.https;
 import io.reactivex.ObservableTransformer;
 
 /**
- * @package: com.bestsoft.common.https
+ * @package: com.juzhe.www.common.https
  * @user:xhkj
  * @date:2018/10/29
  * @description:

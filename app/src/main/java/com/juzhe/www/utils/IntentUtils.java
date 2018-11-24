@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 
 /**
- * @package: com.bestsoft.utils
+ * @package: com.juzhe.www.utils
  * @user:xhkj
  * @date:2018/10/30
  * @description: 意图跳转

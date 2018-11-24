@@ -13,7 +13,7 @@ import com.juzhe.www.utils.GlideUtil;
 import com.juzhe.www.utils.MagicTextViewUtil;
 
 /**
- * @package: com.bestsoft.ui.adapter
+ * @package: com.juzhe.www.ui.adapter
  * @user:xhkj
  * @date:2018/11/2
  * @description: 团队数据列表

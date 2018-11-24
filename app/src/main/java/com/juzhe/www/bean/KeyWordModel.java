@@ -4,7 +4,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 
 /**
- * @package: com.bestsoft.bean
+ * @package: com.juzhe.www.bean
  * @user:xhkj
  * @date:2018/11/14
  * @description:

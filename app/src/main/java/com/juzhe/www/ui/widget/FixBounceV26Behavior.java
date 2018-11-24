@@ -11,7 +11,7 @@ import android.widget.OverScroller;
 import java.lang.reflect.Field;
 
 /**
- * @package: com.bestsoft.ui.widget
+ * @package: com.juzhe.www.ui.widget
  * @user:xhkj
  * @date:2018/11/14
  * @description: 功能概要描述：反射注入，勿删

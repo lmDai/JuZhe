@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @package: com.bestsoft.ui.adapter
+ * @package: com.juzhe.www.ui.adapter
  * @user:xhkj
  * @date:2018/11/7
  * @description:

@@ -1,7 +1,7 @@
 package com.juzhe.www.utils;
 
 /**
- * @package: com.bestsoft.utils
+ * @package: com.juzhe.www.utils
  * @user:xhkj
  * @date:2018/11/14
  * @description:

@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 import io.reactivex.annotations.Nullable;
 
 /**
- * @package: com.bestsoft.common.https
+ * @package: com.juzhe.www.common.https
  * @user:xhkj
  * @date:2018/11/12
  * @description:包装返回结果为空

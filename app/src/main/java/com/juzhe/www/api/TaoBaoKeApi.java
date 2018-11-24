@@ -1,7 +1,7 @@
 package com.juzhe.www.api;
 
 /**
- * @package: com.bestsoft.api
+ * @package: com.juzhe.www.api
  * @user:xhkj
  * @date:2018/10/29
  * @description:

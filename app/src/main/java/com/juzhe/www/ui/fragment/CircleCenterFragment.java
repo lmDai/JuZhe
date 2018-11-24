@@ -35,7 +35,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
- * @package: com.bestsoft.ui.fragment
+ * @package: com.juzhe.www.ui.fragment
  * @user:xhkj
  * @date:2018/11/6
  * @description: 发圈中心碎片

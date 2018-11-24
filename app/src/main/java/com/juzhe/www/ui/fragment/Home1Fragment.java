@@ -39,7 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * @package: com.bestsoft.ui.fragment
+ * @package: com.juzhe.www.ui.fragment
  * @user:xhkj
  * @date:2018/10/31
  * @description:首页

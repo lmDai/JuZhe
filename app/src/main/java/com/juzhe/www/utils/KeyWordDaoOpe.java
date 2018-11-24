@@ -10,7 +10,7 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import java.util.List;
 
 /**
- * @package: com.bestsoft.utils
+ * @package: com.juzhe.www.utils
  * @user:xhkj
  * @date:2018/11/14
  * @description:

@@ -15,7 +15,7 @@ import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 
 /**
- * @package: com.bestsoft.mvp.model
+ * @package: com.juzhe.www.mvp.model
  * @user:xhkj
  * @date:2018/10/29
  * @description:订单模块

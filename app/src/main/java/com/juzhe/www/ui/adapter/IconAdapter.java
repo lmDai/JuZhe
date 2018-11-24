@@ -9,7 +9,7 @@ import com.juzhe.www.bean.IconModel;
 import com.juzhe.www.utils.GlideUtil;
 
 /**
- * @package: com.bestsoft.ui.adapter
+ * @package: com.juzhe.www.ui.adapter
  * @user:xhkj
  * @date:2018/11/2
  * @description: 介绍

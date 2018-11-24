@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @package: com.bestsoft.common.widget
+ * @package: com.juzhe.www.common.widget
  * @user:xhkj
  * @date:2018/11/14
  * @description:

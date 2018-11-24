@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.juzhe.www.bean.PotentialFanModel;
 
 /**
- * @package: com.bestsoft.ui.adapter
+ * @package: com.juzhe.www.ui.adapter
  * @user:xhkj
  * @date:2018/11/2
  * @description: 潜在粉丝

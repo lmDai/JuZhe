@@ -13,7 +13,7 @@ import android.widget.EditText;
 import com.juzhe.www.R;
 
 /**
- * @package: com.bestsoft.ui.widget
+ * @package: com.juzhe.www.ui.widget
  * @user:xhkj
  * @date:2018/10/30
  * @description:

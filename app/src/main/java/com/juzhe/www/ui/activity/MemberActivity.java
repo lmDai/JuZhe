@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @package: com.bestsoft.ui.activity
+ * @package: com.juzhe.www.ui.activity
  * @user:xhkj
  * @date:2018/11/6
  * @description:会员中心

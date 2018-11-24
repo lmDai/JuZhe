@@ -10,7 +10,7 @@ import com.juzhe.www.ui.widget.MultiImageView;
 import java.util.ArrayList;
 
 /**
- * @package: com.bestsoft.ui.adapter
+ * @package: com.juzhe.www.ui.adapter
  * @user:xhkj
  * @date:2018/11/2
  * @description: 发圈中心

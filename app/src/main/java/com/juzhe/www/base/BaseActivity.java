@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * @package: com.bestsoft.base
+ * @package: com.juzhe.www.base
  * @user:xhkj
  * @date:2018/10/29
  * @description:

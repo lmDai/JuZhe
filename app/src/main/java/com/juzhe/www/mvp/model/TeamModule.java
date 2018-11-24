@@ -16,7 +16,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 
 /**
- * @package: com.bestsoft.mvp.model
+ * @package: com.juzhe.www.mvp.model
  * @user:xhkj
  * @date:2018/10/29
  * @description:团队数据

@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.juzhe.www.MyApplication;
 
 /**
- * @package: com.bestsoft.utils
+ * @package: com.juzhe.www.utils
  * @user:xhkj
  * @date:2018/11/16
  * @description:

@@ -4,7 +4,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 /**
- * @package: com.bestsoft.ui.widget
+ * @package: com.juzhe.www.ui.widget
  * @user:xhkj
  * @date:2018/11/7
  * @description:

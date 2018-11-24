@@ -37,7 +37,7 @@ import com.juzhe.www.R;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
- * @package: com.bestsoft.ui.widget
+ * @package: com.juzhe.www.ui.widget
  * @user:xhkj
  * @date:2018/11/1
  * @description:

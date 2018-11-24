@@ -1,7 +1,7 @@
 package com.juzhe.www.common.https;
 
 /**
- * @package: com.bestsoft.common.https
+ * @package: com.juzhe.www.common.https
  * @user:xhkj
  * @date:2018/10/29
  * @description:返回的基础类型数据

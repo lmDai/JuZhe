@@ -18,7 +18,7 @@ import com.juzhe.www.ui.widget.LoadingDialog;
 import io.reactivex.ObservableTransformer;
 
 /**
- * @package: com.bestsoft.base
+ * @package: com.juzhe.www.base
  * @user:xhkj
  * @date:2018/10/29 TODO:注意  需要创建 presenter，必需要添加注解 @CreatePresenterAnnotation(xxx.class)
  **/

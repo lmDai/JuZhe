@@ -13,7 +13,7 @@ import com.juzhe.www.mvp.model.MainModel;
 
 
 /**
- * @package: com.bestsoft.mvp.presenter
+ * @package: com.juzhe.www.mvp.presenter
  * @user:xhkj
  * @date:2018/10/29
  * @description: 注册

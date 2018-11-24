@@ -43,7 +43,7 @@ import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 /**
- * @package: com.bestsoft.api
+ * @package: com.juzhe.www.api
  * @user:xhkj
  * @date:2018/10/29
  * @description:

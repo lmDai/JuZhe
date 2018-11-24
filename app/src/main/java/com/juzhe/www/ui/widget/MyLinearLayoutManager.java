@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * @package: com.bestsoft.ui.widget
+ * @package: com.juzhe.www.ui.widget
  * @user:xhkj
  * @date:2018/11/8
  * @description:

@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * @package: com.bestsoft.bean
+ * @package: com.juzhe.www.bean
  * @user:xhkj
  * @date:2018/11/9
  * @description:

@@ -5,7 +5,7 @@ import com.juzhe.www.common.https.BasePresenter;
 import com.juzhe.www.common.https.IBaseView;
 
 /**
- * @package: com.bestsoft.mvp.contract
+ * @package: com.juzhe.www.mvp.contract
  * @user:xhkj
  * @date:2018/10/29
  * @description:登陆

@@ -3,7 +3,7 @@ package com.juzhe.www.bean;
 import java.util.List;
 
 /**
- * @package: com.bestsoft.bean
+ * @package: com.juzhe.www.bean
  * @user:xhkj
  * @date:2018/11/15
  * @description:

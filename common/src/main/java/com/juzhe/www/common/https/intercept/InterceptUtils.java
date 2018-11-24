@@ -22,7 +22,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
- * @package: com.bestsoft.common.https.intercept
+ * @package: com.juzhe.www.common.https.intercept
  * @user:xhkj
  * @date:2018/10/29
  * @description:

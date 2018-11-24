@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.widget.TextView;
 
 /**
- * @package: com.bestsoft.utils
+ * @package: com.juzhe.www.utils
  * @user:xhkj
  * @date:2018/11/20
  * @description:字体工具类

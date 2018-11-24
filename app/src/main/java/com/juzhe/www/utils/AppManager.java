@@ -5,7 +5,7 @@ import android.app.Activity;
 import java.util.Stack;
 
 /**
- * @package: com.bestsoft.utils
+ * @package: com.juzhe.www.utils
  * @user:xhkj
  * @date:2018/10/31
  * @description:

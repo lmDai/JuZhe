@@ -13,7 +13,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
- * @package: com.bestsoft.common.https
+ * @package: com.juzhe.www.common.https
  * @user:xhkj
  * @date:2018/10/29
  * @description: 预处理服务器返回数据

@@ -7,7 +7,7 @@ import com.juzhe.www.common.https.IBaseView;
 import java.util.List;
 
 /**
- * @package: com.bestsoft.mvp.contract
+ * @package: com.juzhe.www.mvp.contract
  * @user:xhkj
  * @date:2018/10/29
  * @description:注册

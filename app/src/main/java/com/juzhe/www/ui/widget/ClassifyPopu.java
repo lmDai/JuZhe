@@ -11,7 +11,7 @@ import com.juzhe.www.utils.GlideUtil;
 import java.util.List;
 
 /**
- * @package: com.bestsoft.ui.widget
+ * @package: com.juzhe.www.ui.widget
  * @user:xhkj
  * @date:2018/11/13
  * @description:

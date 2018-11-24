@@ -60,7 +60,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * @package: com.bestsoft.ui.fragment
+ * @package: com.juzhe.www.ui.fragment
  * @user:xhkj
  * @date:2018/10/31
  * @description:首页

@@ -6,7 +6,7 @@ import com.juzhe.www.R;
 import com.juzhe.www.base.BaseActivity;
 
 /**
- * @package: com.bestsoft.ui.activity
+ * @package: com.juzhe.www.ui.activity
  * @user:xhkj
  * @date:2018/11/6
  * @description: 他正在买

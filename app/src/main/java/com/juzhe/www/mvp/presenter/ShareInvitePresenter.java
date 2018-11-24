@@ -10,7 +10,7 @@ import com.juzhe.www.mvp.model.ShareInviteTempModel;
 import java.util.List;
 
 /**
- * @package: com.bestsoft.mvp.presenter
+ * @package: com.juzhe.www.mvp.presenter
  * @user:xhkj
  * @date:2018/10/29
  * @description:

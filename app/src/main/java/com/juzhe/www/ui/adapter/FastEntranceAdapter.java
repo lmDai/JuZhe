@@ -11,7 +11,7 @@ import com.juzhe.www.R;
 import java.util.List;
 
 /**
- * @package: com.bestsoft.ui.adapter
+ * @package: com.juzhe.www.ui.adapter
  * @user:xhkj
  * @date:2018/10/31
  * @description:

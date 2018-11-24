@@ -14,7 +14,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * @package: com.bestsoft.common.https
+ * @package: com.juzhe.www.common.https
  * @user:xhkj
  * @date:2018/10/29
  * @description:统一接口实例的管理类RetrofitManager 特性：

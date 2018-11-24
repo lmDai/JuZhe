@@ -7,7 +7,7 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 /**
- * @package: com.bestsoft.common.https.rxUtils
+ * @package: com.juzhe.www.common.https.rxUtils
  * @user:xhkj
  * @date:2018/10/29
  * @description:事件传递处理

@@ -1,7 +1,7 @@
 package com.juzhe.www.common.https.rxUtils;
 
 /**
- * @package: com.bestsoft.common.https.rxUtils
+ * @package: com.juzhe.www.common.https.rxUtils
  * @user:xhkj
  * @date:2018/10/29
  * @description:

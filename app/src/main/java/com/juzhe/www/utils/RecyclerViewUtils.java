@@ -13,7 +13,7 @@ import java.util.List;
 
 
 /**
- * @package: com.bestsoft.utils
+ * @package: com.juzhe.www.utils
  * @user:xhkj
  * @date:2018/11/2
  * @description:

@@ -3,7 +3,7 @@ package com.juzhe.www;
 import android.os.Environment;
 
 /**
- * @package: com.bestsoft
+ * @package: com.juzhe.www
  * @user:xhkj 常量
  * @date:2018/10/31
  * @description:

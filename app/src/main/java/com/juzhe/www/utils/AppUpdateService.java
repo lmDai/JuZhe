@@ -19,7 +19,7 @@ import com.juzhe.www.R;
 import java.io.File;
 
 /**
- * @package: com.bestsoft.utils
+ * @package: com.juzhe.www.utils
  * @user:xhkj
  * @date:2018/11/16
  * @description:

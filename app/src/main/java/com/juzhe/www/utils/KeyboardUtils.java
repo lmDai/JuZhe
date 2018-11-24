@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.juzhe.www.ui.widget.MaterialRippleLayout;
 
 /**
- * @package: com.bestsoft.utils
+ * @package: com.juzhe.www.utils
  * @user:xhkj
  * @date:2018/10/29
  * @description:

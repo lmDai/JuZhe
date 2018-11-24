@@ -1,7 +1,7 @@
 package com.juzhe.www.mvp.model;
 
 /**
- * @package: com.bestsoft.mvp.model
+ * @package: com.juzhe.www.mvp.model
  * @user:xhkj
  * @date:2018/11/16
  * @description:
