@@ -196,7 +196,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp_50"
                             android:layout_height="@dimen/dp_50"
-                            android:src="@drawable/ic_zhanwei_product" />
+                            android:src="@drawable/ic_zhanwei_potential_img" />
 
                         <TextView
                             android:id="@+id/txt_seller_nick"

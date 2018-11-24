@@ -105,10 +105,10 @@ public class CircleCenterFragment extends BaseMvpFragment<ShareAticleContract.Vi
                                 sp.setShareType(Platform.SHARE_IMAGE);
                                 Platform platform = null;
                                 switch (type) {
-                                    case 1:
+                                    case 2:
                                         platform = ShareSDK.getPlatform(WechatMoments.NAME);
                                         break;
-                                    case 2:
+                                    case 1:
                                         platform = ShareSDK.getPlatform(Wechat.NAME);
                                         break;
                                     case 3:

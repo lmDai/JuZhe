@@ -13,12 +13,15 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar.FullScreen">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
 
-    <style name="SplashTheme" parent="AppTheme">
-        <!-- 欢迎页背景引用刚才写好的 -->
-        <item name="android:windowBackground">@drawable/splash</item>
+    <style name="Theme.AppCompat.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
-        <!-- <item name="android:windowIsTranslucent">true</item> --> <!-- 透明背景不要了 -->
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="common_dialog" parent="@android:style/Theme.Dialog">

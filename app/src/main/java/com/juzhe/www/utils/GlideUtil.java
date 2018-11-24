@@ -239,7 +239,7 @@ public class GlideUtil {
      */
     public static void into(Context context, String url, ImageView view) {
         Glide.with(context).load(url)
-                .placeholder(R.drawable.ic_zhanwei_product)
+                .placeholder(R.drawable.ic_zhanwei_message)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .dontAnimate()//去掉glide 自带的效果，防止加载自定义控件时只显示替换图
                 .centerCrop() // 缩放图片让图片充满整个ImageView的边框，然后裁掉超出的部分
@@ -352,8 +352,8 @@ public class GlideUtil {
 //        Glide.with(context)
 //                .load(url)
 //                .asBitmap()
-//                .placeholder(R.drawable.ic_zhanwei_product)
-//                .error(R.drawable.ic_zhanwei_product)
+//                .placeholder(R.drawable.bg_equity_estimate)
+//                .error(R.drawable.bg_equity_estimate)
 //                .diskCacheStrategy(DiskCacheStrategy.ALL) //设置缓存
 //                .into(new BitmapImageViewTarget(imageView) {
 //                    @Override
@@ -368,8 +368,8 @@ public class GlideUtil {
 //                });
         Glide.with(context)
                 .load(url)
-                .placeholder(R.drawable.ic_zhanwei_product)
-                .error(R.drawable.ic_zhanwei_product)
+                .placeholder(R.drawable.bg_equity_estimate)
+                .error(R.drawable.bg_equity_estimate)
                 .diskCacheStrategy(DiskCacheStrategy.ALL) //设置缓存
                 //.centerCrop() 千万不要加，加了就没有圆角效果了
                 .transform(new CenterCrop(context), new GlideRoundTransform(context, 10))
