@@ -289,14 +289,6 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.View, LoginPres
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!isTaskRoot()) {
-            Intent intent = getIntent();
-            String action = intent.getAction();
-            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null && action.equals(Intent.ACTION_MAIN)) {
-                finish();
-                return;
-            }
-        }
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }

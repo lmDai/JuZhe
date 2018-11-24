@@ -24,7 +24,7 @@ public class ProductDetailsPresenter extends ProductDetailsContract.Presenter {
         MainModel.getInstance(Utils.getContext()).getHaoDetail(item_id, user_id, user_chanel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<ProductModel>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<ProductModel>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(ProductModel result) {
                         getView().setResult(result);//返回数据
@@ -45,7 +45,7 @@ public class ProductDetailsPresenter extends ProductDetailsContract.Presenter {
                 item_end_price, tkrates, tkmoney, user_id, user_channel_id, couponmoney)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<OrderConfirmModel>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<OrderConfirmModel>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(OrderConfirmModel result) {
                         getView().orderConfirm(result);//返回数据
@@ -64,7 +64,7 @@ public class ProductDetailsPresenter extends ProductDetailsContract.Presenter {
                 user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.handNoResponseResult())
-                .subscribe(new ProgressObserver<BaseNoDataResponse>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<BaseNoDataResponse>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(BaseNoDataResponse result) {
                         getView().orderPayConfirm(result);

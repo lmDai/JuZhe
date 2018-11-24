@@ -23,7 +23,7 @@ public class SearchPresenter extends SearchContract.Presenter {
         MainModel.getInstance(Utils.getContext()).getHotKeyWord(user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<List<KeyWordModel>>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<List<KeyWordModel>>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(List<KeyWordModel> result) {
                         getView().setHotKeyWords(result);

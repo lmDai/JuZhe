@@ -31,7 +31,7 @@ public class OrderListPresenter extends OrderListContract.Presenter {
                 user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<List<OrderModel>>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<List<OrderModel>>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(List<OrderModel> result) {
                         getView().showOrderList(result, isRefresh);

@@ -46,7 +46,7 @@ public class UpgradePresenter extends UpgradeContract.Presenter {
         MemberModule.getInstance(Utils.getContext()).userUpgrade(user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<UpgradeModel>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<UpgradeModel>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(UpgradeModel result) {
                         getView().setUpgrade(result);
@@ -65,7 +65,7 @@ public class UpgradePresenter extends UpgradeContract.Presenter {
         MemberModule.getInstance(Utils.getContext()).upgradeApply(user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<ApplyModel>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<ApplyModel>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(ApplyModel result) {
                         getView().showPayPage(result.getOrderId());

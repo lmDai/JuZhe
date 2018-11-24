@@ -32,7 +32,7 @@ public class InComeListPresenter extends InComeListContract.Presenter {
                 user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.handNoResponseResult())
-                .subscribe(new ProgressObserver<BasePageResponse<List<IncomeDetailModel>>>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<BasePageResponse<List<IncomeDetailModel>>>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(BasePageResponse<List<IncomeDetailModel>> result) {
                         if (result.getErrorcode() == 0) {

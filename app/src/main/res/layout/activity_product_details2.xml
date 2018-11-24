@@ -41,7 +41,7 @@
                     android:lineSpacingExtra="@dimen/dp_4"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
-                    android:text="正宗韩式风味 朴家炒年糕 韩式辣酱炒年糕条 年糕火锅 包邮送酱包"
+                    tools:text="正宗韩式风味 朴家炒年糕 韩式辣酱炒年糕条 年糕火锅 包邮送酱包"
                     android:textSize="@dimen/sp_14" />
 
                 <LinearLayout
@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="@dimen/dp_4"
-                        android:text="￥5.88"
+                        tools:text="￥5.88"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
 
@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="@dimen/dp_4"
-                        android:text="再返还￥0.07"
+                        tools:text="再返还￥0.07"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
 
@@ -93,7 +93,7 @@
                     android:lineSpacingExtra="@dimen/dp_4"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
-                    android:text="【类目综合排名第一】传统工艺，口感润滑Q弹，酱香浓郁，香辣不腻，软而不腻，三个月做一次活动速抢！【赠运费险】"
+                    tools:text="【类目综合排名第一】传统工艺，口感润滑Q弹，酱香浓郁，香辣不腻，软而不腻，三个月做一次活动速抢！【赠运费险】"
                     android:textSize="@dimen/sp_14" />
 
                 <TextView
@@ -133,7 +133,7 @@
                     android:layout_width="@dimen/dp_120"
                     android:layout_height="@dimen/dp_120"
                     android:layout_margin="@dimen/dp_10"
-                    android:src="@drawable/ic_zhanwei_product" />
+                    tools:src="@drawable/ic_zhanwei_product" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -166,7 +166,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="@dimen/dp_4"
-                            android:text="￥5.88"
+                            tools:text="￥5.88"
                             android:textSize="@dimen/sp_14" />
                     </LinearLayout>
 
@@ -186,7 +186,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="@dimen/dp_4"
-                            android:text="再返还￥0.07"
+                            tools:text="再返还￥0.07"
                             android:textSize="@dimen/sp_14" />
                     </LinearLayout>
 
@@ -203,7 +203,7 @@
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="@dimen/dp_4"
                         android:paddingLeft="@dimen/dp_10"
-                        android:text="复制这条评论信息，￥j0r3bS3TJD6￥，打开【手机淘宝】即可查看"
+                        tools:text="复制这条评论信息，￥j0r3bS3TJD6￥，打开【手机淘宝】即可查看"
                         android:textSize="@dimen/sp_14" />
 
                     <TextView

@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.alibaba.android.vlayout.DelegateAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.juzhe.www.R;
@@ -39,7 +37,6 @@ import com.juzhe.www.ui.activity.WebViewActivity;
 import com.juzhe.www.ui.adapter.BasePagerAdapter;
 import com.juzhe.www.ui.adapter.FastEntranceAdapter;
 import com.juzhe.www.ui.adapter.IconAdapter;
-import com.juzhe.www.ui.widget.ClassifyPopu;
 import com.juzhe.www.ui.widget.FiltPopuWindow;
 import com.juzhe.www.ui.widget.GlideImageLoader;
 import com.juzhe.www.utils.IntentUtils;
@@ -53,7 +50,6 @@ import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -97,14 +93,12 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
     @BindView(R.id.txt_app_name)
     TextView txtAppName;
     Unbinder unbinder;
-    private List<DelegateAdapter.Adapter> mAdapters;
     private int position;
     private BasePagerAdapter myAdapter;
     private List<ClassfyModel> classfiy;
     private IconAdapter iconAdapter;
-    private ClassifyPopu classifyPopu;
     private UserModel userModel;
-
+    private boolean isRefresh = true;
 
     @Override
     protected int getLayout() {
@@ -114,13 +108,9 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
     @Override
     protected void initView(LayoutInflater inflater) {
         super.initView(inflater);
-        mAdapters = new LinkedList<>();
         initRecyclerView();
         userModel = UserUtils.getUser(mContext);
-        getMvpPresenter().getIconClassify();//获取分类列表
-        getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
-        getMvpPresenter().getAdvert(userModel.getId(), userModel.getUser_channel_id());
-        getMvpPresenter().getIconpage(userModel.getId(), userModel.getUser_channel_id());
+        initData();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerEntrance.setLayoutManager(linearLayoutManager);
@@ -137,14 +127,26 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
         TextFontUtils.setTextTypeDTr(mContext, txtTitle);
     }
 
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        getMvpPresenter().getIconClassify();//获取分类列表
+        getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
+        getMvpPresenter().getAdvert(userModel.getId(), userModel.getUser_channel_id());
+        getMvpPresenter().getIconpage(userModel.getId(), userModel.getUser_channel_id());
+    }
+
     @Override
     protected void initEvent() {
         super.initEvent();
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                isRefresh = false;
+//                getMvpPresenter().getAdvert(userModel.getId(), userModel.getUser_channel_id());
+                getMvpPresenter().getIconpage(userModel.getId(), userModel.getUser_channel_id());
                 ((ProductListFragment) myAdapter.getItem(position)).lazyFetchData();
-                refreshLayout.finishRefresh();
             }
         });
         iconAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -284,6 +286,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
         banner.setImages(images)
                 .setImageLoader(new GlideImageLoader())
                 .start();
+
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
@@ -303,17 +306,20 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
 
             }
         });
+
     }
 
     @Override
     public void setUserModel(UserModel user) {
         txtTitle.setText("¥" + user.getTotal_income());
         UserUtils.saveUserInfo(mContext, user);
+        refreshLayout.finishRefresh();
     }
 
     @Override
     public void setIconPage(List<IconModel> iconPage) {
         iconAdapter.setNewData(iconPage);
+        refreshLayout.finishRefresh();
     }
 
     @Override

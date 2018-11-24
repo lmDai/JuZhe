@@ -20,7 +20,7 @@ public class RegisterPresenter extends RegisterContract.Presenter {
         LoginModel.getInstance(Utils.getContext()).userRegister(nickName,headimgurl,openid,type,phone, smscode, user_chanel_id, pid)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<UserModel>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<UserModel>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(UserModel result) {
                         getView().registerSuccess(result);//注册成功

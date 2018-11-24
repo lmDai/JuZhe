@@ -22,7 +22,7 @@ public class ChartDataPresenter extends ChartDataContract.Presenter {
         TeamModule.getInstance(Utils.getContext()).userChart(user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<ChartModel>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<ChartModel>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(ChartModel result) {
                         getView().setChartData(result);

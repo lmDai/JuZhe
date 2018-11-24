@@ -65,7 +65,7 @@ public class LoadingDialog extends Dialog {
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
         WindowManager.LayoutParams attributes = getWindow().getAttributes();
         attributes.alpha = 0.3f;
-        attributes.width = screenWidth / 3;
+        attributes.width = screenWidth / 4;
         attributes.height = attributes.width;
         getWindow().setAttributes(attributes);
         setCancelable(mCancelable);

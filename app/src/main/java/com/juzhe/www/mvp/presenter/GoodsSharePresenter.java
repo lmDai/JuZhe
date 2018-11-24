@@ -23,7 +23,7 @@ public class GoodsSharePresenter extends GoodsShareContract.Presenter {
         MainModel.getInstance(Utils.getContext()).goodsShare(item_id, user_id, user_chanel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<GoodsShareModel>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<GoodsShareModel>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(GoodsShareModel result) {
                         getView().setResult(result);//返回数据

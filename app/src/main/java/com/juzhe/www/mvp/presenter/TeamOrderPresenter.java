@@ -31,7 +31,7 @@ public class TeamOrderPresenter extends TeamOrderContract.Presenter {
                 user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<List<TeamOrderModel>>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<List<TeamOrderModel>>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(List<TeamOrderModel> result) {
                         getView().showTeamOrders(result, isRefresh);//注册成功

@@ -7,6 +7,7 @@ package com.juzhe.www;
  * @description:
  **/
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -19,6 +20,14 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!isTaskRoot()) {
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null && action.equals(Intent.ACTION_MAIN)) {
+                finish();
+                return;
+            }
+        }
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 if ((boolean) SharePreUtils.get(SplashActivity.this, Constant.isLOGIN, false)) {
@@ -27,21 +36,12 @@ public class SplashActivity extends BaseActivity {
                     IntentUtils.get().goActivityKill(SplashActivity.this, LoginActivity.class);
                 }
             }
-        }, 0);
-    }
-
-    @Override
-    protected void initImmersionBar() {
-        super.initImmersionBar();
-        mImmersionBar
-                .statusBarColor(R.color.colorWhite)
-                .statusBarDarkFont(true, 0.2f)
-                .init();
+        }, 1000);
     }
 
     @Override
     protected int getLayout() {
-        return 0;
+        return R.layout.activity_splash;
     }
 
     @Override

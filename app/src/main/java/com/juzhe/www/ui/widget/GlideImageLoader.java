@@ -16,6 +16,6 @@ import com.youth.banner.loader.ImageLoader;
 public class GlideImageLoader extends ImageLoader {
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
-        GlideUtil.loadRoundImage(context, (String) path, SizeUtils.dp2px(10), imageView);
+        GlideUtil.into(context, (String) path, imageView);
     }
 }

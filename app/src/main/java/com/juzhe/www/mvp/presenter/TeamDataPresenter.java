@@ -21,7 +21,7 @@ public class TeamDataPresenter extends TeamDataContract.Presenter {
         TeamModule.getInstance(Utils.getContext()).userTeamProfit(user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<TeamProfitModel>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<TeamProfitModel>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(TeamProfitModel result) {
                         getView().setTeamData(result);

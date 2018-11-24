@@ -130,8 +130,10 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
             case R.id.img_back:
                 finish();
             case R.id.img_head:
+
                 break;
             case R.id.ll_share:
+                IntentUtils.get().goActivity(mContext, InviteActivity.class);
                 break;
             case R.id.ll_auth:
                 login();

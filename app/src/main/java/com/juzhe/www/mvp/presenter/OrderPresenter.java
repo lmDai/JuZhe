@@ -20,7 +20,7 @@ public class OrderPresenter extends OrderContract.Presenter {
         OrderModule.getInstance(Utils.getContext()).userProfit(user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<ProfitModel>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<ProfitModel>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(ProfitModel result) {
                         getView().setUserProfit(result);//会员收益数据

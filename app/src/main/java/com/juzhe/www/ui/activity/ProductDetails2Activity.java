@@ -108,7 +108,7 @@ public class ProductDetails2Activity extends BaseMvpActivity<GoodsShareContract.
         if (bundle != null) {
             itemId = bundle.getString("item_id");
         }
-        userModel=UserUtils.getUser(mContext);
+        userModel = UserUtils.getUser(mContext);
         getMvpPresenter().goodsShare(itemId, userModel.getId(), userModel.getUser_channel_id());
     }
 
@@ -146,6 +146,7 @@ public class ProductDetails2Activity extends BaseMvpActivity<GoodsShareContract.
                 finish();
                 break;
             case R.id.txt_copy:
+                if (result == null) return;
                 ClipboardManager cm = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
                 cm.setText(result.getTapkoul());
@@ -168,6 +169,10 @@ public class ProductDetails2Activity extends BaseMvpActivity<GoodsShareContract.
 
     private void share(int type) {
         Platform.ShareParams sp = new Platform.ShareParams();
+        if (result == null) {
+            ToastUtils.showShort("分享信息不能为空");
+            return;
+        }
         sp.setImageUrl(result.getShare_img());
         sp.setShareType(Platform.SHARE_IMAGE);
         Platform platform = null;

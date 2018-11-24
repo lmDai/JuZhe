@@ -30,7 +30,7 @@ public class ProductListPresenter extends ProductListContract.Presenter {
                 user_id, user_channel_id, user_level)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.handNoResponseResult())
-                .subscribe(new ProgressObserver<BasePageResponse<List<ProductModel>>>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<BasePageResponse<List<ProductModel>>>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(BasePageResponse<List<ProductModel>> result) {
                         if (result.getErrorcode() == 0) {

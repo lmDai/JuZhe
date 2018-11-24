@@ -32,7 +32,7 @@ public class ShareAticlePresenter extends ShareAticleContract.Presenter {
                 user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<List<ArticleModel>>(this, true, "请稍后...") {
+                .subscribe(new ProgressObserver<List<ArticleModel>>(this, true, "加载中...") {
                     @Override
                     public void onSuccess(List<ArticleModel> result) {
                             getView().showAticleList(result, isRefresh);
