@@ -6,16 +6,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpFragment;
 import com.juzhe.www.bean.ProfitModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.OrderContract;
 import com.juzhe.www.mvp.presenter.OrderPresenter;
@@ -24,6 +27,7 @@ import com.juzhe.www.ui.activity.PersonalActivity;
 import com.juzhe.www.ui.activity.TeamDataActivity;
 import com.juzhe.www.ui.adapter.BasePagerAdapter;
 import com.juzhe.www.utils.IntentUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -70,6 +74,7 @@ public class OrderFragment extends BaseMvpFragment<OrderContract.View, OrderPres
     Unbinder unbinder;
     private int position = 0;
     private BasePagerAdapter myAdapter;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -117,6 +122,7 @@ public class OrderFragment extends BaseMvpFragment<OrderContract.View, OrderPres
     @Override
     protected void lazyFetchData() {
         super.lazyFetchData();
+        userModel = UserUtils.getUser(mContext);
         getMvpPresenter().userProfit(userModel.getId(), userModel.getUser_channel_id());
     }
 

@@ -13,11 +13,13 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.https.BaseNoDataResponse;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.FeedBackContract;
 import com.juzhe.www.mvp.presenter.FeedBackPresenter;
 import com.juzhe.www.utils.KeyboardUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,6 +41,7 @@ public class FeedbackActivity extends BaseMvpActivity<FeedBackContract.View, Fee
     EditText editContact;
     @BindView(R.id.btn_commit)
     Button btnCommit;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -49,6 +52,7 @@ public class FeedbackActivity extends BaseMvpActivity<FeedBackContract.View, Fee
     protected void initView(Bundle savedInstanceState) {
         txtTitle.setText(mContext.getString(R.string.title_feed_back));
         KeyboardUtils.setRipper(btnCommit);
+        userModel=UserUtils.getUser(mContext);
     }
 
     @Override

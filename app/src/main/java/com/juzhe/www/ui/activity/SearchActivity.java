@@ -13,12 +13,14 @@ import android.widget.TextView;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.KeyWordModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.common.widget.FlowTagLayout;
 import com.juzhe.www.mvp.contract.SearchContract;
 import com.juzhe.www.mvp.presenter.SearchPresenter;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.KeyWordDaoOpe;
+import com.juzhe.www.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,7 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
     FlowTagLayout tagHistory;
     @BindView(R.id.txt_search)
     TextView txtSearch;
+    private UserModel userModel;
 
 
     @Override
@@ -83,6 +86,7 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
     @Override
     protected void initView(Bundle savedInstanceState) {
         showSearchHistory();
+        userModel=UserUtils.getUser(mContext);
         getMvpPresenter().getHotKeyWord(userModel.getId(), userModel.getUser_channel_id());
     }
 

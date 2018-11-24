@@ -16,12 +16,14 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.TeamProfitModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.TeamDataContract;
 import com.juzhe.www.mvp.presenter.TeamDataPresenter;
 import com.juzhe.www.ui.adapter.BasePagerAdapter;
 import com.juzhe.www.ui.fragment.TeamDataListFragment;
 import com.juzhe.www.utils.IntentUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +68,7 @@ public class TeamDataActivity extends BaseMvpActivity<TeamDataContract.View, Tea
     TextView txtTodayCommission;
     @BindView(R.id.txt_stay_commission)
     TextView txtStayCommission;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -76,6 +79,7 @@ public class TeamDataActivity extends BaseMvpActivity<TeamDataContract.View, Tea
     protected void initView(Bundle savedInstanceState) {
         toolbar.setBackground(ContextCompat.getDrawable(mContext, R.drawable.bg_toolbar));
         txtTitle.setText(mContext.getString(R.string.title_team_data));
+        userModel=UserUtils.getUser(mContext);
         getMvpPresenter().getUserTeamProfit(userModel.getId(), userModel.getUser_channel_id());
         List<String> mTitleList = new ArrayList<>();
         List<Fragment> mFragments = new ArrayList<>();

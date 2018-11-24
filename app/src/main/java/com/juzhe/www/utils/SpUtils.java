@@ -42,7 +42,7 @@ public class SpUtils {
             editor.putLong(key, (Long) object);
         }
 
-        editor.commit();
+        editor.apply();
     }
 
 

@@ -1,6 +1,7 @@
 package com.juzhe.www.mvp.presenter;
 
 import com.juzhe.www.bean.ThirdLoginModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.https.ProgressObserver;
 import com.juzhe.www.common.https.rxUtils.RxUtil;
 import com.juzhe.www.common.utils.Utils;
@@ -20,9 +21,9 @@ public class LoginPresenter extends LoginContract.Presenter {
         LoginModel.getInstance(Utils.getContext()).thirdLogin(type, openid, user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.handNoResponseResult())
-                .subscribe(new ProgressObserver<ThirdLoginModel>(this, true, "登录中...") {
+                .subscribe(new ProgressObserver<ThirdLoginModel<UserModel>>(this, true, "登录中...") {
                     @Override
-                    public void onSuccess(ThirdLoginModel result) {
+                    public void onSuccess(ThirdLoginModel<UserModel> result) {
                         getView().loginSuccess(result);
                     }
                 });

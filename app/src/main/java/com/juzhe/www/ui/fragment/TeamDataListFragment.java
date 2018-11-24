@@ -11,11 +11,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpFragment;
 import com.juzhe.www.bean.TeamOrderModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.TeamOrderContract;
 import com.juzhe.www.mvp.presenter.TeamOrderPresenter;
 import com.juzhe.www.ui.adapter.TeamDataListAdapter;
 import com.juzhe.www.utils.RecyclerViewUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -42,6 +44,7 @@ public class TeamDataListFragment extends BaseMvpFragment<TeamOrderContract.View
     private static final String TYPE = "type";
     public int order_type;//0 全部订单，1 推广，2 自然订单
     private int order_status = 0;//1.待支付订单，2.已支付订单，3.退款订单，4.完成订单，5.失效订单 0.全部
+    private UserModel userModel;
 
     public TeamDataListFragment newInstance(int order_type) {
         TeamDataListFragment orderListFragment = new TeamDataListFragment();
@@ -63,6 +66,7 @@ public class TeamDataListFragment extends BaseMvpFragment<TeamOrderContract.View
         if (bundle != null) {
             order_type = bundle.getInt(TYPE);
         }
+        userModel = UserUtils.getUser(mContext);
         rbAll.setChecked(true);
         teamDataAdapter = new TeamDataListAdapter(R.layout.item_team_data);
         if (order_type == 1)

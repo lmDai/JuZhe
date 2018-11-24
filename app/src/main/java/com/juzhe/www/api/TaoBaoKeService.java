@@ -208,7 +208,7 @@ public interface TaoBaoKeService {
     //第三方登录
     @POST(TaoBaoKeApi.THIRD_LOGIN)
     @FormUrlEncoded
-    Observable<ThirdLoginModel> thirdLogin(@FieldMap Map<String, Object> map);
+    Observable<ThirdLoginModel<UserModel>> thirdLogin(@FieldMap Map<String, Object> map);
 
     //会员提现申请
     @POST(TaoBaoKeApi.WITHDRAW_APPLY)

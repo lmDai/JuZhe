@@ -23,6 +23,7 @@ import com.juzhe.www.mvp.presenter.UpgradePresenter;
 import com.juzhe.www.ui.adapter.FastEntranceAdapter;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SpacesItemDecoration;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -58,6 +59,7 @@ public class MemberActivity extends BaseMvpActivity<UpgradeContract.View, Upgrad
     TextView txtVip;
     @BindView(R.id.txt_info)
     TextView txtInfo;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -67,6 +69,7 @@ public class MemberActivity extends BaseMvpActivity<UpgradeContract.View, Upgrad
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        userModel=UserUtils.getUser(mContext);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerEntrance.setLayoutManager(linearLayoutManager);
@@ -137,7 +140,7 @@ public class MemberActivity extends BaseMvpActivity<UpgradeContract.View, Upgrad
 
     @Override
     public void setUserModel(UserModel userModel) {
-        MyApplication.mApplication.setUserModel(userModel);
+        UserUtils.saveUserInfo(mContext,userModel);
         EventBus.getDefault().post(new RxEvent(1, Constant.UPDATE_USER));
     }
 

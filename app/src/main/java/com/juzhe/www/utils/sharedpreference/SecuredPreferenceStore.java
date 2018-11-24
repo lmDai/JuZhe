@@ -29,7 +29,7 @@ import javax.crypto.NoSuchPaddingException;
 public class SecuredPreferenceStore implements SharedPreferences {
 
 
-    private final String PREF_FILE_NAME = "SPS_file";
+    private final String PREF_FILE_NAME = "SPS";
 
     private SharedPreferences mPrefs;
     private EncryptionManager mEncryptionManager;

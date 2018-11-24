@@ -24,6 +24,7 @@ import com.juzhe.www.utils.DialogListener;
 import com.juzhe.www.utils.DialogUtils;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.MagicTextViewUtil;
+import com.juzhe.www.utils.UserUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +61,7 @@ public class WithdrawActivity extends BaseMvpActivity<WithDrawContract.View, Wit
     Toolbar toolbar;
     private String amount;
     private String type = "1";
+    private UserModel userModel;
 
 
     @Override
@@ -71,6 +73,7 @@ public class WithdrawActivity extends BaseMvpActivity<WithDrawContract.View, Wit
     protected void initView(Bundle savedInstanceState) {
 
         txtTitle.setText("提现");
+        userModel=UserUtils.getUser(mContext);
         editAmount.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
     }

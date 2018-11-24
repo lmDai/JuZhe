@@ -11,6 +11,7 @@ import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpFragment;
 import com.juzhe.www.bean.ProductModel;
 import com.juzhe.www.bean.SelectModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.ProductListContract;
 import com.juzhe.www.mvp.presenter.ProductListPresenter;
@@ -21,6 +22,7 @@ import com.juzhe.www.ui.widget.ItemClickListener;
 import com.juzhe.www.ui.widget.ListPopu;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.RecyclerViewUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class ProductListFragment extends BaseMvpFragment<ProductListContract.Vie
     private String sort = "";
     private String Comprehensive, PostCoupon, SalesVolume, VoucherDenomination;
     private ListPopu listPopu;
+    private UserModel userModel;
 
     public ProductListFragment newInstance(String key) {
         ProductListFragment productListFragment = new ProductListFragment();
@@ -70,6 +73,7 @@ public class ProductListFragment extends BaseMvpFragment<ProductListContract.Vie
         if (bundle != null) {
             key = bundle.getString(KEY);
         }
+        userModel = UserUtils.getUser(mContext);
         productAdapter = new ProductAdapter(R.layout.item_product, userModel.getLevel());
         RecyclerViewUtils.initHeaderRecyclerView(recyclerView, mContext);
         recyclerView.setAdapter(productAdapter);

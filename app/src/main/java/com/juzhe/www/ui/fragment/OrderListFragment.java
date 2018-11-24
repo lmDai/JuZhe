@@ -9,11 +9,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpFragment;
 import com.juzhe.www.bean.OrderModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.OrderListContract;
 import com.juzhe.www.mvp.presenter.OrderListPresenter;
 import com.juzhe.www.ui.adapter.OrderListAdapter;
 import com.juzhe.www.utils.RecyclerViewUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.List;
@@ -35,6 +37,7 @@ public class OrderListFragment extends BaseMvpFragment<OrderListContract.View, O
     private OrderListAdapter orderAdapter;
     private static final String TYPE = "type";
     public int tag;//1.待支付订单，2.已支付订单，3.退款订单，4.完成订单，5.失效订单 0.全部
+    private UserModel userModel;
 
     public OrderListFragment newInstance(int tag) {
         OrderListFragment orderListFragment = new OrderListFragment();
@@ -57,6 +60,7 @@ public class OrderListFragment extends BaseMvpFragment<OrderListContract.View, O
         if (bundle != null) {
             tag = bundle.getInt(TYPE);
         }
+        userModel = UserUtils.getUser(mContext);
         orderAdapter = new OrderListAdapter(R.layout.item_order, tag);
         addHeader();//添加头部
         RecyclerViewUtils.initHeaderRecyclerView(recyclerView, mContext);

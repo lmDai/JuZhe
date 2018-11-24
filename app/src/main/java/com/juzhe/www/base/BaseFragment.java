@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.gyf.barlibrary.ImmersionBar;
-import com.juzhe.www.MyApplication;
 import com.juzhe.www.R;
 import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.https.rxUtils.RxEvent;
 import com.juzhe.www.utils.TextFontUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +40,6 @@ public abstract class BaseFragment extends RxFragment {
     private boolean isViewPrepared; // 标识fragment视图已经初始化完毕
     private boolean hasFetchData; // 标识已经触发过懒加载数据
     protected ImmersionBar mImmersionBar;
-    protected UserModel userModel;
     private TextView txtTitle;
 
     @Override
@@ -57,7 +56,6 @@ public abstract class BaseFragment extends RxFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -78,18 +76,6 @@ public abstract class BaseFragment extends RxFragment {
         return rootView;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refreshData(RxEvent messageEvent) {
-        if (messageEvent.getCode() == 1) {
-            LogUtils.i("user_level");
-            initView();
-            LogUtils.i("user_level"+userModel.getLevel());
-        }
-    }
-
-    protected void initView() {
-        userModel = MyApplication.mApplication.getUser();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -171,7 +157,6 @@ public abstract class BaseFragment extends RxFragment {
             unbinder.unbind();
         if (mImmersionBar != null)
             mImmersionBar.destroy();
-        EventBus.getDefault().unregister(this);
     }
 
 
@@ -219,7 +204,7 @@ public abstract class BaseFragment extends RxFragment {
     protected abstract int getLayout();
 
     protected void initView(LayoutInflater inflater) {
-        userModel = MyApplication.mApplication.getUser();
+
     }
 
     protected void initEvent() {

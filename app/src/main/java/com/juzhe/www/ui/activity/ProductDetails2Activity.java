@@ -15,10 +15,12 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.GoodsShareModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.GoodsShareContract;
 import com.juzhe.www.mvp.presenter.GoodsSharePresenter;
 import com.juzhe.www.utils.GlideUtil;
+import com.juzhe.www.utils.UserUtils;
 
 import java.util.HashMap;
 
@@ -77,6 +79,7 @@ public class ProductDetails2Activity extends BaseMvpActivity<GoodsShareContract.
     LinearLayout dialogZhifubao;
     private String itemId;
     private GoodsShareModel result;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -105,6 +108,7 @@ public class ProductDetails2Activity extends BaseMvpActivity<GoodsShareContract.
         if (bundle != null) {
             itemId = bundle.getString("item_id");
         }
+        userModel=UserUtils.getUser(mContext);
         getMvpPresenter().goodsShare(itemId, userModel.getId(), userModel.getUser_channel_id());
     }
 

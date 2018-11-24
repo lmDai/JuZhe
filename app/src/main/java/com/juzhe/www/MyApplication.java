@@ -26,7 +26,6 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
  * @description:
  **/
 public class MyApplication extends BaseApplication {
-    public UserModel userModel;
     public static MyApplication mApplication;
 
     @Override
@@ -67,16 +66,5 @@ public class MyApplication extends BaseApplication {
                 return new ClassicsFooter(context).setDrawableSize(20);
             }
         });
-    }
-
-    public UserModel getUser() {
-        String user = (String) SpUtils.getParam(this, Constant.USER, "");
-        return userModel == null ? JSON.parseObject(user, UserModel.class) : userModel;
-    }
-
-    public void setUserModel(UserModel userModel) {
-        String userResult = JSON.toJSONString(userModel);
-        SpUtils.setParam(this, Constant.USER, userResult);
-        this.userModel = userModel;
     }
 }

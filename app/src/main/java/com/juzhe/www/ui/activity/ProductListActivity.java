@@ -12,12 +12,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.ProductModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.ProductListContract;
 import com.juzhe.www.mvp.presenter.ProductListPresenter;
 import com.juzhe.www.ui.adapter.ProductAdapter;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.RecyclerViewUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -45,6 +47,7 @@ public class ProductListActivity extends BaseMvpActivity<ProductListContract.Vie
     private String name;
     private String key;
     private ProductAdapter productAdapter;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -66,6 +69,7 @@ public class ProductListActivity extends BaseMvpActivity<ProductListContract.Vie
         name = bundle.getString("name");
         key = bundle.getString("key");
         txtTitle.setText(name);
+        userModel=UserUtils.getUser(mContext);
         productAdapter = new ProductAdapter(R.layout.item_product, userModel.getLevel());
         RecyclerViewUtils.initLinerLayoutRecyclerView(recyclerView, mContext);
         recyclerView.setAdapter(productAdapter);

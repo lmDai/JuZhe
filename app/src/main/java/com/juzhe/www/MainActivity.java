@@ -13,11 +13,13 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.base.BaseActivity;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.ui.activity.MemberActivity;
 import com.juzhe.www.ui.fragment.HomeFragment;
 import com.juzhe.www.ui.fragment.OrderFragment;
 import com.juzhe.www.ui.fragment.SkillFragment;
 import com.juzhe.www.utils.AppManager;
+import com.juzhe.www.utils.UserUtils;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ import butterknife.OnClick;
 /**
  * 主activity
  */
+
 public class MainActivity extends BaseActivity {
 
 
@@ -45,6 +48,7 @@ public class MainActivity extends BaseActivity {
     private Drawable[] tabN;
     private Drawable[] tabH;
     private ArrayList<Fragment> tabFragment;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -54,6 +58,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         tabFragment = new ArrayList<>();
+        userModel = UserUtils.getUser(mContext);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         tabFragment.add(new HomeFragment());//首页
         tabFragment.add(new OrderFragment());//礼包中心
@@ -83,7 +88,7 @@ public class MainActivity extends BaseActivity {
                 onPageSelected(0);
                 break;
             case R.id.txt_order:
-                if (userModel.getLevel() == 1) {
+                if (UserUtils.getUser(mContext).getLevel() == 1) {
                     ActivityUtils.startActivity(MemberActivity.class);
                     return;
                 }

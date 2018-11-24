@@ -1,6 +1,7 @@
 package com.juzhe.www.mvp.contract;
 
 import com.juzhe.www.bean.ThirdLoginModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.https.BasePresenter;
 import com.juzhe.www.common.https.IBaseView;
 
@@ -12,7 +13,7 @@ import com.juzhe.www.common.https.IBaseView;
  **/
 public interface LoginContract {
     interface View extends IBaseView {
-        void loginSuccess(ThirdLoginModel userModel);
+        void loginSuccess(ThirdLoginModel<UserModel> userModel);
     }
 
     abstract class Presenter extends BasePresenter<View> {

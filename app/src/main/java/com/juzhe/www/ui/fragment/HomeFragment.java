@@ -44,6 +44,7 @@ import com.juzhe.www.ui.widget.GlideImageLoader;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SpacesItemDecoration;
 import com.juzhe.www.utils.TextFontUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -103,6 +104,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
     private List<ClassfyModel> classfiy;
     private IconAdapter iconAdapter;
     private ClassifyPopu classifyPopu;
+    private UserModel userModel;
 
 
     @Override
@@ -115,6 +117,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
         super.initView(inflater);
         mAdapters = new LinkedList<>();
         initRecyclerView();
+        userModel = UserUtils.getUser(mContext);
         getMvpPresenter().getIconClassify();//获取分类列表
         getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
         getMvpPresenter().getAdvert(userModel.getId(), userModel.getUser_channel_id());
@@ -304,8 +307,9 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
     }
 
     @Override
-    public void setUserModel(UserModel userModel) {
-        txtTitle.setText("¥" + userModel.getTotal_income());
+    public void setUserModel(UserModel user) {
+        txtTitle.setText("¥" + user.getTotal_income());
+        UserUtils.saveUserInfo(mContext, user);
     }
 
     @Override

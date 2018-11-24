@@ -11,10 +11,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.ChartModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.ChartDataContract;
 import com.juzhe.www.mvp.presenter.ChartDataPresenter;
 import com.juzhe.www.utils.ChartUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,7 @@ public class MyTeamActivity extends BaseMvpActivity<ChartDataContract.View, Char
     TextView txtDirectCount;
     @BindView(R.id.txt_indirect_count)
     TextView txtIndirectCount;
+    private UserModel userModel;
 
 
     @Override
@@ -67,7 +70,7 @@ public class MyTeamActivity extends BaseMvpActivity<ChartDataContract.View, Char
         toolbar.setBackground(ContextCompat.getDrawable(mContext, R.drawable.bg_toolbar));
 
         ChartUtils.initChart(lineChart);
-
+        userModel=UserUtils.getUser(mContext);
         getMvpPresenter().getUserChart(userModel.getId(), userModel.getUser_channel_id());
     }
 

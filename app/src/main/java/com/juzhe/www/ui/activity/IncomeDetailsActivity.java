@@ -13,12 +13,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.IncomeDetailModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.InComeListContract;
 import com.juzhe.www.mvp.presenter.InComeListPresenter;
 import com.juzhe.www.ui.adapter.IncomeDetailAdapter;
 import com.juzhe.www.ui.widget.IncomPopWindow;
 import com.juzhe.www.utils.RecyclerViewUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,7 @@ public class IncomeDetailsActivity extends BaseMvpActivity<InComeListContract.Vi
     private IncomeDetailAdapter incomeDetailAdapter;
     private String type = "0";//0.全部，1.佣金流水，2.提现流水，3.余额流水
     private IncomPopWindow incomPopWindow;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -57,6 +60,7 @@ public class IncomeDetailsActivity extends BaseMvpActivity<InComeListContract.Vi
         txtTitle.setText("明细");
         txtRight.setVisibility(View.VISIBLE);
         txtRight.setText("全部");
+        userModel=UserUtils.getUser(mContext);
         Drawable drawable = mContext.getResources().getDrawable(R.drawable
                 .ic_dropdown_normal);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());

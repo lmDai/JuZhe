@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.gyf.barlibrary.ImmersionBar;
-import com.juzhe.www.MyApplication;
 import com.juzhe.www.R;
 import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.https.rxUtils.RxEvent;
 import com.juzhe.www.utils.AppManager;
 import com.juzhe.www.utils.KeyboardUtils;
 import com.juzhe.www.utils.TextFontUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,7 +35,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected Activity mContext;
     protected Unbinder mUnBinder;
     protected ImmersionBar mImmersionBar;
-    protected UserModel userModel;
     private TextView txtTitle;
 
     @Override
@@ -56,7 +55,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (txtTitle != null)
             TextFontUtils.setTextTypeDTr(mContext, txtTitle);
         initEvent();
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -92,15 +90,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (mImmersionBar != null)
             mImmersionBar.destroy();  //在BaseActivity里销毁
         AppManager.getAppManager().finishActivity(this);
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refreshData(RxEvent messageEvent) {
-        if (messageEvent.getCode() == 1) {
-            init();
-            LogUtils.i("user_level"+userModel.getLevel());
-        }
     }
 
     protected void initImmersionBar() {
@@ -128,7 +117,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      */
     protected void init() {
         AppManager.getAppManager().addActivity(this);
-        userModel = MyApplication.mApplication.getUser();
     }
 
     protected void initEvent() {

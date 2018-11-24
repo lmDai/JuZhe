@@ -13,6 +13,7 @@ import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.ProductModel;
 import com.juzhe.www.bean.SelectModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.SearchDetailsContract;
 import com.juzhe.www.mvp.presenter.SearchDetailsPresenter;
@@ -22,6 +23,7 @@ import com.juzhe.www.ui.widget.ItemClickListener;
 import com.juzhe.www.ui.widget.ListPopu;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.RecyclerViewUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,7 @@ public class SearchDetailActivity extends BaseMvpActivity<SearchDetailsContract.
     private String sort = "";
     private ProductAdapter productAdapter;
     private ListPopu listPopu;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -73,6 +76,7 @@ public class SearchDetailActivity extends BaseMvpActivity<SearchDetailsContract.
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        userModel=UserUtils.getUser(mContext);
         Bundle bundle = getIntent().getBundleExtra("bundle");
         keyWord = bundle.getString("keyword");
         editSearch.setText(keyWord);

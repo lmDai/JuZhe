@@ -18,6 +18,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.RuleModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.ShareInviteContract;
 import com.juzhe.www.mvp.model.ShareInviteTempModel;
@@ -29,6 +30,7 @@ import com.juzhe.www.utils.AppManager;
 import com.juzhe.www.utils.DialogUtils;
 import com.juzhe.www.utils.RecyclerViewUtils;
 import com.juzhe.www.utils.ShareDialogListener;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -77,6 +79,7 @@ public class InviteActivity extends BaseMvpActivity<ShareInviteContract.View, Sh
     private int pagerWidth;
     private int i = 0;
     private List<ShareInviteTempModel> settingResult;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -85,6 +88,7 @@ public class InviteActivity extends BaseMvpActivity<ShareInviteContract.View, Sh
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        userModel=UserUtils.getUser(mContext);
         txtTitle.setText(mContext.getString(R.string.title_invite));
         txtInviteCode.setText("我的邀请码:" + userModel.getInvite_code());
         viewPagerTheme.setOffscreenPageLimit(4);

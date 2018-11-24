@@ -79,13 +79,13 @@ public class LoginModel {
         return loinModel;
     }
 
-    public Observable<ThirdLoginModel> thirdLogin(String type, String openid, String user_id, String user_channel_id) {
+    public Observable<ThirdLoginModel<UserModel>> thirdLogin(String type, String openid, String user_id, String user_channel_id) {
         Map<String, Object> requestMap = InterceptUtils.getRequstMap();
         requestMap.put("type", type);
         requestMap.put("openid", openid);
         requestMap.put("user_id", user_id);
         requestMap.put("user_channel_id", user_channel_id);
-        Observable<ThirdLoginModel> thirdLogin = mApiService.thirdLogin(requestMap);
+        Observable<ThirdLoginModel<UserModel>> thirdLogin = mApiService.thirdLogin(requestMap);
         return thirdLogin;
     }
     public Observable<BaseResponse<String>> bindThird(String nickname, String headimgurl,String type,String openid, String user_id, String user_channel_id) {

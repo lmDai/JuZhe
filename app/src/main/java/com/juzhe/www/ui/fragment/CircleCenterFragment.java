@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpFragment;
 import com.juzhe.www.bean.ArticleModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.ShareAticleContract;
 import com.juzhe.www.mvp.presenter.ShareAticlePresenter;
@@ -18,6 +19,7 @@ import com.juzhe.www.ui.adapter.CircleCenterAdapter;
 import com.juzhe.www.utils.DialogUtils;
 import com.juzhe.www.utils.RecyclerViewUtils;
 import com.juzhe.www.utils.ShareDialogListener;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.HashMap;
@@ -47,6 +49,7 @@ public class CircleCenterFragment extends BaseMvpFragment<ShareAticleContract.Vi
     private CircleCenterAdapter circleAdapter;
     private static final String TYPE = "type";
     public int tag;//分类 1.新手必发，2.营销素材
+    private UserModel userModel;
 
     public CircleCenterFragment newInstance(int tag) {
         CircleCenterFragment orderListFragment = new CircleCenterFragment();
@@ -68,6 +71,7 @@ public class CircleCenterFragment extends BaseMvpFragment<ShareAticleContract.Vi
         if (bundle != null) {
             tag = bundle.getInt(TYPE);
         }
+        userModel = UserUtils.getUser(mContext);
         circleAdapter = new CircleCenterAdapter(R.layout.item_circle_center);
         RecyclerViewUtils.initLinerLayoutRecyclerView(recyclerView, mContext);
         recyclerView.setAdapter(circleAdapter);
@@ -120,10 +124,12 @@ public class CircleCenterFragment extends BaseMvpFragment<ShareAticleContract.Vi
                                         //失败的回调，arg:平台对象，arg1:表示当前的动作，arg2:异常信息
                                         LogUtils.i("onError");
                                     }
+
                                     public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
                                         //分享成功的回调
-                                        LogUtils.i("onComplete",JSON.toJSONString(arg2));
+                                        LogUtils.i("onComplete", JSON.toJSONString(arg2));
                                     }
+
                                     public void onCancel(Platform arg0, int arg1) {
                                         //取消分享的回调
                                         LogUtils.i("onCancel");

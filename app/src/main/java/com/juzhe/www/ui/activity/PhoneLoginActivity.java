@@ -23,6 +23,7 @@ import com.juzhe.www.mvp.presenter.PhoneLoginPresenter;
 import com.juzhe.www.ui.widget.ClearEditText;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SpUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -85,7 +86,7 @@ public class PhoneLoginActivity extends BaseMvpActivity<PhoneLoginContract.View,
                 break;
             case R.id.txt_count:
                 if (!RegexUtils.isMobileExact(userName)) {
-                    ToastUtils.showShort( "请输入正确的手机号");
+                    ToastUtils.showShort("请输入正确的手机号");
                     return;
                 }
                 countdown(60);//倒计时60s
@@ -99,13 +100,13 @@ public class PhoneLoginActivity extends BaseMvpActivity<PhoneLoginContract.View,
 
     @Override
     public void sendCodeSuccess(BaseNoDataResponse result) {
-        ToastUtils.showShort( result.getMsg());
+        ToastUtils.showShort(result.getMsg());
     }
 
     @Override
     public void loginSuccess(UserModel userModel) {
         SpUtils.setParam(mContext, Constant.isLOGIN, true);
-        MyApplication.mApplication.setUserModel(userModel);
+        UserUtils.saveUserInfo(mContext, userModel);
         IntentUtils.get().goActivityKill(mContext, MainActivity.class);//手机号登录
     }
 

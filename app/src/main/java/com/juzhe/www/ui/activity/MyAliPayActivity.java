@@ -23,6 +23,7 @@ import com.juzhe.www.mvp.contract.MyAlipayContract;
 import com.juzhe.www.mvp.presenter.MyAlipayPresenter;
 import com.juzhe.www.ui.widget.ClearEditText;
 import com.juzhe.www.utils.KeyboardUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -55,6 +56,7 @@ public class MyAliPayActivity extends BaseMvpActivity<MyAlipayContract.View, MyA
     Button btnUnbind;
     @BindView(R.id.ll_unbind)
     LinearLayout llUnbind;
+    private UserModel userModel;
 
 
     @Override
@@ -66,6 +68,7 @@ public class MyAliPayActivity extends BaseMvpActivity<MyAlipayContract.View, MyA
     protected void initView(Bundle savedInstanceState) {
         txtTitle.setText(mContext.getString(R.string.title_alipay));
         KeyboardUtils.setRipper(btnSave);
+        userModel=UserUtils.getUser(mContext);
 //        getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
         if (userModel != null) {
             if (!TextUtils.isEmpty(userModel.getReal_name()) && !TextUtils.isEmpty(userModel.getAlipay_account())) {
@@ -165,7 +168,7 @@ public class MyAliPayActivity extends BaseMvpActivity<MyAlipayContract.View, MyA
                 llBind.setVisibility(View.VISIBLE);
             }
         }
-        MyApplication.mApplication.setUserModel(userModel);
+        UserUtils.saveUserInfo(mContext,userModel);
         EventBus.getDefault().post(new RxEvent(1, Constant.UPDATE_USER));
     }
 

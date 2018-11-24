@@ -19,6 +19,7 @@ import com.juzhe.www.mvp.presenter.RegisterPresenter;
 import com.juzhe.www.ui.widget.VerifyCodeView;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SpUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -113,7 +114,7 @@ public class InputCodeActivity extends BaseMvpActivity<RegisterContract.View, Re
     @Override
     public void registerSuccess(UserModel result) {
         SpUtils.setParam(mContext, Constant.isLOGIN, true);
-        MyApplication.mApplication.setUserModel(userModel);
+        UserUtils.saveUserInfo(mContext,result);
         IntentUtils.get().goActivityKill(mContext, MainActivity.class);//手机号登录
     }
 

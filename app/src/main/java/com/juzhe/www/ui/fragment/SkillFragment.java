@@ -24,6 +24,7 @@ import com.juzhe.www.ui.activity.MessageActivity;
 import com.juzhe.www.ui.activity.PersonalActivity;
 import com.juzhe.www.ui.activity.WithdrawActivity;
 import com.juzhe.www.utils.IntentUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -66,6 +67,7 @@ public class SkillFragment extends BaseMvpFragment<SkillContract.View, SkillPres
     LinearLayout llCenter;
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout refreshLayout;
+    private UserModel userModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class SkillFragment extends BaseMvpFragment<SkillContract.View, SkillPres
     protected void initView(LayoutInflater inflater) {
         super.initView(inflater);
         txtTitle.setText(mContext.getString(R.string.title_up_skill));
+        userModel = UserUtils.getUser(mContext);
         getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
     }
 

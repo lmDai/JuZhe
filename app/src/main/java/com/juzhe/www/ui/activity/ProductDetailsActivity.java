@@ -23,6 +23,7 @@ import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.OrderConfirmModel;
 import com.juzhe.www.bean.ProductModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.https.BaseNoDataResponse;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.ProductDetailsContract;
@@ -30,6 +31,7 @@ import com.juzhe.www.mvp.presenter.ProductDetailsPresenter;
 import com.juzhe.www.ui.widget.GlideImageLoader;
 import com.juzhe.www.utils.GlideUtil;
 import com.juzhe.www.utils.IntentUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.youth.banner.Banner;
 
 import java.util.HashMap;
@@ -83,6 +85,7 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
     private ProductModel result;
     private int type = 0;//0立即领券，1 立即购买
     private OrderConfirmModel orderConfirmModel;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -111,6 +114,7 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
         if (bundle != null) {
             itemId = bundle.getString("item_id");
         }
+        userModel=UserUtils.getUser(mContext);
         getMvpPresenter().getHaoDetail(itemId, userModel.getId(), userModel.getUser_channel_id());
         if (userModel.getLevel() == 1) {
             txtUpgrade.setVisibility(View.GONE);

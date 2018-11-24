@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -30,6 +31,7 @@ import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.RuntimeRationale;
 import com.juzhe.www.utils.SpUtils;
 import com.juzhe.www.utils.TextFontUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
@@ -78,6 +80,7 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.View, LoginPres
     public static String unionid = "";
     public static String nickName = "";
     public static String headimgurl = "";
+    private UserModel userModel;
 
 
     @Override
@@ -89,10 +92,8 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.View, LoginPres
     protected void initView(Bundle savedInstanceState) {
 
         requestPermission(Permission.READ_PHONE_STATE, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE);
-        if ((boolean) SpUtils.getParam(mContext, Constant.isLOGIN, false)) {
-            IntentUtils.get().goActivityKill(mContext, MainActivity.class);
-        }
         TextFontUtils.setTextTypeRTW(mContext, txtInfo);
+        userModel = UserUtils.getUser(mContext);
     }
 
     /**
@@ -264,13 +265,14 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.View, LoginPres
     }
 
     @Override
-    public void loginSuccess(ThirdLoginModel userModel) {
-        if (userModel.getErrorcode() == 2) {
+    public void loginSuccess(ThirdLoginModel<UserModel> model) {
+        if (model.getErrorcode() == 2) {
             showRegisterDialog();
-        } else if (userModel.getErrorcode() == 0) {
+        } else if (model.getErrorcode() == 0) {
             SpUtils.setParam(mContext, Constant.isLOGIN, true);
-            UserModel user = JSON.parseObject(JSON.toJSONString(userModel.getData()), UserModel.class);
-            MyApplication.mApplication.setUserModel(user);
+            Log.i("single", JSON.toJSONString(model.getData()) + "");
+            UserUtils.saveUserInfo(mContext, model.getData());
+            Log.i("single", JSON.toJSONString(UserUtils.getUser(mContext)));
             IntentUtils.get().goActivityKill(mContext, MainActivity.class);//手机号登录
         }
     }

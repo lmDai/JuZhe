@@ -9,10 +9,12 @@ import android.widget.TextView;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.ExtractModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.ExtractContract;
 import com.juzhe.www.mvp.presenter.ExtractPresenter;
 import com.juzhe.www.utils.IntentUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,6 +43,7 @@ public class BanlanceActivity extends BaseMvpActivity<ExtractContract.View, Extr
     @BindView(R.id.txt_wait_commission)
     TextView txtWaitCommission;
     private ExtractModel models;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -52,6 +55,7 @@ public class BanlanceActivity extends BaseMvpActivity<ExtractContract.View, Extr
         txtRight.setVisibility(View.VISIBLE);
         txtRight.setText("明细");
         txtTitle.setText(mContext.getString(R.string.title_balance));
+        userModel=UserUtils.getUser(mContext);
         getMvpPresenter().getUserExtract(userModel.getId(), userModel.getUser_channel_id());
     }
 

@@ -39,6 +39,7 @@ import com.juzhe.www.utils.DialogUtils;
 import com.juzhe.www.utils.GlideUtil;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SpUtils;
+import com.juzhe.www.utils.UserUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -74,6 +75,7 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
     Button btnLogout;
     @BindView(R.id.btn_switch)
     Switch btnSwitch;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -83,6 +85,7 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
     @Override
     protected void initView(Bundle savedInstanceState) {
         txtTitle.setText(mContext.getString(R.string.title_personal));
+        userModel = UserUtils.getUser(mContext);
 //        KeyboardUtils.setRipper(llShare);
 //        KeyboardUtils.setRipper(llAuth);
 //        KeyboardUtils.setRipper(llCenter);
@@ -155,7 +158,7 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
 
     @Override
     public void setUserModel(UserModel userModel) {
-        MyApplication.mApplication.setUserModel(userModel);
+        UserUtils.saveUserInfo(mContext, userModel);
         btnSwitch.setChecked(userModel.getSettingtaobao() == 1);
         txtName.setText(userModel.getNickname());
         txtId.setText(userModel.getId());
@@ -167,7 +170,7 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
         ToastUtils.showShort(settingResult.getMsg());
         if (settingResult.getErrorcode() == 0) {
             userModel.setSettingtaobao(userModel.getSettingtaobao() == 1 ? 2 : 1);
-            MyApplication.mApplication.setUserModel(userModel);
+            UserUtils.saveUserInfo(mContext, userModel);
             btnSwitch.setChecked(userModel.getSettingtaobao() == 1);
         }
     }
@@ -211,7 +214,7 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
                     ToastUtils.showShort(msg);
                     btnSwitch.setChecked(false);
                     userModel.setSettingtaobao(2);
-                    MyApplication.mApplication.setUserModel(userModel);
+                    UserUtils.saveUserInfo(mContext, userModel);
                     EventBus.getDefault().post(new RxEvent(1, Constant.UPDATE_USER));
                 }
             });
