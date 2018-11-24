@@ -3,8 +3,12 @@ package com.juzhe.www.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Parcelable;
+
+import java.util.List;
 
 /**
  * @package: com.juzhe.www.utils
@@ -192,5 +196,19 @@ public class IntentUtils {
     private void putParcelable(Parcelable parcelable) {
         if (parcelable == null) return;
         intent.putExtra(OPEN_ACTIVITY_KEY, parcelable);
+    }
+
+    public static boolean isWeixinAvilible(Context context) {
+        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

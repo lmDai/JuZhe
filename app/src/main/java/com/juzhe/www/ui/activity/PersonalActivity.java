@@ -45,6 +45,11 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
 
 @CreatePresenterAnnotation(PersonalPresenter.class)
 public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, PersonalPresenter> implements PersonalContract.View {

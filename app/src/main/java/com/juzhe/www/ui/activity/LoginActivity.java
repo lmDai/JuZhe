@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.Constant;
 import com.juzhe.www.MainActivity;
 import com.juzhe.www.MyApplication;
@@ -177,11 +178,14 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.View, LoginPres
         Platform plat = null;
         switch (view.getId()) {
             case R.id.ll_wechat_login:
+                if (!IntentUtils.isWeixinAvilible(mContext)) {
+                    ToastUtils.showShort("未安装微信客户端！");
+                    return;
+                }
                 plat = ShareSDK.getPlatform(Wechat.NAME);
-//                if (plat.isAuthValid()) {
-//                    plat.removeAccount(true);
-//                }
-                plat.SSOSetting(true);
+                if (plat.isAuthValid())
+                    plat.removeAccount(true); //移除授权状态和本地缓存，下次授权会重新授权
+                plat.SSOSetting(false);
                 plat.setPlatformActionListener(new PlatformActionListener() {
                     @Override
                     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
@@ -189,7 +193,6 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.View, LoginPres
                         unionid = platform.getDb().getUserId();
                         nickName = platform.getDb().getUserName();//获取用户名字
                         headimgurl = platform.getDb().getUserIcon(); //获取用户头像
-
                         type = "wechat";
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
@@ -202,7 +205,6 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.View, LoginPres
                                 }
                             }
                         });
-
                     }
 
                     @Override
@@ -219,14 +221,12 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.View, LoginPres
                 break;
             case R.id.ll_qq:
                 plat = ShareSDK.getPlatform(QQ.NAME);
-//                if (plat.isAuthValid()) {
-//                    plat.removeAccount(true);
-//                }
-                plat.SSOSetting(true);
+                if (plat.isAuthValid())
+                    plat.removeAccount(true); //移除授权状态和本地缓存，下次授权会重新授权
+                plat.SSOSetting(false);
                 plat.setPlatformActionListener(new PlatformActionListener() {
                     @Override
                     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                        LogUtils.i("onComplete" + platform.getDb().getUserId() + hashMap.get("nickname") + hashMap.get("figureurl"));
                         unionid = platform.getDb().getUserId();
                         nickName = (String) hashMap.get("nickname");
                         headimgurl = (String) hashMap.get("figureurl_qq_2");
