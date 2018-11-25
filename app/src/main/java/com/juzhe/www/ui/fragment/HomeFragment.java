@@ -144,9 +144,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 isRefresh = false;
-//                getMvpPresenter().getAdvert(userModel.getId(), userModel.getUser_channel_id());
-                getMvpPresenter().getIconpage(userModel.getId(), userModel.getUser_channel_id());
-                ((ProductListFragment) myAdapter.getItem(position)).lazyFetchData();
+                initData();
             }
         });
         iconAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

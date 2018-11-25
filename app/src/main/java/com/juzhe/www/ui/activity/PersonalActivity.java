@@ -85,13 +85,6 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
     protected void initView(Bundle savedInstanceState) {
         txtTitle.setText(mContext.getString(R.string.title_personal));
         userModel = UserUtils.getUser(mContext);
-//        KeyboardUtils.setRipper(llShare);
-//        KeyboardUtils.setRipper(llAuth);
-//        KeyboardUtils.setRipper(llCenter);
-//        KeyboardUtils.setRipper(llAlypay);
-//        KeyboardUtils.setRipper(llCheckUpdate);
-//        KeyboardUtils.setRipper(llFeedback);
-//        KeyboardUtils.setRipper(btnLogout);
         getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
     }
 
@@ -170,9 +163,7 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
     public void userSettingTaobao(BaseNoDataResponse settingResult) {
         ToastUtils.showShort(settingResult.getMsg());
         if (settingResult.getErrorcode() == 0) {
-            userModel.setSettingtaobao(userModel.getSettingtaobao() == 1 ? 2 : 1);
-            UserUtils.saveUserInfo(mContext, userModel);
-            btnSwitch.setChecked(userModel.getSettingtaobao() == 1);
+            getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
         }
     }
 
@@ -208,6 +199,7 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
                     //获取淘宝用户信息
                     LogUtils.i("获取淘宝用户信息: " + AlibcLogin.getInstance().getSession());
                     getMvpPresenter().userSettingTaobao(userModel.getId(), userModel.getUser_channel_id());
+
                 }
 
                 @Override
@@ -216,7 +208,6 @@ public class PersonalActivity extends BaseMvpActivity<PersonalContract.View, Per
                     btnSwitch.setChecked(false);
                     userModel.setSettingtaobao(2);
                     UserUtils.saveUserInfo(mContext, userModel);
-                    EventBus.getDefault().post(new RxEvent(1, Constant.UPDATE_USER));
                 }
             });
         } else {
