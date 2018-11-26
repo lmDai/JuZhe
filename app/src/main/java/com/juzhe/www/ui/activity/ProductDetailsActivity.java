@@ -17,6 +17,7 @@ import com.alibaba.baichuan.android.trade.model.OpenType;
 import com.alibaba.baichuan.android.trade.model.TradeResult;
 import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
 import com.alibaba.baichuan.android.trade.page.AlibcPage;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -186,7 +187,7 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
         }
     }
 
-    @OnClick({R.id.img_back, R.id.txt_confirm, R.id.btn_buy, R.id.btn_share, R.id.ll_home})
+    @OnClick({R.id.img_back, R.id.txt_confirm, R.id.btn_buy, R.id.btn_share, R.id.ll_home,R.id.txt_member})
     public void onViewClicked(View view) {
         String pic = result.getItem_pic() == null ? "" : result.getItem_pic().get(0);
         switch (view.getId()) {
@@ -213,6 +214,9 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
                 break;
             case R.id.ll_home:
                 IntentUtils.get().goActivityKill(mContext, MainActivity.class);
+                break;
+            case R.id.txt_member:
+                ActivityUtils.startActivity(MemberActivity.class);
                 break;
         }
     }

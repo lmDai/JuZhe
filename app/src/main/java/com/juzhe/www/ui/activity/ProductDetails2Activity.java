@@ -88,8 +88,7 @@ public class ProductDetails2Activity extends BaseMvpActivity<GoodsShareContract.
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        txtTitle.setText("商品详情");
-
+        txtTitle.setText("分享详情");
     }
 
     @Override
