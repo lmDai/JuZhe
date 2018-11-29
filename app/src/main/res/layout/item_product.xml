@@ -14,7 +14,8 @@
             android:id="@+id/img_pic"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
-            android:src="@drawable/ic_zhanwei_product" />
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_zhanwei_intro" />
 
         <LinearLayout
             android:layout_width="@dimen/dp_0"

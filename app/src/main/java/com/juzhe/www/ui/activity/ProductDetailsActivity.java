@@ -137,7 +137,7 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
         txtUpgrade.setText("赚¥" + result.getUpgrade());
         txtSale.setText("已售" + result.getItem_sale() + "件");
         txtMoney.setText("原价：" + result.getItem_price());
-        txtTkmoney.setText("现在升级VIP最高可得佣金¥" + result.getTkmoney());
+        txtTkmoney.setText("现在升级VIP最高可得佣金¥" + result.getCore_commission());
         txtTitleProduct.setText(result.getItem_title());
         txtCouponmoney.setText(result.getCouponmoney() + "元优惠券");
         txtTime.setText("使用时间:" + result.getCouponstarttime() + "-" + result.getCouponendtime());

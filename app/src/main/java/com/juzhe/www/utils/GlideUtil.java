@@ -349,23 +349,6 @@ public class GlideUtil {
      */
     public static void loadRoundImage(final Context context, String url,
                                       final int radius, final ImageView imageView) {
-//        Glide.with(context)
-//                .load(url)
-//                .asBitmap()
-//                .placeholder(R.drawable.bg_equity_estimate)
-//                .error(R.drawable.bg_equity_estimate)
-//                .diskCacheStrategy(DiskCacheStrategy.ALL) //设置缓存
-//                .into(new BitmapImageViewTarget(imageView) {
-//                    @Override
-//                    protected void setResource(Bitmap resource) {
-//                        super.setResource(resource);
-//
-//                        RoundedBitmapDrawable circularBitmapDrawable =
-//                                RoundedBitmapDrawableFactory.create(context.getResources(), resource);
-//                        circularBitmapDrawable.setCornerRadius(radius); //设置圆角弧度
-//                        imageView.setImageDrawable(circularBitmapDrawable);
-//                    }
-//                });
         Glide.with(context)
                 .load(url)
                 .placeholder(R.drawable.bg_equity_estimate)
