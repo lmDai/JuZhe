@@ -1,12 +1,14 @@
 package com.juzhe.www.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.juzhe.www.bean.KeyWordModel;
 import com.juzhe.www.gen.KeyWordModelDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -108,5 +110,44 @@ public class KeyWordDaoOpe {
                 .offset(pageSize * pageNum).limit(pageNum).list();
         return listMsg;
 
+    }
+
+    public static List<KeyWordModel> updateList(Context context) {
+        //查询所有
+        List<KeyWordModel> list = queryAll(context);
+        //这里用于判断是否有数据
+        //list倒序排列
+        Collections.reverse(list);
+        return list;
+    }
+
+    public static List<KeyWordModel> insertDB(Context context, String name) {
+        QueryBuilder<KeyWordModel> builder = DbManager.getDaoSession(context).getKeyWordModelDao().queryBuilder();
+        //查询所有
+        List<KeyWordModel> list = builder.list();
+        KeyWordModelDao keyWordModelDao = DbManager.getDaoSession(context).getKeyWordModelDao();
+        try {
+            if (list.size() < 10) {
+                List<KeyWordModel> list2 = keyWordModelDao.queryBuilder()
+                        .where(KeyWordModelDao.Properties.Keyword.eq(name)).build().list();
+                keyWordModelDao.deleteInTx(list2);
+                //添加
+                if (!name.equals(""))
+                    keyWordModelDao.insert(new KeyWordModel(null, name));
+            } else {
+                //删除第一条数据，用于替换最后一条搜索
+                keyWordModelDao.delete(keyWordModelDao.queryBuilder().list().get(0));
+                //删除已经存在重复的搜索历史
+                List<KeyWordModel> list3 = keyWordModelDao.queryBuilder()
+                        .where(KeyWordModelDao.Properties.Keyword.eq(name)).build().list();
+                keyWordModelDao.deleteInTx(list3);
+                //添加
+                if (!name.equals(""))
+                    keyWordModelDao.insert(new KeyWordModel(null, name));
+            }
+        } catch (Exception e) {
+            Log.i("single", e.getMessage());
+        }
+        return updateList(context);
     }
 }

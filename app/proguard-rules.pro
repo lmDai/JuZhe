@@ -61,3 +61,9 @@
 -dontwarn com.mob.**
 -dontwarn cn.sharesdk.**
 -dontwarn **.R$*
+-keep class com.kepler.**{*;}
+-dontwarn com.kepler.**
+-keep class com.jingdong.jdma.**{*;}
+-dontwarn com.jingdong.jdma.**
+-keep class com.jingdong.crash.**{*;}
+-dontwarn com.jingdong.crash.**

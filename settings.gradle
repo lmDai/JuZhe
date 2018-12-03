@@ -1,1 +1,1 @@
-include ':app', ':common', ':banner'
+include ':app', ':common', ':banner', ':jdsdk_lib'

@@ -191,12 +191,24 @@
 
         <activity
             android:name="com.ali.auth.third.ui.LoginActivity"
-
             android:theme="@style/AlibcLoginTheme"
+            tools:replace="android:theme" />
+        <activity
+            android:name="com.kepler.jd.login.AuthSuccessActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
 
-            tools:replace="android:theme"
 
-            />
+        <activity
+            android:name="com.kepler.jd.sdk.KeplerMidActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+
+        <activity
+            android:name="com.kepler.jd.sdk.WebViewActivity"
+            android:screenOrientation="portrait" />
+        <service android:name="com.jingdong.crash.inner.CrashService" android:process=":jingdongerror" />
     </application>
 
 </manifest>

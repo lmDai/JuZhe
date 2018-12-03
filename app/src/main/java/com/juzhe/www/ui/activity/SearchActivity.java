@@ -72,7 +72,7 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH)
                     if (!TextUtils.isEmpty(editSearch.getText().toString())) {
-
+                        saveLocale(editSearch.getText().toString());
                         Bundle bundle = new Bundle();
                         bundle.putString("keyword", editSearch.getText().toString());
                         IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
@@ -85,8 +85,8 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        showSearchHistory();
-        userModel=UserUtils.getUser(mContext);
+        showSearchHistory(KeyWordDaoOpe.updateList(mContext));
+        userModel = UserUtils.getUser(mContext);
         getMvpPresenter().getHotKeyWord(userModel.getId(), userModel.getUser_channel_id());
     }
 
@@ -101,30 +101,7 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
         tagHotSearch.setTagClickListener(new FlowTagLayout.OnTagClickListener() {
             @Override
             public void tagClick(int position) {
-                List<KeyWordModel> historys = KeyWordDaoOpe.queryAll(mContext);
-                if (!historys.contains(models.get(position)))
-                    KeyWordDaoOpe.saveData(mContext, models.get(position));
-                showSearchHistory();
-                editSearch.setText(dataList.get(position));
-                editSearch.setSelection(editSearch.getText().length());
-                Bundle bundle = new Bundle();
-                bundle.putString("keyword", dataList.get(position));
-                IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
-            }
-        });
-    }
-
-    public void showSearchHistory() {
-        List<KeyWordModel> models = KeyWordDaoOpe.queryAll(mContext);
-        List<String> dataList = new ArrayList<>();
-        if (models != null && models.size() > 0)
-            for (KeyWordModel keyWordModel : models) {
-                dataList.add(keyWordModel.getKeyword());
-            }
-        tagHistory.addTags(dataList);
-        tagHistory.setTagClickListener(new FlowTagLayout.OnTagClickListener() {
-            @Override
-            public void tagClick(int position) {
+                saveLocale(models.get(position).getKeyword());
                 editSearch.setText(dataList.get(position));
                 editSearch.setSelection(editSearch.getText().length());
                 Bundle bundle = new Bundle();
@@ -138,8 +115,6 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
     public void showError(Throwable throwable) {
 
     }
-
-
 
     @Override
     protected void onDestroy() {
@@ -161,11 +136,36 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
                 break;
             case R.id.txt_search:
                 if (!TextUtils.isEmpty(editSearch.getText().toString())) {
+                    saveLocale(editSearch.getText().toString());
                     Bundle bundle = new Bundle();
                     bundle.putString("keyword", editSearch.getText().toString());
                     IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
                 }
                 break;
         }
+    }
+
+
+    private void saveLocale(String keyWord) {
+        showSearchHistory(KeyWordDaoOpe.insertDB(mContext, keyWord));
+    }
+
+    private void showSearchHistory(List<KeyWordModel> models) {
+        List<String> dataList = new ArrayList<>();
+        if (models != null && models.size() > 0)
+            for (KeyWordModel keyWordModel : models) {
+                dataList.add(keyWordModel.getKeyword());
+            }
+        tagHistory.addTags(dataList);
+        tagHistory.setTagClickListener(new FlowTagLayout.OnTagClickListener() {
+            @Override
+            public void tagClick(int position) {
+                editSearch.setText(dataList.get(position));
+                editSearch.setSelection(editSearch.getText().length());
+                Bundle bundle = new Bundle();
+                bundle.putString("keyword", dataList.get(position));
+                IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
+            }
+        });
     }
 }

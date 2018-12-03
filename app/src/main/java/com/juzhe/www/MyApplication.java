@@ -1,11 +1,14 @@
 package com.juzhe.www;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
 import com.alibaba.baichuan.android.trade.AlibcTradeSDK;
 import com.alibaba.baichuan.android.trade.callback.AlibcTradeInitCallback;
 import com.juzhe.www.common.BaseApplication;
+import com.kepler.jd.Listener.AsyncInitListener;
+import com.kepler.jd.login.KeplerApiManager;
 import com.mob.MobSDK;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -24,7 +27,8 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
  **/
 public class MyApplication extends BaseApplication {
     public static MyApplication mApplication;
-
+    public static final String appKey = "5990181a5fe943b5892cc52dd6488663";
+    public static final String keySecret = "d37c5f87d5464c7f8ef43b6158025d48";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -44,6 +48,22 @@ public class MyApplication extends BaseApplication {
                 Log.i("single", "onFailure" + code + msg);
             }
         });
+
+        KeplerApiManager.asyncInitSdk(this, appKey, keySecret,
+                new AsyncInitListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.e("Kepler", "Kepler asyncInitSdk onSuccess ");
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                        Log.e("Kepler",
+                                "Kepler asyncInitSdk 授权失败，请检查lib 工程资源引用；包名,签名证书是否和注册一致");
+
+                    }
+                });
     }
 
     static {

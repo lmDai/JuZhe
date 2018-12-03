@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.juzhe.www.Constant;
@@ -21,6 +22,7 @@ import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.UpgradeContract;
 import com.juzhe.www.mvp.presenter.UpgradePresenter;
 import com.juzhe.www.ui.adapter.FastEntranceAdapter;
+import com.juzhe.www.utils.GlideUtil;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SpacesItemDecoration;
 import com.juzhe.www.utils.UserUtils;
@@ -59,6 +61,8 @@ public class MemberActivity extends BaseMvpActivity<UpgradeContract.View, Upgrad
     TextView txtVip;
     @BindView(R.id.txt_info)
     TextView txtInfo;
+    @BindView(R.id.img_pic)
+    ImageView imgPic;
     private UserModel userModel;
 
     @Override
@@ -140,6 +144,7 @@ public class MemberActivity extends BaseMvpActivity<UpgradeContract.View, Upgrad
 
     @Override
     public void setUserModel(UserModel userModel) {
+        GlideUtil.loadCirclePic(mContext, userModel.getHeadimgurl(), imgPic);
         UserUtils.saveUserInfo(mContext, userModel);
     }
 

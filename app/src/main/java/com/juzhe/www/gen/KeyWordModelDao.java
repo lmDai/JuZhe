@@ -15,7 +15,7 @@ import com.juzhe.www.bean.KeyWordModel;
 /** 
  * DAO for table "KEY_WORD_MODEL".
 */
-public class KeyWordModelDao extends AbstractDao<KeyWordModel, Void> {
+public class KeyWordModelDao extends AbstractDao<KeyWordModel, Long> {
 
     public static final String TABLENAME = "KEY_WORD_MODEL";
 
@@ -24,7 +24,8 @@ public class KeyWordModelDao extends AbstractDao<KeyWordModel, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Keyword = new Property(0, String.class, "keyword", false, "KEYWORD");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Keyword = new Property(1, String.class, "keyword", false, "KEYWORD");
     }
 
 
@@ -40,7 +41,8 @@ public class KeyWordModelDao extends AbstractDao<KeyWordModel, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"KEY_WORD_MODEL\" (" + //
-                "\"KEYWORD\" TEXT);"); // 0: keyword
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"KEYWORD\" TEXT);"); // 1: keyword
     }
 
     /** Drops the underlying database table. */
@@ -53,9 +55,14 @@ public class KeyWordModelDao extends AbstractDao<KeyWordModel, Void> {
     protected final void bindValues(DatabaseStatement stmt, KeyWordModel entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         String keyword = entity.getKeyword();
         if (keyword != null) {
-            stmt.bindString(1, keyword);
+            stmt.bindString(2, keyword);
         }
     }
 
@@ -63,45 +70,55 @@ public class KeyWordModelDao extends AbstractDao<KeyWordModel, Void> {
     protected final void bindValues(SQLiteStatement stmt, KeyWordModel entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         String keyword = entity.getKeyword();
         if (keyword != null) {
-            stmt.bindString(1, keyword);
+            stmt.bindString(2, keyword);
         }
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public KeyWordModel readEntity(Cursor cursor, int offset) {
         KeyWordModel entity = new KeyWordModel( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0) // keyword
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // keyword
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, KeyWordModel entity, int offset) {
-        entity.setKeyword(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setKeyword(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(KeyWordModel entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final Long updateKeyAfterInsert(KeyWordModel entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Void getKey(KeyWordModel entity) {
-        return null;
+    public Long getKey(KeyWordModel entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(KeyWordModel entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override

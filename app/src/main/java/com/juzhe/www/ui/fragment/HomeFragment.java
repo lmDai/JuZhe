@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -35,6 +36,7 @@ import com.juzhe.www.ui.activity.ProductListActivity;
 import com.juzhe.www.ui.activity.SearchActivity;
 import com.juzhe.www.ui.activity.WebViewActivity;
 import com.juzhe.www.ui.adapter.BasePagerAdapter;
+import com.juzhe.www.ui.adapter.ChildAdapter;
 import com.juzhe.www.ui.adapter.FastEntranceAdapter;
 import com.juzhe.www.ui.adapter.IconAdapter;
 import com.juzhe.www.ui.widget.FiltPopuWindow;
@@ -43,11 +45,20 @@ import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SpacesItemDecoration;
 import com.juzhe.www.utils.TextFontUtils;
 import com.juzhe.www.utils.UserUtils;
+import com.kepler.jd.Listener.ActionCallBck;
+import com.kepler.jd.Listener.LoginListener;
+import com.kepler.jd.Listener.OpenAppAction;
+import com.kepler.jd.login.KeplerApiManager;
+import com.kepler.jd.sdk.bean.KeplerAttachParameter;
+import com.kepler.jd.sdk.bean.KeplerGlobalParameter;
+import com.kepler.jd.sdk.exception.KeplerBufferOverflowException;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,13 +103,17 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
     TextView txtMinute;
     @BindView(R.id.txt_app_name)
     TextView txtAppName;
+    @BindView(R.id.recycler_child)
+    RecyclerView recyclerChild;
     Unbinder unbinder;
     private int position;
     private BasePagerAdapter myAdapter;
     private List<ClassfyModel> classfiy;
     private IconAdapter iconAdapter;
+    private ChildAdapter childAdapter;
     private UserModel userModel;
     private boolean isRefresh = true;
+
 
     @Override
     protected int getLayout() {
@@ -155,6 +170,14 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
                 bundle.putString("name", iconModel.getName());
                 bundle.putString("key", iconModel.getKey());
                 IntentUtils.get().goActivity(mContext, ProductListActivity.class, bundle);
+//               recyclerChild.setVisibility(recyclerChild.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+//                KeplerGlobalParameter.getSingleton().setIsOpenByH5Mode(true);
+//                try {
+//                    KeplerApiManager.getWebViewService().openJDUrlWebViewPage("http://union-click.jd.com/jdc?e=jz2&p=AyIPZRprFDJWWA1FBCVbV0IUWVALHFRBEwQAQB1AWQkFa3VcCGEVGlNWZxZfM28ac3hVBRYfK0MOHmlWGlscAhIFVBtdJQoUBlYbUxQAFTdVGloUABAFURlTJTISBmVQNRQyEgNTHF4TAhMOVStbEQcQA1ISXhcFGw9RK1wlWUdpUEsJEQYTUlQeUxAEQjdlK2slMhIHZRtrSkZPWmUa&t=W1dCFFlQCxxUQRMEAEAdQFkJBQ%3D%3D",
+//                            new KeplerAttachParameter());
+//                } catch (KeplerBufferOverflowException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
     }
@@ -225,7 +248,15 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
 
 
     private void initRecyclerView() {
-        recyclerIcon.setNestedScrollingEnabled(false);
+        recyclerChild.setNestedScrollingEnabled(false);
+        GridLayoutManager childManager = new GridLayoutManager(mContext, 5);
+        childManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerChild.setLayoutManager(childManager);
+        recyclerChild.addItemDecoration(new SpacesItemDecoration(0));
+        recyclerChild.setNestedScrollingEnabled(false);
+        childAdapter = new ChildAdapter(R.layout.item_menu);
+        recyclerChild.setAdapter(childAdapter);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 5);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerIcon.setLayoutManager(gridLayoutManager);
@@ -318,6 +349,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
     public void setIconPage(List<IconModel> iconPage) {
         iconAdapter.setNewData(iconPage);
         refreshLayout.finishRefresh();
+//        childAdapter.setNewData(iconPage);
     }
 
     @Override

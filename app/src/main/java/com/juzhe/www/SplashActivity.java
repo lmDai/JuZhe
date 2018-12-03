@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.juzhe.www.base.BaseActivity;
-import com.juzhe.www.ui.activity.ImageScanActivity;
 import com.juzhe.www.ui.activity.LoginActivity;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SharePreUtils;
