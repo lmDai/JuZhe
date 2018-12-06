@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context=".ui.activity.LoginActivity">
+    tools:context=".ui.activity.login.LoginActivity">
 
     <View
         android:id="@+id/top_view"

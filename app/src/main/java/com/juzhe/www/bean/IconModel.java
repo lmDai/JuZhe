@@ -11,6 +11,12 @@ public class IconModel {
     private String key;
     private String icon;
 
+    public IconModel(String name, String key, String icon) {
+        this.name = name;
+        this.key = key;
+        this.icon = icon;
+    }
+
     public String getName() {
         return name;
     }

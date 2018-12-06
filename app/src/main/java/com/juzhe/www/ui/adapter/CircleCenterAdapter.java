@@ -1,7 +1,6 @@
 package com.juzhe.www.ui.adapter;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;

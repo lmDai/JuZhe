@@ -64,7 +64,11 @@ public class RxUtil {
                              public ObservableSource<Optional<T>> apply(@NonNull BaseResponse<T> result) throws Exception {
                                  if (result.getErrorcode() == BaseResponse.SUCCESS) {
                                      // result.transform() 就是将返回结果进行包装
-                                     return createHttpData(result.transform());
+                                     if (result.getData() != null) {
+                                         return createHttpData(result.transform());
+                                     }else {
+                                         return Observable.error(new ApiException(result.getMsg(), result.getErrorcode()));
+                                     }
                                  } else if (!TextUtils.isEmpty(result.getMsg())) {
                                      return Observable.error(new ApiException(result.getMsg(), result.getErrorcode()));
                                  } else {

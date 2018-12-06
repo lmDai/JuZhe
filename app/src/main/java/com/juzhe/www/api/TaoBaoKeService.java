@@ -10,9 +10,13 @@ import com.juzhe.www.bean.ExtractModel;
 import com.juzhe.www.bean.GoodsShareModel;
 import com.juzhe.www.bean.IconModel;
 import com.juzhe.www.bean.IncomeDetailModel;
+import com.juzhe.www.bean.JDProductModel;
 import com.juzhe.www.bean.KeyWordModel;
 import com.juzhe.www.bean.OrderConfirmModel;
 import com.juzhe.www.bean.OrderModel;
+import com.juzhe.www.bean.PddDetailModel;
+import com.juzhe.www.bean.PddListModel;
+import com.juzhe.www.bean.PddPromotionModel;
 import com.juzhe.www.bean.ProductModel;
 import com.juzhe.www.bean.ProfitModel;
 import com.juzhe.www.bean.TeamOrderModel;
@@ -229,4 +233,35 @@ public interface TaoBaoKeService {
     @POST(TaoBaoKeApi.UNTYING_ALIPAY)
     @FormUrlEncoded
     Observable<BaseNoDataResponse> untyingAlipay(@FieldMap Map<String, Object> map);
+
+
+    //京东商品列表
+    @POST(TaoBaoKeApi.JD_LIST)
+    @FormUrlEncoded
+    Observable<BasePageResponse<List<JDProductModel>>> getJDList(@FieldMap Map<String, Object> map);
+
+    //京东商品列表
+    @POST(TaoBaoKeApi.JD_DETAIL)
+    @FormUrlEncoded
+    Observable<BaseResponse<JDProductModel>> getJDDetail(@FieldMap Map<String, Object> map);
+
+    //拼多多商品列表
+    @POST(TaoBaoKeApi.PDD_LIST)
+    @FormUrlEncoded
+    Observable<BasePageResponse<List<PddListModel>>> getPddList(@FieldMap Map<String, Object> map);
+
+    //拼多多商品详情
+    @POST(TaoBaoKeApi.PDD_DETAILS)
+    @FormUrlEncoded
+    Observable<BaseResponse<PddDetailModel>> getPddDetails(@FieldMap Map<String, Object> map);
+
+    //生成多多客推广链接
+    @POST(TaoBaoKeApi.PDD_PROMOTION)
+    @FormUrlEncoded
+    Observable<BaseResponse<PddPromotionModel>> getPddPromotion(@FieldMap Map<String, Object> map);
+
+    //卡密兑换
+    @POST(TaoBaoKeApi.USER_KALMAN)
+    @FormUrlEncoded
+    Observable<BaseNoDataResponse> userKalMan(@FieldMap Map<String, Object> map);
 }

@@ -26,7 +26,7 @@ import com.juzhe.www.common.utils.Utils;
 import com.juzhe.www.mvp.contract.HomeFragmentContract;
 import com.juzhe.www.mvp.model.MainModel;
 import com.juzhe.www.mvp.model.PersonModule;
-import com.juzhe.www.ui.activity.IntroductionActivity;
+import com.juzhe.www.ui.activity.person.IntroductionActivity;
 import com.juzhe.www.ui.adapter.BaseDelegateAdapter;
 import com.juzhe.www.ui.adapter.FastEntranceAdapter;
 import com.juzhe.www.ui.widget.GlideImageLoader;

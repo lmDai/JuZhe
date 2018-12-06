@@ -70,11 +70,24 @@ public class TaoBaoKeApi {
     //第三方登录
     public final static String THIRD_LOGIN = "app/user/third-login";
     //会员提现申请
-    public final static String WITHDRAW_APPLY="app/order/withdraw-apply";
+    public final static String WITHDRAW_APPLY = "app/order/withdraw-apply";
     //商品分享
-    public final static String GOODS_SHARE="app/goods/share";
+    public final static String GOODS_SHARE = "app/goods/share";
     //第三方绑定
-    public final static String BIND_THIRD="app/user/binding-third";
+    public final static String BIND_THIRD = "app/user/binding-third";
     //解绑支付宝
-    public final static String UNTYING_ALIPAY="app/user/untying-alipay";
+    public final static String UNTYING_ALIPAY = "app/user/untying-alipay";
+    //京东列表
+    public final static String JD_LIST = "app/jingdong/list";
+    //京东商品详情
+    public final static String JD_DETAIL = "app/jingdong/detail";
+    //拼多多列表
+    public final static String PDD_LIST = "app/pinduoduo/goods-list";
+    //拼多多详情
+    public final static String PDD_DETAILS = "app/pinduoduo/goods-detail";
+    //生成多多客推广链接
+    public final static String PDD_PROMOTION = "app/pinduoduo/promotion";
+    //卡密兑换
+    public final static String USER_KALMAN = "app/user/kalman";
+
 }

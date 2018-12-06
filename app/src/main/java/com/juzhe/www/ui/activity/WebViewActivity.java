@@ -2,25 +2,33 @@ package com.juzhe.www.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.H5PayCallback;
 import com.alipay.sdk.app.PayTask;
 import com.alipay.sdk.util.H5PayResultModel;
 import com.blankj.utilcode.util.LogUtils;
+import com.just.agentweb.AgentWeb;
+import com.just.agentweb.DefaultWebClient;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseActivity;
+import com.juzhe.www.ui.fragment.SmartRefreshWebLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -41,18 +49,17 @@ public class WebViewActivity extends BaseActivity {
     TextView txtRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.webView)
-    WebView webView;
-    @BindView(R.id.refresh_layout)
-    SmartRefreshLayout refreshLayout;
+    @BindView(R.id.ll_container)
+    LinearLayout coordinator;
+    protected AgentWeb mAgentWeb;
+    private SmartRefreshWebLayout mSmartRefreshWebLayout = null;
     private String link;
     private int type = 0;
     private String realm = "http://test.bestsoft.channel.cqjjsms.com";
-    private boolean isFirstLoad = false;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_web_view;
+        return R.layout.activity_web_agent;
     }
 
     @Override
@@ -75,21 +82,25 @@ public class WebViewActivity extends BaseActivity {
                 type = bundle.getInt("type");
             }
         }
+        mSmartRefreshWebLayout = new SmartRefreshWebLayout(mContext);
         settingWebView();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
     protected void initEvent() {
         super.initEvent();
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        final SmartRefreshLayout mSmartRefreshLayout = (SmartRefreshLayout) this.mSmartRefreshWebLayout.getLayout();
+        mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                webView.loadUrl(link);
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mAgentWeb.getUrlLoader().reload();
+
+                mSmartRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSmartRefreshLayout.finishRefresh();
+                    }
+                }, 2000);
             }
         });
     }
@@ -101,103 +112,126 @@ public class WebViewActivity extends BaseActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void settingWebView() {
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(link);
-        if (type == 0) {
-            webView.setWebViewClient(new WebViewClient() {
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    view.loadUrl(url);
-                    return true;
-                }
-
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    super.onPageFinished(view, url);
-                    String title = view.getTitle();
-                    if (!TextUtils.isEmpty(title)) {
-                        txtTitle.setVisibility(View.VISIBLE);
-                        txtTitle.setText(title);
-                    }
-                    refreshLayout.finishRefresh();
-//                view.loadUrl(String.format(Locale.CHINA, "javascript:document.body.style.paddingTop='%fpx'; void 0", DensityUtil.px2dp(webView.getPaddingTop())));
-                }
-            });
-        } else {
-            refreshLayout.setEnableRefresh(false);
-            refreshLayout.setEnableLoadMore(false);
-            refreshLayout.setEnablePureScrollMode(true);
-            webView.setWebViewClient(new MyWebViewClient());
-        }
+        mAgentWeb = AgentWeb.with(this)
+                .setAgentWebParent(coordinator, new LinearLayout.LayoutParams(-1, -1))
+                .useDefaultIndicator()
+                .setWebChromeClient(mWebChromeClient)
+                .setWebViewClient(mWebViewClient)
+                .setMainFrameErrorView(R.layout.agentweb_error_page, -1)
+                .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
+                .setWebLayout(mSmartRefreshWebLayout)
+                .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.DERECT)//打开其他应用时，弹窗咨询用户是否前往其他应用
+                .interceptUnkownUrl() //拦截找不到相关页面的Scheme
+                .createAgentWeb()
+                .ready()
+                .go(link);
     }
 
-    /**
-     * 重写WebViewClient
-     */
-    private class MyWebViewClient extends WebViewClient {
+    private WebViewClient mWebViewClient = new WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            //微信H5支付核心代码
-            LogUtils.i(url + "dfsfsd");
-            if (url.startsWith("weixin://wap/pay?")) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                startActivity(intent);
-                return true;
-            }
-            if (!(url.startsWith("http") || url.startsWith("https"))) {
-                return true;
-            }
-            final PayTask task = new PayTask(mContext);
-            boolean isInstercepter = task.payInterceptorWithUrl(url, true, new H5PayCallback() {
-                @Override
-                public void onPayResult(H5PayResultModel h5PayResultModel) {
-                    final String url = h5PayResultModel.getReturnUrl();
-                    WebViewActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!TextUtils.isEmpty(url)) {
-                                Map<String, String> extraHeaders = new HashMap<>();
-                                extraHeaders.put("Referer", realm);
-                                view.loadUrl(url, extraHeaders);
-                            }
-                        }
-                    });
+            if (type == 1) {
+                //微信H5支付核心代码
+                Log.i("single", url + "dfsfsd");
+                if (url.startsWith("weixin://wap/pay?")) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
+                    return true;
                 }
-            });
-            if (!isInstercepter) {
-                Map<String, String> extraHeaders = new HashMap<>();
-                extraHeaders.put("Referer", realm);
-                view.loadUrl(url, extraHeaders);
+                if (!(url.startsWith("http") || url.startsWith("https"))) {
+                    return true;
+                }
+                final PayTask task = new PayTask(mContext);
+                boolean isInstercepter = task.payInterceptorWithUrl(url, true, new H5PayCallback() {
+                    @Override
+                    public void onPayResult(H5PayResultModel h5PayResultModel) {
+                        final String url = h5PayResultModel.getReturnUrl();
+                        WebViewActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!TextUtils.isEmpty(url)) {
+                                    Map<String, String> extraHeaders = new HashMap<>();
+                                    extraHeaders.put("Referer", realm);
+                                    view.loadUrl(url, extraHeaders);
+                                }
+                            }
+                        });
+                    }
+                });
+                if (!isInstercepter) {
+                    Map<String, String> extraHeaders = new HashMap<>();
+                    extraHeaders.put("Referer", realm);
+                    view.loadUrl(url, extraHeaders);
+                }
             }
-
             return true;
         }
 
-        //处理https请求
         @Override
-        public void onReceivedSslError(WebView view, SslErrorHandler handler, android.net.http.SslError error) {
-            handler.proceed();
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            Log.i("single", request.getMethod() + request.getUrl() + "dfsfsd");
+            return super.shouldOverrideUrlLoading(view, request);
         }
-    }
 
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            //do you  work
+            Log.i("Info", "BaseWebActivity onPageStarted");
+        }
+    };
+
+    private WebChromeClient mWebChromeClient = new WebChromeClient() {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            //do you work
+//            Log.i("Info","onProgress:"+newProgress);
+        }
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            if (txtTitle != null) {
+                txtTitle.setText(title);
+                txtTitle.setVisibility(View.VISIBLE);
+            }
+        }
+    };
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
-            webView.goBack();// 返回前一个页面
+
+        if (mAgentWeb.handleKeyEvent(keyCode, event)) {
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
     @Override
+    protected void onPause() {
+        mAgentWeb.getWebLifeCycle().onPause();
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        mAgentWeb.getWebLifeCycle().onResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("Info", "onResult:" + requestCode + " onResult:" + resultCode);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (webView != null) {
-            webView.stopLoading();
-            webView.removeAllViews();
-            webView.destroy();
-            webView = null;
-        }
+        //mAgentWeb.destroy();
+        mAgentWeb.getWebLifeCycle().onDestroy();
     }
 }

@@ -17,12 +17,13 @@ import com.juzhe.www.common.https.rxUtils.RxEvent;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.SkillContract;
 import com.juzhe.www.mvp.presenter.SkillPresenter;
-import com.juzhe.www.ui.activity.BanlanceActivity;
+import com.juzhe.www.ui.activity.account.BanlanceActivity;
 import com.juzhe.www.ui.activity.HairCircleCenterActivity;
 import com.juzhe.www.ui.activity.MemberActivity;
-import com.juzhe.www.ui.activity.MessageActivity;
-import com.juzhe.www.ui.activity.PersonalActivity;
-import com.juzhe.www.ui.activity.WithdrawActivity;
+import com.juzhe.www.ui.activity.person.KalManActivity;
+import com.juzhe.www.ui.activity.person.MessageActivity;
+import com.juzhe.www.ui.activity.person.PersonalActivity;
+import com.juzhe.www.ui.activity.account.WithdrawActivity;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -101,7 +102,7 @@ public class SkillFragment extends BaseMvpFragment<SkillContract.View, SkillPres
         }
     }
 
-    @OnClick({R.id.img_me, R.id.ll_core_member, R.id.ll_center, R.id.img_message, R.id.txt_withdraw, R.id.rl_balance})
+    @OnClick({R.id.img_me, R.id.ll_core_member, R.id.ll_center, R.id.img_message, R.id.txt_withdraw, R.id.rl_balance, R.id.ll_recharge})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_me:
@@ -121,6 +122,9 @@ public class SkillFragment extends BaseMvpFragment<SkillContract.View, SkillPres
                 break;
             case R.id.ll_core_member://核心会员
                 IntentUtils.get().goActivity(mContext, MemberActivity.class);
+                break;
+            case R.id.ll_recharge:
+                IntentUtils.get().goActivity(mContext, KalManActivity.class);
                 break;
         }
     }

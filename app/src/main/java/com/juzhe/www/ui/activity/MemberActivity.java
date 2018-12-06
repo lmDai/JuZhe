@@ -9,15 +9,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juzhe.www.Constant;
-import com.juzhe.www.MyApplication;
 import com.juzhe.www.R;
 import com.juzhe.www.api.TaoBaoKeApi;
 import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.UpgradeModel;
 import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.https.BaseApi;
-import com.juzhe.www.common.https.rxUtils.RxEvent;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.UpgradeContract;
 import com.juzhe.www.mvp.presenter.UpgradePresenter;
@@ -29,8 +26,6 @@ import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;

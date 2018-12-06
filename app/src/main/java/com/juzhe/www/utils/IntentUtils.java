@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -210,5 +211,19 @@ public class IntentUtils {
             }
         }
         return false;
+    }
+
+    public static boolean checkHasInstalledApp(@NonNull Context context, String pkgName) {
+        PackageManager pm = context.getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(pkgName, PackageManager.GET_GIDS);
+            app_installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        } catch (RuntimeException e) {
+            app_installed = false;
+        }
+        return app_installed;
     }
 }

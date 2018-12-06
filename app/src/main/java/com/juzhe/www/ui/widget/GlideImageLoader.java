@@ -3,7 +3,6 @@ package com.juzhe.www.ui.widget;
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.blankj.utilcode.util.SizeUtils;
 import com.juzhe.www.utils.GlideUtil;
 import com.youth.banner.loader.ImageLoader;
 

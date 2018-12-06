@@ -19,6 +19,15 @@ public class BasePageResponse<T> {
 
     private String next;
     private String total_income;
+    private String page;
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
 
     public String getTotal_income() {
         return total_income;

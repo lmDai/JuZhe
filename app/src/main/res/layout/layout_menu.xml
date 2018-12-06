@@ -19,6 +19,7 @@
         android:id="@+id/recycler_child"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorBg"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="never"
         android:scrollbars="none"

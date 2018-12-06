@@ -15,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -28,12 +27,14 @@ import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.HomeFragmentContract;
 import com.juzhe.www.mvp.presenter.HomeFragmentPresenter;
-import com.juzhe.www.ui.activity.IntroductionActivity;
-import com.juzhe.www.ui.activity.MessageActivity;
-import com.juzhe.www.ui.activity.PersonalActivity;
-import com.juzhe.www.ui.activity.ProductDetailsActivity;
-import com.juzhe.www.ui.activity.ProductListActivity;
-import com.juzhe.www.ui.activity.SearchActivity;
+import com.juzhe.www.ui.activity.person.IntroductionActivity;
+import com.juzhe.www.ui.activity.person.MessageActivity;
+import com.juzhe.www.ui.activity.person.PersonalActivity;
+import com.juzhe.www.ui.activity.product.ProductDetailsActivity;
+import com.juzhe.www.ui.activity.product.ProductListActivity;
+import com.juzhe.www.ui.activity.product.ProductListJDActivity;
+import com.juzhe.www.ui.activity.product.ProductListPddActivity;
+import com.juzhe.www.ui.activity.product.SearchActivity;
 import com.juzhe.www.ui.activity.WebViewActivity;
 import com.juzhe.www.ui.adapter.BasePagerAdapter;
 import com.juzhe.www.ui.adapter.ChildAdapter;
@@ -45,20 +46,11 @@ import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SpacesItemDecoration;
 import com.juzhe.www.utils.TextFontUtils;
 import com.juzhe.www.utils.UserUtils;
-import com.kepler.jd.Listener.ActionCallBck;
-import com.kepler.jd.Listener.LoginListener;
-import com.kepler.jd.Listener.OpenAppAction;
-import com.kepler.jd.login.KeplerApiManager;
-import com.kepler.jd.sdk.bean.KeplerAttachParameter;
-import com.kepler.jd.sdk.bean.KeplerGlobalParameter;
-import com.kepler.jd.sdk.exception.KeplerBufferOverflowException;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,11 +158,14 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 IconModel iconModel = iconAdapter.getData().get(position);
-                Bundle bundle = new Bundle();
-                bundle.putString("name", iconModel.getName());
-                bundle.putString("key", iconModel.getKey());
-                IntentUtils.get().goActivity(mContext, ProductListActivity.class, bundle);
-//               recyclerChild.setVisibility(recyclerChild.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                if (position == iconAdapter.getData().size() - 1) {
+                    recyclerChild.setVisibility(recyclerChild.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", iconModel.getName());
+                    bundle.putString("key", iconModel.getKey());
+                    IntentUtils.get().goActivity(mContext, ProductListActivity.class, bundle);
+                }
 //                KeplerGlobalParameter.getSingleton().setIsOpenByH5Mode(true);
 //                try {
 //                    KeplerApiManager.getWebViewService().openJDUrlWebViewPage("http://union-click.jd.com/jdc?e=jz2&p=AyIPZRprFDJWWA1FBCVbV0IUWVALHFRBEwQAQB1AWQkFa3VcCGEVGlNWZxZfM28ac3hVBRYfK0MOHmlWGlscAhIFVBtdJQoUBlYbUxQAFTdVGloUABAFURlTJTISBmVQNRQyEgNTHF4TAhMOVStbEQcQA1ISXhcFGw9RK1wlWUdpUEsJEQYTUlQeUxAEQjdlK2slMhIHZRtrSkZPWmUa&t=W1dCFFlQCxxUQRMEAEAdQFkJBQ%3D%3D",
@@ -180,6 +175,21 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
 //                }
             }
         });
+        childAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (position) {
+                    case 0:
+                        IntentUtils.get().goActivity(mContext, ProductListJDActivity.class);
+                        break;
+                    case 1:
+                        IntentUtils.get().goActivity(mContext, ProductListPddActivity.class);
+                        break;
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -347,9 +357,14 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
 
     @Override
     public void setIconPage(List<IconModel> iconPage) {
+        iconPage.add(new IconModel("其他", "京东", "http://res.jiruan.ltd/20181203/5c04f27f65baf-49839402390885.jpg"));
         iconAdapter.setNewData(iconPage);
         refreshLayout.finishRefresh();
-//        childAdapter.setNewData(iconPage);
+        List<IconModel> iconModels = new ArrayList<>();
+        iconModels.add(new IconModel("京东", "京东", "http://5b0988e595225.cdn.sohucs.com/images/20170903/814f6e0a4cbf40f6ad607d212f369424.jpeg"));
+        iconModels.add(new IconModel("拼多多", "拼多多", "http://file16.zk71.com/File/CorpProductImages/2017/08/08/0_wenxia-1008_0_20170808155021.jpg"));
+
+        childAdapter.setNewData(iconModels);
     }
 
     @Override

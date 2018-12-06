@@ -26,6 +26,7 @@
     <string name="title_alipay">我的支付宝</string>
     <string name="title_feed_back">用户反馈</string>
     <string name="title_balance">余额</string>
+    <string name="title_recharge">充值</string>
     <string name="title_member_recharge">会员充值</string>
     <string name="title_invite">邀请</string>
     <string name="loading">加载中</string>

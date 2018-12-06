@@ -39,6 +39,37 @@ public class UserModel {
     private String alipay_account;//淘宝账号
     private String real_name;//真实姓名
 
+    private double kalman;//		会员卡密余额
+    private int kalman_setting;//	卡密状态 1.开启，2.关闭
+
+    public void setTotal_income(double total_income) {
+        this.total_income = total_income;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getKalman() {
+        return kalman;
+    }
+
+    public void setKalman(double kalman) {
+        this.kalman = kalman;
+    }
+
+    public int getKalman_setting() {
+        return kalman_setting;
+    }
+
+    public void setKalman_setting(int kalman_setting) {
+        this.kalman_setting = kalman_setting;
+    }
+
     public void setSettingtaobao(int settingtaobao) {
         this.settingtaobao = settingtaobao;
     }

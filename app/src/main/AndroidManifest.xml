@@ -36,78 +36,82 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.person.KalManActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.login.LoginActivity"
             android:theme="@style/AppTheme.Transparent" />
         <!-- 填写邀请码 -->
         <activity
-            android:name=".ui.activity.InputInvateInfoActivity"
+            android:name=".ui.activity.login.InputInvateInfoActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- 填写手机号 -->
         <activity
-            android:name=".ui.activity.InputPhoneActivity"
+            android:name=".ui.activity.login.InputPhoneActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- 填写手机号 -->
         <activity
-            android:name=".ui.activity.InputCodeActivity"
+            android:name=".ui.activity.login.InputCodeActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.PersonalActivity"
+            android:name=".ui.activity.person.PersonalActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.MyAliPayActivity"
+            android:name=".ui.activity.person.MyAliPayActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.FeedbackActivity"
+            android:name=".ui.activity.person.FeedbackActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.IntroductionActivity"
+            android:name=".ui.activity.person.IntroductionActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.MessageActivity"
+            android:name=".ui.activity.person.MessageActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.TeamDataActivity"
+            android:name=".ui.activity.team.TeamDataActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.MyTeamActivity"
+            android:name=".ui.activity.team.MyTeamActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.BanlanceActivity"
+            android:name=".ui.activity.account.BanlanceActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.IncomeDetailsActivity"
+            android:name=".ui.activity.account.IncomeDetailsActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.WithdrawActivity"
+            android:name=".ui.activity.account.WithdrawActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.ApplyActivity"
+            android:name=".ui.activity.account.ApplyActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -127,27 +131,27 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.InviteActivity"
+            android:name=".ui.activity.person.InviteActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.PhoneLoginActivity"
+            android:name=".ui.activity.login.PhoneLoginActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.ProductDetailsActivity"
+            android:name=".ui.activity.product.ProductDetailsActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.SearchActivity"
+            android:name=".ui.activity.product.SearchActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.SearchDetailActivity"
+            android:name=".ui.activity.product.SearchDetailActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -157,7 +161,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.ProductListActivity"
+            android:name=".ui.activity.product.ProductListActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -168,6 +172,11 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.activity.ImageScanActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.product.ProductListJDActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -184,11 +193,30 @@
         </provider>
 
         <activity
-            android:name=".ui.activity.ProductDetails2Activity"
+            android:name=".ui.activity.product.ProductDetails2Activity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
+        <activity
+            android:name=".ui.activity.product.ProductListPddActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.product.PddDetailsActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.product.WebViewPddDetailsActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.product.JdDetailsActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.ali.auth.third.ui.LoginActivity"
             android:theme="@style/AlibcLoginTheme"
@@ -196,19 +224,22 @@
         <activity
             android:name="com.kepler.jd.login.AuthSuccessActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
 
         <activity
             android:name="com.kepler.jd.sdk.KeplerMidActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
             android:name="com.kepler.jd.sdk.WebViewActivity"
             android:screenOrientation="portrait" />
-        <service android:name="com.jingdong.crash.inner.CrashService" android:process=":jingdongerror" />
+
+        <service
+            android:name="com.jingdong.crash.inner.CrashService"
+            android:process=":jingdongerror" />
     </application>
 
 </manifest>

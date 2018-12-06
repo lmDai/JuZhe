@@ -7,20 +7,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.juzhe.www.R;
-import com.juzhe.www.bean.UserModel;
-import com.juzhe.www.common.https.rxUtils.RxEvent;
 import com.juzhe.www.utils.AppManager;
 import com.juzhe.www.utils.KeyboardUtils;
 import com.juzhe.www.utils.TextFontUtils;
-import com.juzhe.www.utils.UserUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

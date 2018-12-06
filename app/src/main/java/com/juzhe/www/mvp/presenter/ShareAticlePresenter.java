@@ -3,6 +3,7 @@ package com.juzhe.www.mvp.presenter;
 import android.support.annotation.NonNull;
 
 import com.juzhe.www.bean.ArticleModel;
+import com.juzhe.www.common.https.Optional;
 import com.juzhe.www.common.https.ProgressObserver;
 import com.juzhe.www.common.https.rxUtils.RxUtil;
 import com.juzhe.www.common.utils.Utils;
@@ -31,11 +32,11 @@ public class ShareAticlePresenter extends ShareAticleContract.Presenter {
         SkillModule.getInstance(Utils.getContext()).shareAticle(type, currentPage,
                 user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
-                .compose(RxUtil.hanResult())
-                .subscribe(new ProgressObserver<List<ArticleModel>>(this, true, "加载中...") {
+                .compose(RxUtil.handleNullresult())
+                .subscribe(new ProgressObserver<Optional<List<ArticleModel>>>(this, true, "加载中...") {
                     @Override
-                    public void onSuccess(List<ArticleModel> result) {
-                            getView().showAticleList(result, isRefresh);
+                    public void onSuccess(Optional<List<ArticleModel>> result) {
+                        getView().showAticleList(result.get(), isRefresh);
                     }
 
                     @Override

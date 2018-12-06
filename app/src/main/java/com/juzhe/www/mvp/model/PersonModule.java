@@ -128,4 +128,14 @@ public class PersonModule {
         Observable<BaseNoDataResponse> untyingAlipay = mApiService.untyingAlipay(requestMap);
         return untyingAlipay;
     }
+
+    public Observable<BaseNoDataResponse> userKalMan(String card_number, String secret_key, String user_id, String user_channel_id) {
+        Map<String, Object> requestMap = InterceptUtils.getRequstMap();
+        requestMap.put("user_id", user_id);
+        requestMap.put("card_number", card_number);
+        requestMap.put("secret_key", secret_key);
+        requestMap.put("user_channel_id", user_channel_id);
+        Observable<BaseNoDataResponse> userKalMan = mApiService.userKalMan(requestMap);
+        return userKalMan;
+    }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.juzhe.www.common.https.BasePresenter;
 import com.juzhe.www.common.https.IBaseView;
 import com.juzhe.www.common.mvp_senior.factory.IMvpPresenterFactroy;

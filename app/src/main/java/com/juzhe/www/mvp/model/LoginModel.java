@@ -58,7 +58,7 @@ public class LoginModel {
         return codeInfo;
     }
 
-    public Observable<BaseResponse<UserModel>> userRegister(String nickName,String headimgurl,String openid,String type,String phone, String smscode, String user_chanel_id, String pid) {
+    public Observable<BaseResponse<UserModel>> userRegister(String nickName, String headimgurl, String openid, String type, String phone, String smscode, String user_chanel_id, String pid) {
         Map<String, Object> requestMap = InterceptUtils.getRequstMap();
         requestMap.put("phone", phone);
         requestMap.put("smscode", smscode);
@@ -67,6 +67,7 @@ public class LoginModel {
         requestMap.put("headimgurl", headimgurl);
         requestMap.put("openid", openid);
         requestMap.put("type", type);
+        requestMap.put("pid", pid);
         Observable<BaseResponse<UserModel>> register = mApiService.userRegister(requestMap);
         return register;
     }
@@ -88,7 +89,8 @@ public class LoginModel {
         Observable<ThirdLoginModel<UserModel>> thirdLogin = mApiService.thirdLogin(requestMap);
         return thirdLogin;
     }
-    public Observable<BaseResponse<String>> bindThird(String nickname, String headimgurl,String type,String openid, String user_id, String user_channel_id) {
+
+    public Observable<BaseResponse<String>> bindThird(String nickname, String headimgurl, String type, String openid, String user_id, String user_channel_id) {
         Map<String, Object> requestMap = InterceptUtils.getRequstMap();
         requestMap.put("nickname", nickname);
         requestMap.put("headimgurl", headimgurl);

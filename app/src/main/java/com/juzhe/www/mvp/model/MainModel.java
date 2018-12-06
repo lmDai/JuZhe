@@ -7,8 +7,12 @@ import com.juzhe.www.bean.AdvertModel;
 import com.juzhe.www.bean.ClassfyModel;
 import com.juzhe.www.bean.GoodsShareModel;
 import com.juzhe.www.bean.IconModel;
+import com.juzhe.www.bean.JDProductModel;
 import com.juzhe.www.bean.KeyWordModel;
 import com.juzhe.www.bean.OrderConfirmModel;
+import com.juzhe.www.bean.PddDetailModel;
+import com.juzhe.www.bean.PddListModel;
+import com.juzhe.www.bean.PddPromotionModel;
 import com.juzhe.www.bean.ProductModel;
 import com.juzhe.www.common.https.BaseNoDataResponse;
 import com.juzhe.www.common.https.BasePageResponse;
@@ -162,6 +166,7 @@ public class MainModel {
         Observable<BaseResponse<List<IconModel>>> homeIconpage = mApiService.homeIconpage(requestMap);
         return homeIconpage;
     }
+
     public Observable<BaseResponse<GoodsShareModel>> goodsShare(String item_id, String user_id, String user_channel_id) {
         Map<String, Object> requestMap = InterceptUtils.getRequstMap();
         requestMap.put("item_id", item_id);
@@ -169,5 +174,49 @@ public class MainModel {
         requestMap.put("user_channel_id", user_channel_id);
         Observable<BaseResponse<GoodsShareModel>> goodsShare = mApiService.goodsShare(requestMap);
         return goodsShare;
+    }
+
+    public Observable<BasePageResponse<List<JDProductModel>>> getJDList(String page, String user_id, String user_channel_id) {
+        Map<String, Object> requestMap = InterceptUtils.getRequstMap();
+        requestMap.put("page", page);
+        requestMap.put("user_id", user_id);
+        requestMap.put("user_channel_id", user_channel_id);
+        Observable<BasePageResponse<List<JDProductModel>>> getJDList = mApiService.getJDList(requestMap);
+        return getJDList;
+    }
+
+    public Observable<BaseResponse<JDProductModel>> getJDDetail(String item_id, String discount_link, String user_id, String user_channel_id) {
+        Map<String, Object> requestMap = InterceptUtils.getRequstMap();
+        requestMap.put("item_id", item_id);
+        requestMap.put("discount_link", discount_link);
+        requestMap.put("user_id", user_id);
+        requestMap.put("user_channel_id", user_channel_id);
+        Observable<BaseResponse<JDProductModel>> getJDDetail = mApiService.getJDDetail(requestMap);
+        return getJDDetail;
+    }
+
+    public Observable<BasePageResponse<List<PddListModel>>> getPddList(String page, String user_channel_id) {
+        Map<String, Object> requestMap = InterceptUtils.getRequstMap();
+        requestMap.put("page", page);
+        requestMap.put("user_channel_id", user_channel_id);
+        Observable<BasePageResponse<List<PddListModel>>> getPddList = mApiService.getPddList(requestMap);
+        return getPddList;
+    }
+
+    public Observable<BaseResponse<PddDetailModel>> getPddDetails(String goods_id, String user_channel_id) {
+        Map<String, Object> requestMap = InterceptUtils.getRequstMap();
+        requestMap.put("goods_id", goods_id);
+        requestMap.put("user_channel_id", user_channel_id);
+        Observable<BaseResponse<PddDetailModel>> getPddDetails = mApiService.getPddDetails(requestMap);
+        return getPddDetails;
+    }
+
+    public Observable<BaseResponse<PddPromotionModel>> getPddPromotion(String user_id, String goods_id, String user_channel_id) {
+        Map<String, Object> requestMap = InterceptUtils.getRequstMap();
+        requestMap.put("user_id", user_id);
+        requestMap.put("goods_id", goods_id);
+        requestMap.put("user_channel_id", user_channel_id);
+        Observable<BaseResponse<PddPromotionModel>> getPddPromotion = mApiService.getPddPromotion(requestMap);
+        return getPddPromotion;
     }
 }

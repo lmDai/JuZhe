@@ -15,7 +15,7 @@ import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.ProductListContract;
 import com.juzhe.www.mvp.presenter.ProductListPresenter;
-import com.juzhe.www.ui.activity.ProductDetailsActivity;
+import com.juzhe.www.ui.activity.product.ProductDetailsActivity;
 import com.juzhe.www.ui.adapter.ProductAdapter;
 import com.juzhe.www.ui.widget.DropdownButton;
 import com.juzhe.www.ui.widget.ItemClickListener;
