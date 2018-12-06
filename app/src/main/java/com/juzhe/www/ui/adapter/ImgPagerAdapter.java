@@ -49,6 +49,7 @@ public class ImgPagerAdapter extends PagerAdapter {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_main, container, false);
         ImageView imageView = view.findViewById(R.id.iv);
         GlideUtil.loadRoundImage(mContext, mList.get(position).getUrl(), SizeUtils.px2dp(10), imageView);
+        view.setTag(position);
         container.addView(view);
         return view;
     }

@@ -1,50 +1,46 @@
-package com.juzhe.www.ui.widget;
+package com.juzhe.www.common.widget;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * @package: com.juzhe.www.ui.widget
+ * @package: com.juzhe.www.common.widget
  * @user:xhkj
- * @date:2018/11/29
- * @description: 实现gallery翻页动画效果的ViewPager
+ * @date:2018/12/6
+ * @description:ViewPgager 画廊效果
  **/
+
 public class GalleryViewPager extends ViewPager {
     //默认距离
     private final static float DISTANCE = 10;
-    private float downX;//按下X位置
-    private float downY;//按下Y坐标
+    private float downX;
+    private float downY;
 
-    public GalleryViewPager(@NonNull Context context) {
+    public GalleryViewPager(Context context) {
         super(context);
     }
 
-    public GalleryViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public GalleryViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    /**
-     * 点击拦截 实现点击左右item ，使其居中显示
-     *
-     * @param ev
-     * @return
-     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             downX = ev.getX();
             downY = ev.getY();
         } else if (ev.getAction() == MotionEvent.ACTION_UP) {
+
             float upX = ev.getX();
             float upY = ev.getY();
+            //如果 up的位置和down 的位置 距离 > 设置的距离,则事件继续传递,不执行下面的点击切换事件
             if (Math.abs(upX - downX) > DISTANCE || Math.abs(upY - downY) > DISTANCE) {
                 return super.dispatchTouchEvent(ev);
             }
+
             View view = viewOfClickOnScreen(ev);
             if (view != null) {
                 int index = (Integer) view.getTag();
@@ -56,6 +52,10 @@ public class GalleryViewPager extends ViewPager {
         return super.dispatchTouchEvent(ev);
     }
 
+    /**
+     * @param ev
+     * @return
+     */
     private View viewOfClickOnScreen(MotionEvent ev) {
         int childCount = getChildCount();
         int currentIndex = getCurrentItem();
@@ -69,8 +69,19 @@ public class GalleryViewPager extends ViewPager {
 
             int maxX = location[0] + v.getWidth();
             int maxY = location[1] + v.getHeight();
+
+//            if(position < currentIndex){
+//                maxX -= v.getWidth() * (1 - ScalePageTransformer.MIN_SCALE) * 0.5 + v.getWidth() * (Math.abs(1 - ScalePageTransformer.MAX_SCALE)) * 0.5;
+//                minX -= v.getWidth() * (1 - ScalePageTransformer.MIN_SCALE) * 0.5 + v.getWidth() * (Math.abs(1 - ScalePageTransformer.MAX_SCALE)) * 0.5;
+//            }else if(position == currentIndex){
+//                minX += v.getWidth() * (Math.abs(1 - ScalePageTransformer.MAX_SCALE));
+//            }else if(position > currentIndex){
+//                maxX -= v.getWidth() * (Math.abs(1 - ScalePageTransformer.MAX_SCALE)) * 0.5;
+//                minX -= v.getWidth() * (Math.abs(1 - ScalePageTransformer.MAX_SCALE)) * 0.5;
+//            }
             float x = ev.getRawX();
-            float y = ev.getRawX();
+            float y = ev.getRawY();
+
             if ((x > minX && x < maxX) && (y > minY && y < maxY)) {
                 return v;
             }

@@ -1,16 +1,17 @@
-package com.juzhe.www.ui.widget;
+package com.juzhe.www.common.widget;
 
+import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 /**
- * @package: com.juzhe.www.ui.widget
+ * @package: com.juzhe.www.common.widget
  * @user:xhkj
- * @date:2018/11/7
- * @description:
+ * @date:2018/12/6
+ * @description:ViewPager 翻页效果
  **/
-public class GallyPageTransformer implements ViewPager.PageTransformer {
-    private static final float min_scale = 0.85f;
+public class ScalePageTransformer implements ViewPager.PageTransformer {
+    private static final float min_scale = 1.0f;
 
     @Override
     public void transformPage(View page, float position) {
@@ -30,6 +31,9 @@ public class GallyPageTransformer implements ViewPager.PageTransformer {
             page.setScaleX(scaleFactor);
             page.setScaleY(scaleFactor);
             page.setRotationY(-rotate);
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            page.getParent().requestLayout();
         }
     }
 }

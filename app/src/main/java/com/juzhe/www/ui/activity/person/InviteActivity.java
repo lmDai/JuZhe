@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,12 +20,13 @@ import com.juzhe.www.base.BaseMvpActivity;
 import com.juzhe.www.bean.RuleModel;
 import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
+import com.juzhe.www.common.widget.GalleryViewPager;
+import com.juzhe.www.common.widget.ScalePageTransformer;
 import com.juzhe.www.mvp.contract.ShareInviteContract;
 import com.juzhe.www.mvp.model.ShareInviteTempModel;
 import com.juzhe.www.mvp.presenter.ShareInvitePresenter;
 import com.juzhe.www.ui.adapter.ImgPagerAdapter;
 import com.juzhe.www.ui.adapter.RuleAdapter;
-import com.juzhe.www.ui.widget.GallyPageTransformer;
 import com.juzhe.www.utils.AppManager;
 import com.juzhe.www.utils.DialogUtils;
 import com.juzhe.www.utils.RecyclerViewUtils;
@@ -68,7 +69,7 @@ public class InviteActivity extends BaseMvpActivity<ShareInviteContract.View, Sh
     @BindView(R.id.txt_total)
     TextView txtTotal;
     @BindView(R.id.view_pager_theme)
-    ViewPager viewPagerTheme;
+    GalleryViewPager viewPagerTheme;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.refresh_layout)
@@ -88,20 +89,11 @@ public class InviteActivity extends BaseMvpActivity<ShareInviteContract.View, Sh
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        userModel=UserUtils.getUser(mContext);
+        userModel = UserUtils.getUser(mContext);
         txtTitle.setText(mContext.getString(R.string.title_invite));
         txtInviteCode.setText("我的邀请码:" + userModel.getInvite_code());
-        viewPagerTheme.setOffscreenPageLimit(4);
-        pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 3.0f / 6.0f);
-        ViewGroup.LayoutParams lp = viewPagerTheme.getLayoutParams();
-        if (lp == null) {
-            lp = new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
-        } else {
-            lp.width = pagerWidth;
-        }
-        viewPagerTheme.setLayoutParams(lp);
-        viewPagerTheme.setPageMargin(-20);
-        viewPagerTheme.setPageTransformer(true, new GallyPageTransformer());
+        viewPagerTheme.setOffscreenPageLimit(5);
+        viewPagerTheme.setPageTransformer(true, new ScalePageTransformer());
         ruleAdapter = new RuleAdapter(R.layout.item_rule);
         RecyclerViewUtils.initLinerLayoutRecyclerView(recyclerView, mContext);
         recyclerView.setAdapter(ruleAdapter);
@@ -149,6 +141,12 @@ public class InviteActivity extends BaseMvpActivity<ShareInviteContract.View, Sh
             @Override
             public void onPageScrollStateChanged(int i) {
 
+            }
+        });
+        findViewById(R.id.root).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return viewPagerTheme.dispatchTouchEvent(event);
             }
         });
     }
@@ -223,6 +221,9 @@ public class InviteActivity extends BaseMvpActivity<ShareInviteContract.View, Sh
         this.settingResult = settingResult;
         txtTotal.setText(String.valueOf(settingResult.size()));
         refreshLayout.finishRefresh();
+        if (settingResult != null && settingResult.size() > 0)
+            viewPagerTheme.setOffscreenPageLimit(settingResult.size());
+        viewPagerTheme.setCurrentItem(settingResult.size() > 1 ? 2 : 0);
         viewPagerTheme.setAdapter(new ImgPagerAdapter(settingResult, this));
     }
 }
