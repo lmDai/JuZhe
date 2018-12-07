@@ -187,7 +187,7 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
         }
     }
 
-    @OnClick({R.id.img_back, R.id.txt_confirm, R.id.btn_buy, R.id.btn_share, R.id.ll_home,R.id.txt_member})
+    @OnClick({R.id.img_back, R.id.txt_confirm, R.id.btn_buy, R.id.btn_share, R.id.ll_home, R.id.txt_member})
     public void onViewClicked(View view) {
         String pic = result.getItem_pic() == null ? "" : result.getItem_pic().get(0);
         switch (view.getId()) {
@@ -196,7 +196,6 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
                 break;
             case R.id.txt_confirm:
 //                type = 0;
-//                openTaoBao();
                 getMvpPresenter().orderConfirm(result.getItem_id(), pic, result.getItem_title(), result.getItem_price()
                         , result.getItem_end_price(), result.getTkrates(), result.getTkmoney() + "", userModel.getId(), userModel.getUser_channel_id()
                         , result.getCouponmoney());

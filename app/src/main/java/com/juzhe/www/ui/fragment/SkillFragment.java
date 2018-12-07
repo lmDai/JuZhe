@@ -1,6 +1,7 @@
 package com.juzhe.www.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.juzhe.www.ui.activity.account.WithdrawActivity;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -68,6 +71,8 @@ public class SkillFragment extends BaseMvpFragment<SkillContract.View, SkillPres
     LinearLayout llCenter;
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.ll_recharge)
+    LinearLayout llCharge;
     private UserModel userModel;
 
     @Override
@@ -85,7 +90,21 @@ public class SkillFragment extends BaseMvpFragment<SkillContract.View, SkillPres
         super.initView(inflater);
         txtTitle.setText(mContext.getString(R.string.title_up_skill));
         userModel = UserUtils.getUser(mContext);
+        if (userModel.getKalman_setting() == 2) {
+            llCharge.setVisibility(View.GONE);
+        }
         getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
+            }
+        });
     }
 
     @Override
@@ -133,6 +152,10 @@ public class SkillFragment extends BaseMvpFragment<SkillContract.View, SkillPres
     public void setUserModel(UserModel userModel) {
         txtPrice.setText(userModel.getTotal_income() + "");
         txtBalance.setText("¥" + userModel.getBalance());
+        if (userModel.getKalman_setting() == 2) {
+            llCharge.setVisibility(View.GONE);
+        }
+        refreshLayout.finishRefresh();
     }
 
     @Override
