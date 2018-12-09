@@ -56,7 +56,7 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
     private int currentItem;
     private int gravity = -1;
     private int lastPosition = 1;
-    private int scaleType = 1;
+    private int scaleType = 6;
     private List<String> titles;
     private List imageUrls;
     private List<View> imageViews;

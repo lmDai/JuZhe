@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -18,9 +19,11 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -246,7 +249,37 @@ public class GlideUtil {
                 .priority(Priority.NORMAL) //下载的优先级
                 .into(view);
     }
+    public static void loadIntoUseFitWidth(Context context, final String imageUrl,final ImageView imageView) {
+        Glide.with(context)
+                .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
 
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        if (imageView == null) {
+                            return false;
+                        }
+                        if (imageView.getScaleType() != ImageView.ScaleType.FIT_XY) {
+                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        }
+                        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+                        int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();
+                        float scale = (float) vw / (float) resource.getIntrinsicWidth();
+                        int vh = Math.round(resource.getIntrinsicHeight() * scale);
+                        params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
+                        imageView.setLayoutParams(params);
+                        return false;
+                    }
+                })
+                .placeholder(R.drawable.ic_zhanwei_message)
+                .error(R.drawable.ic_zhanwei_message)
+                .into(imageView);
+    }
     /**
      * 加载gif
      *
