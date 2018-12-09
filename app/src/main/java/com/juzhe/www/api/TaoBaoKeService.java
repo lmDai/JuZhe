@@ -11,6 +11,7 @@ import com.juzhe.www.bean.GoodsShareModel;
 import com.juzhe.www.bean.IconModel;
 import com.juzhe.www.bean.IncomeDetailModel;
 import com.juzhe.www.bean.JDProductModel;
+import com.juzhe.www.bean.JdSearchModel;
 import com.juzhe.www.bean.KeyWordModel;
 import com.juzhe.www.bean.OrderConfirmModel;
 import com.juzhe.www.bean.OrderModel;
@@ -244,7 +245,10 @@ public interface TaoBaoKeService {
     @POST(TaoBaoKeApi.JD_DETAIL)
     @FormUrlEncoded
     Observable<BaseResponse<JDProductModel>> getJDDetail(@FieldMap Map<String, Object> map);
-
+    //京东商品列表
+    @POST(TaoBaoKeApi.JD_GAO_YONG)
+    @FormUrlEncoded
+    Observable<BaseResponse<JDProductModel>> getJDGaoYong(@FieldMap Map<String, Object> map);
     //拼多多商品列表
     @POST(TaoBaoKeApi.PDD_LIST)
     @FormUrlEncoded
@@ -264,4 +268,9 @@ public interface TaoBaoKeService {
     @POST(TaoBaoKeApi.USER_KALMAN)
     @FormUrlEncoded
     Observable<BaseNoDataResponse> userKalMan(@FieldMap Map<String, Object> map);
+
+    //京东，拼多多搜索
+    @POST(TaoBaoKeApi.JD_PDD_SEARCH)
+    @FormUrlEncoded
+    Observable<BaseResponse<JdSearchModel>> getJdPddSearch(@FieldMap Map<String, Object> map);
 }

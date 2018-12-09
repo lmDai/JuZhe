@@ -36,7 +36,7 @@ public class PddListModel {
      * coupon_end_time : 1544284799
      * promotion_rate : 150
      */
-
+    private String item_end_price;
     private String goods_desc;
     private int sold_quantity;
     private String category_name;
@@ -47,6 +47,17 @@ public class PddListModel {
     private double coupon_start_time;
     private double coupon_end_time;
     private double promotion_rate;
+
+    private String estimate;
+    private String upgrade;
+
+    public String getItem_end_price() {
+        return item_end_price;
+    }
+
+    public void setItem_end_price(String item_end_price) {
+        this.item_end_price = item_end_price;
+    }
 
     public String getGoods_id() {
         return goods_id;
@@ -174,5 +185,21 @@ public class PddListModel {
 
     public void setPromotion_rate(double promotion_rate) {
         this.promotion_rate = promotion_rate;
+    }
+
+    public String getEstimate() {
+        return estimate;
+    }
+
+    public void setEstimate(String estimate) {
+        this.estimate = estimate;
+    }
+
+    public String getUpgrade() {
+        return upgrade;
+    }
+
+    public void setUpgrade(String upgrade) {
+        this.upgrade = upgrade;
     }
 }

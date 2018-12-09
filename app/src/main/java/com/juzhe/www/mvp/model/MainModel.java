@@ -8,6 +8,7 @@ import com.juzhe.www.bean.ClassfyModel;
 import com.juzhe.www.bean.GoodsShareModel;
 import com.juzhe.www.bean.IconModel;
 import com.juzhe.www.bean.JDProductModel;
+import com.juzhe.www.bean.JdSearchModel;
 import com.juzhe.www.bean.KeyWordModel;
 import com.juzhe.www.bean.OrderConfirmModel;
 import com.juzhe.www.bean.PddDetailModel;
@@ -194,9 +195,21 @@ public class MainModel {
         Observable<BaseResponse<JDProductModel>> getJDDetail = mApiService.getJDDetail(requestMap);
         return getJDDetail;
     }
-
-    public Observable<BasePageResponse<List<PddListModel>>> getPddList(String page, String user_channel_id) {
+    public Observable<BaseResponse<JDProductModel>> getJDGaoYong(String couponmoney,String item_id, String discount_link, String user_id, String user_channel_id) {
         Map<String, Object> requestMap = InterceptUtils.getRequstMap();
+        requestMap.put("couponmoney", couponmoney);
+        requestMap.put("item_id", item_id);
+        requestMap.put("discount_link", discount_link);
+        requestMap.put("user_id", user_id);
+        requestMap.put("user_channel_id", user_channel_id);
+        Observable<BaseResponse<JDProductModel>> getJDGaoYong = mApiService.getJDGaoYong(requestMap);
+        return getJDGaoYong;
+    }
+    public Observable<BasePageResponse<List<PddListModel>>> getPddList(String sort,String keyWord,String user_id,String page, String user_channel_id) {
+        Map<String, Object> requestMap = InterceptUtils.getRequstMap();
+        requestMap.put("sort", sort);
+        requestMap.put("user_id", user_id);
+        requestMap.put("keyword", keyWord);
         requestMap.put("page", page);
         requestMap.put("user_channel_id", user_channel_id);
         Observable<BasePageResponse<List<PddListModel>>> getPddList = mApiService.getPddList(requestMap);
@@ -218,5 +231,24 @@ public class MainModel {
         requestMap.put("user_channel_id", user_channel_id);
         Observable<BaseResponse<PddPromotionModel>> getPddPromotion = mApiService.getPddPromotion(requestMap);
         return getPddPromotion;
+    }
+
+    /**
+     * 商品关键字搜索
+     *
+     * @return
+     */
+    public Observable<BaseResponse<JdSearchModel>> getJdPddSearch(String type, String keyword, String sort, String page
+            , String user_id, String user_channel_id, int user_level) {
+        Map<String, Object> requestMap = InterceptUtils.getRequstMap();
+        requestMap.put("keyword", keyword);
+        requestMap.put("type", type);
+        requestMap.put("sort", sort);
+        requestMap.put("page", page);
+        requestMap.put("user_id", user_id);
+        requestMap.put("user_channel_id", user_channel_id);
+        requestMap.put("user_level", user_level);
+        Observable<BaseResponse<JdSearchModel>> getJdPddSearch = mApiService.getJdPddSearch(requestMap);
+        return getJdPddSearch;
     }
 }

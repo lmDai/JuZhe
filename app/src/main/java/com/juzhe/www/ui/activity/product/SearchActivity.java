@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
+import com.juzhe.www.bean.JdSearchModel;
 import com.juzhe.www.bean.KeyWordModel;
 import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
@@ -47,7 +50,12 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
     FlowTagLayout tagHistory;
     @BindView(R.id.txt_search)
     TextView txtSearch;
+    @BindView(R.id.radio)
+    RadioGroup radio;
+    @BindView(R.id.rb_taobao)
+    RadioButton rbTaobao;
     private UserModel userModel;
+    private String type = "1";
 
 
     @Override
@@ -72,12 +80,34 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH)
                     if (!TextUtils.isEmpty(editSearch.getText().toString())) {
-                        saveLocale(editSearch.getText().toString());
-                        Bundle bundle = new Bundle();
-                        bundle.putString("keyword", editSearch.getText().toString());
-                        IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
+                        if (TextUtils.equals(type, "1")||TextUtils.equals(type,"3")) {
+                            saveLocale(editSearch.getText().toString());
+                            Bundle bundle = new Bundle();
+                            bundle.putString("type",type);
+                            bundle.putString("keyword", editSearch.getText().toString());
+                            IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
+                        }  else {
+                            getMvpPresenter().getJdPddSearch(type, editSearch.getText().toString(), "", userModel.getId(), userModel.getUser_channel_id(), userModel.getLevel());
+                        }
                     }
                 return false;
+            }
+        });
+
+        radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_taobao:
+                        type = "1";
+                        break;
+                    case R.id.rb_jd:
+                        type = "2";
+                        break;
+                    case R.id.rb_pdd:
+                        type = "3";
+                        break;
+                }
             }
         });
 
@@ -86,6 +116,7 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
     @Override
     protected void initView(Bundle savedInstanceState) {
         showSearchHistory(KeyWordDaoOpe.updateList(mContext));
+        rbTaobao.setChecked(true);
         userModel = UserUtils.getUser(mContext);
         getMvpPresenter().getHotKeyWord(userModel.getId(), userModel.getUser_channel_id());
     }
@@ -104,9 +135,17 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
                 saveLocale(models.get(position).getKeyword());
                 editSearch.setText(dataList.get(position));
                 editSearch.setSelection(editSearch.getText().length());
-                Bundle bundle = new Bundle();
-                bundle.putString("keyword", dataList.get(position));
-                IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
+                if (!TextUtils.isEmpty(editSearch.getText().toString())) {
+                    if (TextUtils.equals(type, "1")||TextUtils.equals(type,"3")) {
+                        saveLocale(editSearch.getText().toString());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("type",type);
+                        bundle.putString("keyword", editSearch.getText().toString());
+                        IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
+                    }  else {
+                        getMvpPresenter().getJdPddSearch(type, editSearch.getText().toString(), "", userModel.getId(), userModel.getUser_channel_id(), userModel.getLevel());
+                    }
+                }
             }
         });
     }
@@ -114,6 +153,14 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
     @Override
     public void showError(Throwable throwable) {
 
+    }
+
+    @Override
+    public void setJdPddResult(JdSearchModel result) {
+        Bundle bundle = new Bundle();
+        bundle.putString("link", result.getLink());
+        bundle.putString("jd_pid", result.getJingdong_pid());
+        IntentUtils.get().goActivity(mContext, WebViewPddDetailsActivity.class, bundle);
     }
 
     @Override
@@ -136,10 +183,15 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
                 break;
             case R.id.txt_search:
                 if (!TextUtils.isEmpty(editSearch.getText().toString())) {
-                    saveLocale(editSearch.getText().toString());
-                    Bundle bundle = new Bundle();
-                    bundle.putString("keyword", editSearch.getText().toString());
-                    IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
+                    if (TextUtils.equals(type, "1")||TextUtils.equals(type,"3")) {
+                        saveLocale(editSearch.getText().toString());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("type",type);
+                        bundle.putString("keyword", editSearch.getText().toString());
+                        IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
+                    }  else {
+                        getMvpPresenter().getJdPddSearch(type, editSearch.getText().toString(), "", userModel.getId(), userModel.getUser_channel_id(), userModel.getLevel());
+                    }
                 }
                 break;
         }
@@ -162,10 +214,19 @@ public class SearchActivity extends BaseMvpActivity<SearchContract.View, SearchP
             public void tagClick(int position) {
                 editSearch.setText(dataList.get(position));
                 editSearch.setSelection(editSearch.getText().length());
-                Bundle bundle = new Bundle();
-                bundle.putString("keyword", dataList.get(position));
-                IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
+                if (TextUtils.equals(type, "1")||TextUtils.equals(type,"3")) {
+                    saveLocale(editSearch.getText().toString());
+                    Bundle bundle = new Bundle();
+                    bundle.putString("type",type);
+                    bundle.putString("keyword", editSearch.getText().toString());
+                    IntentUtils.get().goActivity(mContext, SearchDetailActivity.class, bundle);
+                }  else {
+                    getMvpPresenter().getJdPddSearch(type, editSearch.getText().toString(), "", userModel.getId(), userModel.getUser_channel_id(), userModel.getLevel());
+                }
             }
         });
     }
+
+
+
 }

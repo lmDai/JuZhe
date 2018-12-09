@@ -121,7 +121,7 @@ public class ProductListJDActivity extends BaseMvpActivity<ProductListJDContract
 //                bundle.putParcelable("item", productAdapter.getData().get(position));
 //                IntentUtils.get().goActivity(mContext, JdDetailsActivity.class, bundle);
                 JDProductModel jdProductModel = productAdapter.getItem(position);
-                getMvpPresenter().getJdDetails(jdProductModel.getItem_id(), jdProductModel.getDiscount_link(), userModel.getId(), userModel.getUser_channel_id());
+                getMvpPresenter().getJdDetails(jdProductModel.getCouponmoney() + "", jdProductModel.getItem_id(), jdProductModel.getDiscount_link(), userModel.getId(), userModel.getUser_channel_id());
             }
         });
     }

@@ -50,8 +50,8 @@ public class ProductListJDPresenter extends ProductListJDContract.Presenter {
     }
 
     @Override
-    public void getJdDetails(String item_id, String discount_link, String user_id, String user_channel_id) {
-        MainModel.getInstance(Utils.getContext()).getJDDetail(item_id, discount_link, user_id, user_channel_id)
+    public void getJdDetails(String couponmoney,String item_id, String discount_link, String user_id, String user_channel_id) {
+        MainModel.getInstance(Utils.getContext()).getJDGaoYong(couponmoney,item_id, discount_link, user_id, user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.hanResult())
                 .subscribe(new ProgressObserver<JDProductModel>(this, true, "加载中...") {

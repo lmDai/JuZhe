@@ -21,6 +21,6 @@ public interface ProductListJDContract {
 
     abstract class Presenter extends BasePresenter<View> {
         public abstract void getProductListOther(String user_id, String user_channel_id, boolean isRefresh);
-        public abstract void getJdDetails(String item_id, String discount_link, String user_id, String user_channel_id);
+        public abstract void getJdDetails(String couponmoney,String item_id, String discount_link, String user_id, String user_channel_id);
     }
 }

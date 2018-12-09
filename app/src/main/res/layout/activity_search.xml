@@ -25,9 +25,60 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
+                <RadioGroup
+                    android:id="@+id/radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_taobao"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/search_tab_selector"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:minHeight="@dimen/dp_30"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:text="淘宝"
+                        android:textColor="@color/color_share_title"
+                        android:textSize="@dimen/sp_16" />
+
+                    <RadioButton
+                        android:id="@+id/rb_jd"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/search_tab_selector"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:minHeight="@dimen/dp_30"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:text="京东"
+                        android:textColor="@color/color_share_title"
+                        android:textSize="@dimen/sp_16" />
+
+                    <RadioButton
+                        android:id="@+id/rb_pdd"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/search_tab_selector"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:minHeight="@dimen/dp_30"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:text="拼多多"
+                        android:textColor="@color/color_share_title"
+                        android:textSize="@dimen/sp_16" />
+                </RadioGroup>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:drawableLeft="@drawable/ic_hot_search"
                     android:drawablePadding="@dimen/dp_5"
                     android:text="热门搜索"

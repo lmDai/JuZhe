@@ -23,11 +23,11 @@ public class ProductListPddPresenter extends ProductListPddContract.Presenter {
     private String currentPage = "1";
 
     @Override
-    public void getProductListOther(String user_channel_id, boolean isRefresh) {
+    public void getProductListOther(String user_id, String user_channel_id, boolean isRefresh) {
         if (isRefresh) {
             currentPage = "1";
         }
-        MainModel.getInstance(Utils.getContext()).getPddList(currentPage,
+        MainModel.getInstance(Utils.getContext()).getPddList("", "", user_id, currentPage,
                 user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.handNoResponseResult())

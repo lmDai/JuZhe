@@ -21,7 +21,7 @@ public interface ProductListPddContract {
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        public abstract void getProductListOther(String user_channel_id, boolean isRefresh);
+        public abstract void getProductListOther(String user_id,String user_channel_id, boolean isRefresh);
         public abstract void getPddPromotion(String pid, String goods_id,  String user_channel_id);
     }
 }

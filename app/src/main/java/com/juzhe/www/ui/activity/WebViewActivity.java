@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -23,7 +21,6 @@ import android.widget.TextView;
 import com.alipay.sdk.app.H5PayCallback;
 import com.alipay.sdk.app.PayTask;
 import com.alipay.sdk.util.H5PayResultModel;
-import com.blankj.utilcode.util.LogUtils;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.juzhe.www.R;
@@ -37,21 +34,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class WebViewActivity extends BaseActivity {
 
+    @BindView(R.id.ll_container)
+    LinearLayout coordinator;
+    protected AgentWeb mAgentWeb;
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.txt_title)
     TextView txtTitle;
     @BindView(R.id.txt_right)
     TextView txtRight;
+    @BindView(R.id.img_close)
+    ImageView imgClose;
+    @BindView(R.id.img_refresh)
+    ImageView imgRefresh;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.ll_container)
-    LinearLayout coordinator;
-    protected AgentWeb mAgentWeb;
     private SmartRefreshWebLayout mSmartRefreshWebLayout = null;
     private String link;
     private int type = 0;
@@ -103,11 +105,6 @@ public class WebViewActivity extends BaseActivity {
                 }, 2000);
             }
         });
-    }
-
-    @OnClick(R.id.img_back)
-    public void onViewClicked() {
-        finish();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -233,5 +230,31 @@ public class WebViewActivity extends BaseActivity {
         super.onDestroy();
         //mAgentWeb.destroy();
         mAgentWeb.getWebLifeCycle().onDestroy();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.img_back, R.id.img_close, R.id.img_refresh})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_back:
+                if (mAgentWeb.getWebCreator().getWebView().canGoBack()) {
+                    mAgentWeb.back();
+                } else {
+                    finish();
+                }
+                break;
+            case R.id.img_close:
+                finish();
+                break;
+            case R.id.img_refresh:
+                mAgentWeb.getWebCreator().getWebView().reload();
+                break;
+        }
     }
 }

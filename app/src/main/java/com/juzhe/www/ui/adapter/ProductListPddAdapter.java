@@ -34,11 +34,10 @@ public class ProductListPddAdapter extends BaseQuickAdapter<PddListModel, BaseVi
         txtPrice.setPaintFlags(txtPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         helper.setText(R.id.txt_resource, "拼多多")
                 .setText(R.id.txt_title, item.getGoods_name())
-//                .setText(R.id.txt_end_price, item.getItem_end_price() + "")
+                .setText(R.id.txt_end_price, item.getItem_end_price() + "")
                 .setText(R.id.txt_sale, item.getSold_quantity() + "人已买")
                 .setText(R.id.txt_couponmoney, item.getCoupon_discount() + "元优惠券");
-//        txtEstimate.setText("预计赚¥" + item.getEstimate());
-//        txtUpgrade.setText("升级赚¥" + item.getUpgrade());
-
+        txtEstimate.setText("预计赚¥" + item.getEstimate());
+        txtUpgrade.setText("升级赚¥" + item.getUpgrade());
     }
 }

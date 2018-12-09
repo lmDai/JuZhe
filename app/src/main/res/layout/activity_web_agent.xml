@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/title_bar_two" />
+    <include layout="@layout/title_bar_webview" />
 
     <LinearLayout
         android:id="@+id/ll_container"

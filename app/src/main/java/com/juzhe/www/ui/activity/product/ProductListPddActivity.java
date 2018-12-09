@@ -74,7 +74,7 @@ public class ProductListPddActivity extends BaseMvpActivity<ProductListPddContra
         productAdapter = new ProductListPddAdapter(R.layout.item_product);
         RecyclerViewUtils.initLinerLayoutRecyclerView(recyclerView, mContext);
         recyclerView.setAdapter(productAdapter);
-        getMvpPresenter().getProductListOther(userModel.getUser_channel_id(), true);
+        getMvpPresenter().getProductListOther(userModel.getId(),userModel.getUser_channel_id(), true);
     }
 
     @Override
@@ -83,13 +83,13 @@ public class ProductListPddActivity extends BaseMvpActivity<ProductListPddContra
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getMvpPresenter().getProductListOther(userModel.getUser_channel_id(), true);
+                getMvpPresenter().getProductListOther(userModel.getId(),userModel.getUser_channel_id(), true);
             }
         });
         productAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                getMvpPresenter().getProductListOther(userModel.getUser_channel_id(), false);
+                getMvpPresenter().getProductListOther(userModel.getId(),userModel.getUser_channel_id(), false);
             }
         }, recyclerView);
         productAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

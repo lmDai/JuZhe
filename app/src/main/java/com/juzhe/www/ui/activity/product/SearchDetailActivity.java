@@ -1,8 +1,11 @@
 package com.juzhe.www.ui.activity.product;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
+import com.juzhe.www.bean.PddListModel;
+import com.juzhe.www.bean.PddPromotionModel;
 import com.juzhe.www.bean.ProductModel;
 import com.juzhe.www.bean.SelectModel;
 import com.juzhe.www.bean.UserModel;
@@ -21,6 +26,7 @@ import com.juzhe.www.mvp.contract.SearchDetailsContract;
 import com.juzhe.www.mvp.presenter.SearchDetailsPresenter;
 import com.juzhe.www.ui.adapter.DropMenuAdapter;
 import com.juzhe.www.ui.adapter.ProductAdapter;
+import com.juzhe.www.ui.adapter.ProductListPddAdapter;
 import com.juzhe.www.ui.widget.ListPopu;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.RecyclerViewUtils;
@@ -53,12 +59,17 @@ public class SearchDetailActivity extends BaseMvpActivity<SearchDetailsContract.
     private ListPopu listPopu;
     private UserModel userModel;
     private String headers[] = {"最新", "销量", "佣金", "筛选"};
+    private String header[] = {"综合", "销量", "价格", "筛选"};
     private int constellationPosition = 0;
     private DropMenuAdapter saleAdapter;//销量
     private DropMenuAdapter commisionAdapter;//佣金
     private DropMenuAdapter dropMenuAdapter;//筛选
     private List<View> popupViews = new ArrayList<>();
     private RecyclerView recyclerProduct;
+    private String type;
+
+
+    private ProductListPddAdapter pddAdapter;
 
     @Override
     protected int getLayout() {
@@ -78,18 +89,33 @@ public class SearchDetailActivity extends BaseMvpActivity<SearchDetailsContract.
     protected void initView(Bundle savedInstanceState) {
         userModel = UserUtils.getUser(mContext);
         Bundle bundle = getIntent().getBundleExtra("bundle");
-        keyWord = bundle.getString("keyword");
+
+        if (bundle != null) {
+            keyWord = bundle.getString("keyword");
+            if (bundle.containsKey("type")) {
+                type = bundle.getString("type");
+            }
+        }
         editSearch.setText(keyWord);
+        editSearch.setEnabled(false);
         txtSearch.setVisibility(View.GONE);
-        initDropMenu();
-        productAdapter = new ProductAdapter(R.layout.item_product, userModel.getLevel());
-        RecyclerViewUtils.initLinerLayoutRecyclerView(recyclerProduct, mContext);
-        recyclerProduct.setAdapter(productAdapter);
+
+        if (TextUtils.equals(type, "1")) {
+            initDropMenu();
+            productAdapter = new ProductAdapter(R.layout.item_product, userModel.getLevel());
+            RecyclerViewUtils.initLinerLayoutRecyclerView(recyclerProduct, mContext);
+            recyclerProduct.setAdapter(productAdapter);
+        } else if (TextUtils.equals(type, "3")) {
+
+            initFileter();
+            pddAdapter = new ProductListPddAdapter(R.layout.item_product);
+            RecyclerViewUtils.initLinerLayoutRecyclerView(recyclerProduct, mContext);
+            recyclerProduct.setAdapter(pddAdapter);
+        }
         initData(true);
 
 
     }
-
 
     private void initDropMenu() {
         //设置筛选条件 销量
@@ -143,24 +169,91 @@ public class SearchDetailActivity extends BaseMvpActivity<SearchDetailsContract.
         dropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, containerView);
     }
 
+    private void initFileter() {
+        //设置筛选条件 销量
+        List<SelectModel> classfiy = new ArrayList<>();
+        classfiy.add(new SelectModel("5", "按销量升序", false));
+        classfiy.add(new SelectModel("6", "按销量降序", false));
+        final View saleView = getLayoutInflater().inflate(R.layout.layout_recyclerview, null);
+        RecyclerView saleRecycler = ButterKnife.findById(saleView, R.id.recycler);
+        saleAdapter = new DropMenuAdapter(R.layout.item_filter);
+        RecyclerViewUtils.initLinerLayoutRecyclerView(saleRecycler, mContext);
+        saleRecycler.setAdapter(saleAdapter);
+        saleAdapter.setNewData(classfiy);
+        //佣金
+        List<SelectModel> classfiy1 = new ArrayList<>();
+        classfiy1.add(new SelectModel("7", "优惠券金额排序升序", false));
+        classfiy1.add(new SelectModel("8", "优惠券金额排序降序", false));
+        final View commsionView = getLayoutInflater().inflate(R.layout.layout_recyclerview, null);
+        RecyclerView commsionRecycler = ButterKnife.findById(commsionView, R.id.recycler);
+        commisionAdapter = new DropMenuAdapter(R.layout.item_filter);
+        RecyclerViewUtils.initLinerLayoutRecyclerView(commsionRecycler, mContext);
+        commsionRecycler.setAdapter(commisionAdapter);
+        commisionAdapter.setNewData(classfiy1);
+        //筛选
+        List<SelectModel> classfiy2 = new ArrayList<>();
+        classfiy2.add(new SelectModel("3", "按价格升序", false));
+        classfiy2.add(new SelectModel("4", "按价格降序", false));
+
+        final View selectView = getLayoutInflater().inflate(R.layout.layout_recyclerview, null);
+        RecyclerView selectRecycler = ButterKnife.findById(selectView, R.id.recycler);
+        dropMenuAdapter = new DropMenuAdapter(R.layout.item_filter);
+        RecyclerViewUtils.initLinerLayoutRecyclerView(selectRecycler, mContext);
+        selectRecycler.setAdapter(dropMenuAdapter);
+        dropMenuAdapter.setNewData(classfiy2);
+
+        //init popupViews
+        popupViews.add(new View(mContext));
+        popupViews.add(saleView);
+        popupViews.add(commsionView);
+        popupViews.add(selectView);
+
+        View containerView = LayoutInflater.from(this).inflate(R.layout.layout_filter_content, null);
+        recyclerProduct = ButterKnife.findById(containerView, R.id.recycler);
+
+        dropDownMenu.setDropDownMenu(Arrays.asList(header), popupViews, containerView);
+    }
+
     @Override
     protected void initEvent() {
         super.initEvent();
-        productAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                initData(false);
-            }
-        }, recyclerProduct);
-        productAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ProductModel productModel = productAdapter.getItem(position);
-                Bundle bundle = new Bundle();
-                bundle.putString("item_id", productModel.getItem_id());
-                IntentUtils.get().goActivity(mContext, ProductDetailsActivity.class, bundle);
-            }
-        });
+
+        if (pddAdapter != null && TextUtils.equals(type, "3")) {
+            pddAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("item_id", productAdapter.getData().get(position).getGoods_id());
+//                IntentUtils.get().goActivity(mContext, PddDetailsActivity.class, bundle);
+                    getMvpPresenter().getPddPromotion(userModel.getId(), pddAdapter.getData().get(position).getGoods_id(), userModel.getUser_channel_id());
+                }
+            });
+            pddAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+                @Override
+                public void onLoadMoreRequested() {
+                    initData(false);
+                }
+            }, recyclerProduct);
+        }
+        if (TextUtils.equals(type, "1")) {
+            productAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+                @Override
+                public void onLoadMoreRequested() {
+                    initData(false);
+                }
+            }, recyclerProduct);
+            productAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (TextUtils.equals(type, "1")) {
+                        ProductModel productModel = productAdapter.getItem(position);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("item_id", productModel.getItem_id());
+                        IntentUtils.get().goActivity(mContext, ProductDetailsActivity.class, bundle);
+                    }
+                }
+            });
+        }
         saleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -201,7 +294,11 @@ public class SearchDetailActivity extends BaseMvpActivity<SearchDetailsContract.
     }
 
     private void initData(boolean isRefresh) {
-        getMvpPresenter().getGoodsSearch(keyWord, sort, userModel.getId(), userModel.getUser_channel_id(), userModel.getLevel(), isRefresh);
+        if (TextUtils.equals(type, "1")) {
+            getMvpPresenter().getGoodsSearch(keyWord, sort, userModel.getId(), userModel.getUser_channel_id(), userModel.getLevel(), isRefresh);
+        } else {
+            getMvpPresenter().getProductListOther(sort, keyWord, userModel.getId(), userModel.getUser_channel_id(), isRefresh);
+        }
     }
 
     @Override
@@ -210,8 +307,16 @@ public class SearchDetailActivity extends BaseMvpActivity<SearchDetailsContract.
     }
 
     @Override
-    public void showError(Throwable throwable, boolean isRefresh) {
-        RecyclerViewUtils.handError(productAdapter, isRefresh);
+    public void setPromotionInfo(PddPromotionModel response) {
+        boolean hasInstalled = IntentUtils.checkHasInstalledApp(mContext, "com.xunmeng.pinduoduo");
+        if (hasInstalled) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.getMobile_url()));
+            startActivity(intent);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("link", response.getWe_app_web_view_url());
+            IntentUtils.get().goActivity(mContext, WebViewPddDetailsActivity.class, bundle);
+        }
     }
 
     //, R.id.choose_comprehensive
@@ -237,5 +342,19 @@ public class SearchDetailActivity extends BaseMvpActivity<SearchDetailsContract.
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void showProductList(List<PddListModel> models, boolean isRefresh) {
+        RecyclerViewUtils.handleNormalAdapter(pddAdapter, models, isRefresh);
+    }
+
+    @Override
+    public void showError(Throwable throwable, boolean isRefresh) {
+        if (TextUtils.equals(type, "1")) {
+            RecyclerViewUtils.handError(productAdapter, isRefresh);
+        } else if (TextUtils.equals(type, "3")) {
+            RecyclerViewUtils.handError(pddAdapter, isRefresh);
+        }
     }
 }

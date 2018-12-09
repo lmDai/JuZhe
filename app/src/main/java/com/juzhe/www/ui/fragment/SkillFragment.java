@@ -154,6 +154,8 @@ public class SkillFragment extends BaseMvpFragment<SkillContract.View, SkillPres
         txtBalance.setText("¥" + userModel.getBalance());
         if (userModel.getKalman_setting() == 2) {
             llCharge.setVisibility(View.GONE);
+        } else {
+            llCharge.setVisibility(View.VISIBLE);
         }
         refreshLayout.finishRefresh();
     }
