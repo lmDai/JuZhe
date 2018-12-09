@@ -5,18 +5,32 @@
     android:layout_height="match_parent">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:srlEnableLoadMore="false"
         app:srlEnableRefresh="false">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:descendantFocusability="blocksDescendants"
-            android:overScrollMode="never"
-            android:scrollbars="none" />
+            android:background="@color/colorBg"
+            android:orientation="horizontal">
+
+            <com.juzhe.www.common.widget.dropmenu.DropDownMenu
+                android:id="@+id/dropDownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:dddividerColor="@color/colorWhite"
+                app:ddmaskColor="@color/mask_color"
+                app:ddmenuBackgroundColor="@color/colorWhite"
+                app:ddmenuMenuHeightPercent="0.5"
+                app:ddmenuSelectedIcon="@drawable/ic_dropdown_normal"
+                app:ddmenuTextSize="13sp"
+                app:ddmenuUnselectedIcon="@drawable/ic_dropdown_normal"
+                app:ddtextSelectedColor="@color/text_info"
+                app:ddtextUnselectedColor="@color/text_info"
+                app:ddunderlineColor="@color/colorWhite" />
+        </LinearLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>
