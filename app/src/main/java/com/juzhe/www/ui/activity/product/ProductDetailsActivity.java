@@ -2,6 +2,7 @@ package com.juzhe.www.ui.activity.product;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +17,12 @@ import com.alibaba.baichuan.android.trade.model.AlibcTaokeParams;
 import com.alibaba.baichuan.android.trade.model.OpenType;
 import com.alibaba.baichuan.android.trade.model.TradeResult;
 import com.alibaba.baichuan.android.trade.page.AlibcBasePage;
+import com.alibaba.baichuan.android.trade.page.AlibcDetailPage;
 import com.alibaba.baichuan.android.trade.page.AlibcPage;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
 import com.juzhe.www.MainActivity;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpActivity;
@@ -31,7 +34,6 @@ import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.ProductDetailsContract;
 import com.juzhe.www.mvp.presenter.ProductDetailsPresenter;
 import com.juzhe.www.ui.activity.MemberActivity;
-import com.juzhe.www.ui.activity.product.ProductDetails2Activity;
 import com.juzhe.www.ui.widget.GlideImageLoader;
 import com.juzhe.www.utils.GlideUtil;
 import com.juzhe.www.utils.IntentUtils;
@@ -149,7 +151,11 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
     @Override
     public void orderConfirm(OrderConfirmModel orderConfirmModel) {
         this.orderConfirmModel = orderConfirmModel;
-        openTaoBao();
+        if (!TextUtils.isEmpty(result.getCouponurl())) {
+            openTaoBao();
+        } else {
+            openTaoBaoDirect();
+        }
     }
 
     @Override
@@ -167,6 +173,37 @@ public class ProductDetailsActivity extends BaseMvpActivity<ProductDetailsContra
             //设置页面打开方式
             AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, false);
             AlibcTaokeParams taokeParams = new AlibcTaokeParams(userModel.getTaobao_pid(), userModel.getTaobao_pid(), null);
+            //使用百川sdk提供默认的Activity打开detail
+            AlibcTrade.show(mContext, alibcBasePage, showParams, taokeParams, exParams,
+                    new AlibcTradeCallback() {
+                        @Override
+                        public void onTradeSuccess(TradeResult tradeResult) {
+                            //打开电商组件，用户操作中成功信息回调。tradeResult：成功信息（结果类型：加购，支付；支付结果）
+                            if (orderConfirmModel != null) {
+                                getMvpPresenter().oderPayConfirm(orderConfirmModel.getOrder_id(), String.valueOf(tradeResult.payResult.paySuccessOrders), userModel.getId(), userModel.getUser_channel_id());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int code, String msg) {
+                            //打开电商组件，用户操作中错误信息回调。code：错误码；msg：错误信息
+                            Log.i("single", "onFailure" + msg + code);
+                        }
+                    });
+        }
+    }
+
+
+    public void openTaoBaoDirect() {
+        //提供给三方传递配置参数
+        if (result != null) {
+            Map<String, String> exParams = new HashMap<>();
+            exParams.put(AlibcConstants.ISV_CODE, "appisvcode");
+            AlibcBasePage alibcBasePage = null;
+            alibcBasePage = new AlibcDetailPage(result.getItem_id());
+            //设置页面打开方式
+            AlibcShowParams showParams = new AlibcShowParams(OpenType.Native, false);
+            AlibcTaokeParams taokeParams = new AlibcTaokeParams(orderConfirmModel.getTaobao_pid(), orderConfirmModel.getTaobao_pid(), null);
             //使用百川sdk提供默认的Activity打开detail
             AlibcTrade.show(mContext, alibcBasePage, showParams, taokeParams, exParams,
                     new AlibcTradeCallback() {
