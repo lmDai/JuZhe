@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -125,11 +127,13 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private WebViewClient mWebViewClient = new WebViewClient() {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            Log.i("single", request.getMethod() + request.getUrl() + "dfsfsd");
             if (type == 1) {
                 //微信H5支付核心代码
-                Log.i("single", url + "dfsfsd");
+                String url = request.getUrl().toString();
                 if (url.startsWith("weixin://wap/pay?")) {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_VIEW);
@@ -163,12 +167,6 @@ public class WebViewActivity extends BaseActivity {
                     view.loadUrl(url, extraHeaders);
                 }
             }
-            return true;
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            Log.i("single", request.getMethod() + request.getUrl() + "dfsfsd");
             return super.shouldOverrideUrlLoading(view, request);
         }
 

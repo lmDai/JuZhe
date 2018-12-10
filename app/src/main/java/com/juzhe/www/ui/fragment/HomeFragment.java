@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -66,7 +67,7 @@ import butterknife.Unbinder;
  * @description:首页
  **/
 @CreatePresenterAnnotation(HomeFragmentPresenter.class)
-public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, HomeFragmentPresenter> implements HomeFragmentContract.View {
+public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, HomeFragmentPresenter> implements HomeFragmentContract.View, OnBannerListener {
     @BindView(R.id.img_me)
     ImageView imgMe;
     @BindView(R.id.txt_title)
@@ -105,6 +106,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
     private ChildAdapter childAdapter;
     private UserModel userModel;
     private boolean isRefresh = true;
+    private List<AdvertModel> model;
 
 
     @Override
@@ -171,13 +173,6 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
                     bundle.putString("key", iconModel.getKey());
                     IntentUtils.get().goActivity(mContext, ProductListActivity.class, bundle);
                 }
-//                KeplerGlobalParameter.getSingleton().setIsOpenByH5Mode(true);
-//                try {
-//                    KeplerApiManager.getWebViewService().openJDUrlWebViewPage("http://union-click.jd.com/jdc?e=jz2&p=AyIPZRprFDJWWA1FBCVbV0IUWVALHFRBEwQAQB1AWQkFa3VcCGEVGlNWZxZfM28ac3hVBRYfK0MOHmlWGlscAhIFVBtdJQoUBlYbUxQAFTdVGloUABAFURlTJTISBmVQNRQyEgNTHF4TAhMOVStbEQcQA1ISXhcFGw9RK1wlWUdpUEsJEQYTUlQeUxAEQjdlK2slMhIHZRtrSkZPWmUa&t=W1dCFFlQCxxUQRMEAEAdQFkJBQ%3D%3D",
-//                            new KeplerAttachParameter());
-//                } catch (KeplerBufferOverflowException e) {
-//                    e.printStackTrace();
-//                }
             }
         });
         childAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -323,34 +318,15 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
 
     @Override
     public void setAdvert(List<AdvertModel> model) {
+        this.model = model;
         List images = new ArrayList();
         for (AdvertModel advertModel : model) {
             images.add(advertModel.getImage());
         }
+        banner.setOnBannerListener(this);
         banner.setImages(images)
                 .setImageLoader(new GlideImageLoader())
                 .start();
-
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                Bundle bundle = new Bundle();
-                switch (model.get(position).getType()) {
-                    case 1:
-                        bundle.putString("link", model.get(position).getLink());
-                        IntentUtils.get().goActivity(mContext, WebViewActivity.class, bundle);
-                        break;
-                    case 2:
-                        bundle.putString("item_id", model.get(position).getLink());
-                        IntentUtils.get().goActivity(mContext, ProductDetailsActivity.class, bundle);
-                        break;
-                    case 3:
-                        break;
-                }
-
-            }
-        });
-
     }
 
     @Override
@@ -375,5 +351,23 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void OnBannerClick(int position) {
+        Log.i("single",position+"dsdfads");
+        Bundle bundle = new Bundle();
+        switch (model.get(position).getType()) {
+            case 1:
+                bundle.putString("link", model.get(position).getLink());
+                IntentUtils.get().goActivity(mContext, WebViewActivity.class, bundle);
+                break;
+            case 2:
+                bundle.putString("item_id", model.get(position).getLink());
+                IntentUtils.get().goActivity(mContext, ProductDetailsActivity.class, bundle);
+                break;
+            case 3:
+                break;
+        }
     }
 }

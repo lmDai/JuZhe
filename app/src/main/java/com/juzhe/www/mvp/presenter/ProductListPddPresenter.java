@@ -2,6 +2,7 @@ package com.juzhe.www.mvp.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.bean.PddListModel;
 import com.juzhe.www.bean.PddPromotionModel;
 import com.juzhe.www.common.https.BasePageResponse;
@@ -38,6 +39,7 @@ public class ProductListPddPresenter extends ProductListPddContract.Presenter {
                             currentPage = result.getPage();
                             getView().showProductList(result.getData(), isRefresh);//注册成功
                         } else {
+                            ToastUtils.showShort(result.getMsg());
                             getView().showError(new Throwable(), isRefresh);
                         }
                     }
