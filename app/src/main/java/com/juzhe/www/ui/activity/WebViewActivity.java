@@ -27,6 +27,7 @@ import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseActivity;
+import com.juzhe.www.common.https.BaseApi;
 import com.juzhe.www.ui.fragment.SmartRefreshWebLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -59,7 +60,7 @@ public class WebViewActivity extends BaseActivity {
     private SmartRefreshWebLayout mSmartRefreshWebLayout = null;
     private String link;
     private int type = 0;
-    private String realm = "http://test.bestsoft.channel.cqjjsms.com";
+    private String realm = BaseApi.getBaseUrl();
 
     @Override
     protected int getLayout() {
@@ -120,7 +121,7 @@ public class WebViewActivity extends BaseActivity {
                 .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
                 .setWebLayout(mSmartRefreshWebLayout)
                 .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.DERECT)//打开其他应用时，弹窗咨询用户是否前往其他应用
-               .interceptUnkownUrl() //拦截找不到相关页面的Scheme
+                .interceptUnkownUrl() //拦截找不到相关页面的Scheme
                 .createAgentWeb()
                 .ready()
                 .go(link);

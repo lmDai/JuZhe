@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.smtt.sdk.QbSdk;
 
 /**
  * @package: com.juzhe.www
@@ -28,6 +29,7 @@ public class MyApplication extends BaseApplication {
     public static MyApplication mApplication;
     public static final String appKey = "5990181a5fe943b5892cc52dd6488663";
     public static final String keySecret = "d37c5f87d5464c7f8ef43b6158025d48";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -63,6 +65,22 @@ public class MyApplication extends BaseApplication {
 
                     }
                 });
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                // TODO Auto-generated method stub
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                Log.d("app", " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+                // TODO Auto-generated method stub
+            }
+        };
+        //x5内核初始化接口
+        QbSdk.initX5Environment(getApplicationContext(), cb);
     }
 
     static {

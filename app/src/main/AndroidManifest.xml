@@ -157,9 +157,9 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.activity.WebViewActivity"
-            android:label=""
-            android:hardwareAccelerated="true"
             android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:label=""
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.activity.product.ProductListActivity"
@@ -218,6 +218,10 @@
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.XWebViewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="" />
         <activity
             android:name="com.ali.auth.third.ui.LoginActivity"
             android:theme="@style/AlibcLoginTheme"

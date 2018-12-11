@@ -17,6 +17,9 @@ android {
         packagingOptions {
             exclude 'META-INF/proguard/androidx-annotations.pro'
         }
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
         multiDexEnabled true
     }
     greendao {
@@ -155,5 +158,8 @@ dependencies {
     //电商SDK
     api 'com.alibaba.sdk.android:alibc_trade_sdk:3.1.1.11@aar'
     implementation project(':jdsdk_lib')
-    implementation 'com.just.agentweb:agentweb:4.0.2' // (必选)
+    implementation 'com.just.agentweb:agentweb:4.0.2'
+
+    // (必选)
+    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
 }

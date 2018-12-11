@@ -28,6 +28,7 @@ import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.HomeFragmentContract;
 import com.juzhe.www.mvp.presenter.HomeFragmentPresenter;
+import com.juzhe.www.ui.activity.XWebViewActivity;
 import com.juzhe.www.ui.activity.person.IntroductionActivity;
 import com.juzhe.www.ui.activity.person.MessageActivity;
 import com.juzhe.www.ui.activity.person.PersonalActivity;
@@ -355,12 +356,12 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentContract.View, Hom
 
     @Override
     public void OnBannerClick(int position) {
-        Log.i("single",position+"dsdfads");
+        Log.i("single", position + "dsdfads");
         Bundle bundle = new Bundle();
         switch (model.get(position).getType()) {
             case 1:
                 bundle.putString("link", model.get(position).getLink());
-                IntentUtils.get().goActivity(mContext, WebViewActivity.class, bundle);
+                IntentUtils.get().goActivity(mContext, XWebViewActivity.class, bundle);
                 break;
             case 2:
                 bundle.putString("item_id", model.get(position).getLink());
