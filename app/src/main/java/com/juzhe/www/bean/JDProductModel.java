@@ -3,6 +3,8 @@ package com.juzhe.www.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * @package: com.juzhe.www.bean
  * @user:xhkj
@@ -30,7 +32,7 @@ public class JDProductModel implements Parcelable {
     private String item_id;
     private String item_title;
     private String item_short_title;
-    private String item_pic;
+    private List<String> item_pic;
     private String fqcat;
     private double item_price;
     private double item_end_price;
@@ -47,7 +49,7 @@ public class JDProductModel implements Parcelable {
         item_id = in.readString();
         item_title = in.readString();
         item_short_title = in.readString();
-        item_pic = in.readString();
+        item_pic = in.createStringArrayList();
         fqcat = in.readString();
         item_price = in.readDouble();
         item_end_price = in.readDouble();
@@ -61,6 +63,30 @@ public class JDProductModel implements Parcelable {
         link = in.readString();
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(item_id);
+        dest.writeString(item_title);
+        dest.writeString(item_short_title);
+        dest.writeStringList(item_pic);
+        dest.writeString(fqcat);
+        dest.writeDouble(item_price);
+        dest.writeDouble(item_end_price);
+        dest.writeDouble(couponmoney);
+        dest.writeString(discount_link);
+        dest.writeDouble(tkrates);
+        dest.writeDouble(tkmoney);
+        dest.writeDouble(estimate);
+        dest.writeDouble(upgrade);
+        dest.writeString(item_pic_copy);
+        dest.writeString(link);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<JDProductModel> CREATOR = new Creator<JDProductModel>() {
         @Override
         public JDProductModel createFromParcel(Parcel in) {
@@ -72,22 +98,6 @@ public class JDProductModel implements Parcelable {
             return new JDProductModel[size];
         }
     };
-
-    public String getItem_pic_copy() {
-        return item_pic_copy;
-    }
-
-    public void setItem_pic_copy(String item_pic_copy) {
-        this.item_pic_copy = item_pic_copy;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
 
     public String getItem_id() {
         return item_id;
@@ -113,11 +123,11 @@ public class JDProductModel implements Parcelable {
         this.item_short_title = item_short_title;
     }
 
-    public String getItem_pic() {
+    public List<String> getItem_pic() {
         return item_pic;
     }
 
-    public void setItem_pic(String item_pic) {
+    public void setItem_pic(List<String> item_pic) {
         this.item_pic = item_pic;
     }
 
@@ -193,27 +203,19 @@ public class JDProductModel implements Parcelable {
         this.upgrade = upgrade;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getItem_pic_copy() {
+        return item_pic_copy;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(item_id);
-        dest.writeString(item_title);
-        dest.writeString(item_short_title);
-        dest.writeString(item_pic);
-        dest.writeString(fqcat);
-        dest.writeDouble(item_price);
-        dest.writeDouble(item_end_price);
-        dest.writeDouble(couponmoney);
-        dest.writeString(discount_link);
-        dest.writeDouble(tkrates);
-        dest.writeDouble(tkmoney);
-        dest.writeDouble(estimate);
-        dest.writeDouble(upgrade);
-        dest.writeString(item_pic_copy);
-        dest.writeString(link);
+    public void setItem_pic_copy(String item_pic_copy) {
+        this.item_pic_copy = item_pic_copy;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

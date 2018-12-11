@@ -28,7 +28,8 @@ public class ProductListJdAdapter extends BaseQuickAdapter<JDProductModel, BaseV
     @Override
     protected void convert(BaseViewHolder helper, JDProductModel item) {
         ImageView imgProduct = helper.getView(R.id.img_pic);
-        GlideUtil.loadRoundImage(mContext, item.getItem_pic(), SizeUtils.px2dp(mContext, 4), imgProduct);
+        if (item.getItem_pic() != null && item.getItem_pic().size() > 0)
+            GlideUtil.loadRoundImage(mContext, item.getItem_pic().get(0), SizeUtils.px2dp(mContext, 4), imgProduct);
         TextView txtPrice = helper.getView(R.id.txt_price);
         TextView txtEstimate = helper.getView(R.id.txt_estimate);
         TextView txtUpgrade = helper.getView(R.id.txt_upgrade);

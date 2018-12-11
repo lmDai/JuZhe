@@ -7,12 +7,12 @@ package com.juzhe.www.common.https;
  * @description: 获取地址
  **/
 public class BaseApi {
-//    public final static String BASE_HOST = "http://channel.jiruan.ltd/";
-//    public final static String VERSION_HOST = "http://channel.jiruan.ltd/";
-//    public final static String OTHER_HOST = "http://channel.jiruan.ltd/";
-    public final static String BASE_HOST = "http://test.bestsoft.channel.cqjjsms.com/";
-    public final static String VERSION_HOST = "http://test.bestsoft.channel.cqjjsms.com/";
-    public final static String OTHER_HOST = "http://test.bestsoft.channel.cqjjsms.com/";
+    public final static String BASE_HOST = "http://channel.jiruan.ltd/";
+    public final static String VERSION_HOST = "http://channel.jiruan.ltd/";
+    public final static String OTHER_HOST = "http://channel.jiruan.ltd/";
+//    public final static String BASE_HOST = "http://test.bestsoft.channel.cqjjsms.com/";
+//    public final static String VERSION_HOST = "http://test.bestsoft.channel.cqjjsms.com/";
+//    public final static String OTHER_HOST = "http://test.bestsoft.channel.cqjjsms.com/";
 
     public enum HostType {
         BASE_TYPE,
