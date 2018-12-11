@@ -50,6 +50,15 @@ public class PddListModel {
 
     private String estimate;
     private String upgrade;
+    private String source;
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 
     public String getItem_end_price() {
         return item_end_price;

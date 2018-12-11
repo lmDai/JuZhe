@@ -35,7 +35,7 @@ public class ProductListJdAdapter extends BaseQuickAdapter<JDProductModel, BaseV
         TextView txtUpgrade = helper.getView(R.id.txt_upgrade);
         txtPrice.setText("¥" + item.getItem_price());
         txtPrice.setPaintFlags(txtPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        helper.setText(R.id.txt_resource, "京东")
+        helper.setText(R.id.txt_resource, item.getSource())
                 .setText(R.id.txt_title, item.getItem_title())
                 .setText(R.id.txt_end_price, item.getItem_end_price() + "")
 //                .setText(R.id.txt_sale, item.getItem_sale() + "人已买")

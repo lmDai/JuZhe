@@ -32,7 +32,7 @@ public class ProductListPddAdapter extends BaseQuickAdapter<PddListModel, BaseVi
         TextView txtUpgrade = helper.getView(R.id.txt_upgrade);
         txtPrice.setText("¥" + item.getPrice());
         txtPrice.setPaintFlags(txtPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        helper.setText(R.id.txt_resource, "拼多多")
+        helper.setText(R.id.txt_resource, item.getSource())
                 .setText(R.id.txt_title, item.getGoods_name())
                 .setText(R.id.txt_end_price, item.getItem_end_price() + "")
                 .setText(R.id.txt_sale, item.getSold_quantity() + "人已买")

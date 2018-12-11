@@ -36,7 +36,7 @@ public class ProductListPddPresenter extends ProductListPddContract.Presenter {
                     @Override
                     public void onSuccess(BasePageResponse<List<PddListModel>> result) {
                         if (result.getErrorcode() == 0) {
-                            currentPage = result.getPage();
+                            currentPage = result.getNext();
                             getView().showProductList(result.getData(), isRefresh);//注册成功
                         } else {
                             ToastUtils.showShort(result.getMsg());

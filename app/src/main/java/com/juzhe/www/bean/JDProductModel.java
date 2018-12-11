@@ -45,6 +45,8 @@ public class JDProductModel implements Parcelable {
     private String item_pic_copy;//	消息图
     private String link;//	链接
 
+    private String source;
+
     protected JDProductModel(Parcel in) {
         item_id = in.readString();
         item_title = in.readString();
@@ -61,30 +63,7 @@ public class JDProductModel implements Parcelable {
         upgrade = in.readDouble();
         item_pic_copy = in.readString();
         link = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(item_id);
-        dest.writeString(item_title);
-        dest.writeString(item_short_title);
-        dest.writeStringList(item_pic);
-        dest.writeString(fqcat);
-        dest.writeDouble(item_price);
-        dest.writeDouble(item_end_price);
-        dest.writeDouble(couponmoney);
-        dest.writeString(discount_link);
-        dest.writeDouble(tkrates);
-        dest.writeDouble(tkmoney);
-        dest.writeDouble(estimate);
-        dest.writeDouble(upgrade);
-        dest.writeString(item_pic_copy);
-        dest.writeString(link);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        source = in.readString();
     }
 
     public static final Creator<JDProductModel> CREATOR = new Creator<JDProductModel>() {
@@ -98,6 +77,15 @@ public class JDProductModel implements Parcelable {
             return new JDProductModel[size];
         }
     };
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
 
     public String getItem_id() {
         return item_id;
@@ -217,5 +205,30 @@ public class JDProductModel implements Parcelable {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(item_id);
+        dest.writeString(item_title);
+        dest.writeString(item_short_title);
+        dest.writeStringList(item_pic);
+        dest.writeString(fqcat);
+        dest.writeDouble(item_price);
+        dest.writeDouble(item_end_price);
+        dest.writeDouble(couponmoney);
+        dest.writeString(discount_link);
+        dest.writeDouble(tkrates);
+        dest.writeDouble(tkmoney);
+        dest.writeDouble(estimate);
+        dest.writeDouble(upgrade);
+        dest.writeString(item_pic_copy);
+        dest.writeString(link);
+        dest.writeString(source);
     }
 }

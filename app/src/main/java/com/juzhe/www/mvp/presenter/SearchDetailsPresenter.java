@@ -52,11 +52,11 @@ public class SearchDetailsPresenter extends SearchDetailsContract.Presenter {
 
 
     @Override
-    public void getProductListOther(String sort,String keyWord,String user_id, String user_channel_id, boolean isRefresh) {
+    public void getProductListOther(String sort, String keyWord, String user_id, String user_channel_id, boolean isRefresh) {
         if (isRefresh) {
             currentPage = "1";
         }
-        MainModel.getInstance(Utils.getContext()).getPddList(sort,keyWord,user_id, currentPage,
+        MainModel.getInstance(Utils.getContext()).getPddList(sort, keyWord, user_id, currentPage,
                 user_channel_id)
                 .compose(RxUtil.observableIO2Main(getView()))
                 .compose(RxUtil.handNoResponseResult())
@@ -64,7 +64,7 @@ public class SearchDetailsPresenter extends SearchDetailsContract.Presenter {
                     @Override
                     public void onSuccess(BasePageResponse<List<PddListModel>> result) {
                         if (result.getErrorcode() == 0) {
-                            currentPage = result.getPage();
+                            currentPage = result.getNext();
                             getView().showProductList(result.getData(), isRefresh);
                         } else {
                             getView().showError(new Throwable(), isRefresh);
