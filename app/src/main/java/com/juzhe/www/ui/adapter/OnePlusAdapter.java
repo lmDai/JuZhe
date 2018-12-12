@@ -12,6 +12,10 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.bumptech.glide.Glide;
 import com.juzhe.www.R;
+import com.juzhe.www.bean.CutomHomeModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @package: com.juzhe.www.ui.adapter
@@ -26,17 +30,18 @@ public class OnePlusAdapter extends DelegateAdapter.Adapter<OnePlusAdapter.MainV
 
     private LayoutHelper mLayoutHelper;
     private int type;
-
+    private List<CutomHomeModel.DataBean.AdvertBean> mList = new ArrayList<>();
 
 
     private int mCount = 0;
 
     public OnePlusAdapter(Context context, LayoutHelper layoutHelper, int count,
-                          int type) {
+                          int type, List<CutomHomeModel.DataBean.AdvertBean> mList) {
         this.mContext = context;
         this.mLayoutHelper = layoutHelper;
         this.mCount = count;
         this.type = type;
+        this.mList = mList;
     }
 
     @Override
@@ -61,14 +66,14 @@ public class OnePlusAdapter extends DelegateAdapter.Adapter<OnePlusAdapter.MainV
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder mainViewHolder, int i) {
         if (type == 1) {
-            Glide.with(mContext).load("http://ww4.sinaimg.cn/large/006uZZy8jw1faic1xjab4j30ci08cjrv.jpg").into(mainViewHolder.imageView);
+            Glide.with(mContext).load(mList.get(i).getImage()).into(mainViewHolder.imageView);
         } else if (type == 2) {
-            Glide.with(mContext).load("http://ww4.sinaimg.cn/large/006uZZy8jw1faic1xjab4j30ci08cjrv.jpg").into(mainViewHolder.imageView);
-            Glide.with(mContext).load("http://ww4.sinaimg.cn/large/006uZZy8jw1faic259ohaj30ci08c74r.jpg").into(mainViewHolder.imageView1);
+            Glide.with(mContext).load(mList.get(i).getImage()).into(mainViewHolder.imageView);
+            Glide.with(mContext).load(mList.get(i).getImage()).into(mainViewHolder.imageView1);
         } else {
-            Glide.with(mContext).load("http://ww4.sinaimg.cn/large/006uZZy8jw1faic1xjab4j30ci08cjrv.jpg").into(mainViewHolder.imageView);
-            Glide.with(mContext).load("http://ww4.sinaimg.cn/large/006uZZy8jw1faic259ohaj30ci08c74r.jpg").into(mainViewHolder.imageView1);
-            Glide.with(mContext).load("http://ww4.sinaimg.cn/large/006uZZy8jw1faic1xjab4j30ci08cjrv.jpg").into(mainViewHolder.imageView2);
+            Glide.with(mContext).load(mList.get(i).getImage()).into(mainViewHolder.imageView);
+            Glide.with(mContext).load(mList.get(i).getImage()).into(mainViewHolder.imageView1);
+            Glide.with(mContext).load(mList.get(i).getImage()).into(mainViewHolder.imageView2);
         }
 
     }

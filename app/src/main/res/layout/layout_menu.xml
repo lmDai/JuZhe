@@ -23,5 +23,5 @@
         android:nestedScrollingEnabled="false"
         android:overScrollMode="never"
         android:scrollbars="none"
-        android:visibility="gone" />
+        />
 </LinearLayout>

@@ -1,42 +1,37 @@
 package com.juzhe.www.ui.fragment;
 
+import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
-import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpFragment;
-import com.juzhe.www.bean.AdvertModel;
 import com.juzhe.www.bean.ClassfyModel;
-import com.juzhe.www.bean.IconModel;
-import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
-import com.juzhe.www.mvp.contract.HomeFragmentContract;
-import com.juzhe.www.mvp.presenter.HomeFragmentPresenter;
+import com.juzhe.www.mvp.contract.CustomeHomeFragmentContract;
+import com.juzhe.www.mvp.presenter.CustomHomeFragmentPresenter;
 import com.juzhe.www.ui.adapter.BasePagerAdapter;
-import com.juzhe.www.ui.adapter.MenuAdapter;
-import com.juzhe.www.ui.adapter.OnePlusAdapter;
-import com.juzhe.www.ui.widget.JudgeNestedScrollView;
-import com.juzhe.www.utils.ScreenUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @package: com.juzhe.www.ui.fragment
@@ -44,31 +39,33 @@ import butterknife.BindView;
  * @date:2018/10/31
  * @description:首页
  **/
-@CreatePresenterAnnotation(HomeFragmentPresenter.class)
-public class Home1Fragment extends BaseMvpFragment<HomeFragmentContract.View, HomeFragmentPresenter> implements HomeFragmentContract.View {
-
-//    @BindView(R.id.recycler_home)
-//    RecyclerView recyclerHome;
-    @BindView(R.id.tabs)
-    SlidingTabLayout tabs;
-    @BindView(R.id.tabs_title)
-    SlidingTabLayout tabTitle;
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
-    @BindView(R.id.scrollView)
-    JudgeNestedScrollView scrollView;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
+@CreatePresenterAnnotation(CustomHomeFragmentPresenter.class)
+public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.View, CustomHomeFragmentPresenter> implements CustomeHomeFragmentContract.View {
+    @BindView(R.id.img_me)
+    ImageView imgMe;
+    @BindView(R.id.txt_title)
+    TextView txtTitle;
+    @BindView(R.id.img_message)
+    ImageView imgMessage;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.ll_title)
-    LinearLayout llTitle;
-    private Runnable trigger;
-    int toolBarPositionY = 0;
-    private int mOffset = 0;
-    private int mScrollY = 0;
+    @BindView(R.id.recycler_home)
+    RecyclerView recyclerHome;
+    @BindView(R.id.tabs)
+    SlidingTabLayout tabs;
+    @BindView(R.id.btn_select)
+    ImageButton btnSelect;
+    @BindView(R.id.appbar_layout)
+    AppBarLayout appbarLayout;
+    @BindView(R.id.viewpager)
+    ViewPager viewpager;
+    @BindView(R.id.refresh_layout)
+    SmartRefreshLayout refreshLayout;
+    Unbinder unbinder;
     private List<DelegateAdapter.Adapter> mAdapters;
-    private BasePagerAdapter mAdapter;
+    private BasePagerAdapter myAdapter;
+    private int position;
+    private DelegateAdapter delegateAdapter;
 
     @Override
     protected int getLayout() {
@@ -91,47 +88,10 @@ public class Home1Fragment extends BaseMvpFragment<HomeFragmentContract.View, Ho
     }
 
     private void initRecyclerView() {
-//        recyclerHome.setNestedScrollingEnabled(false);
-//        DelegateAdapter delegateAdapter = getMvpPresenter().initRecyclerView(recyclerHome);
-//        BaseDelegateAdapter bannerAdapter = getMvpPresenter().initBanner();
-//        mAdapters.add(bannerAdapter);
-//        BaseDelegateAdapter searchAdapter = getMvpPresenter().initSearch();
-//        mAdapters.add(searchAdapter);
-//        mAdapters.add(onePlusAdapter(1));
-//        mAdapters.add(onePlusAdapter(2));
-//        mAdapters.add(onePlusAdapter(3));
-//        mAdapters.add(menuAdapter(1));
-//        mAdapters.add(menuAdapter(2));
-//        mAdapters.add(onePlusAdapter(1));
-//        mAdapters.add(onePlusAdapter(2));
-//        mAdapters.add(onePlusAdapter(3));
-//        mAdapters.add(menuAdapter(1));
-//        mAdapters.add(menuAdapter(2));
-//        //初始化快速入口标题
-//        BaseDelegateAdapter fastEntrceTitleAdapter = getMvpPresenter().initFastEntrceTitle();
-//        mAdapters.add(fastEntrceTitleAdapter);
-//        //初始化快速入口标题
-//        BaseDelegateAdapter fastEntraceAdapter = getMvpPresenter().initFastEntrace();
-//        mAdapters.add(fastEntraceAdapter);
-//
-//        //设置适配器
-//        delegateAdapter.setAdapters(mAdapters);
-//
-//        final Handler mainHandler = new Handler(Looper.getMainLooper());
-//
-//        trigger = new Runnable() {
-//            @Override
-//            public void run() {
-//                recyclerHome.requestLayout();
-//            }
-//        };
-//        mainHandler.postDelayed(trigger, 1000);
+        recyclerHome.setNestedScrollingEnabled(false);
+        delegateAdapter = getMvpPresenter().initRecyclerView(recyclerHome);
     }
 
-    @Override
-    public void setOnclick(int position) {
-
-    }
 
     /**
      * 分类列表
@@ -146,96 +106,57 @@ public class Home1Fragment extends BaseMvpFragment<HomeFragmentContract.View, Ho
             titles.add(classfyModel.getName());
             mFragments.add(new ProductListFragment());
         }
-        initViewPager(mFragments, titles);
+        initTabViewPager(mFragments, titles);
     }
 
     @Override
-    public void setAdvert(List<AdvertModel> model) {
-
+    public void setHomeDelegateAdapter(List<DelegateAdapter.Adapter> homeDelegateAdapter) {
+        delegateAdapter.setAdapters(homeDelegateAdapter);
     }
 
-    @Override
-    public void setUserModel(UserModel userModel) {
-
-    }
-
-    @Override
-    public void setIconPage(List<IconModel> iconPage) {
-
-    }
 
     @Override
     protected void initEvent() {
         super.initEvent();
+        getMvpPresenter().getCutomData();
         getMvpPresenter().getIconClassify();
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+    }
+
+    private void initTabViewPager(List<Fragment> mFragments, List<String> mTitleList) {
+        FragmentManager supportFragmentManager = getChildFragmentManager();
+        myAdapter = new BasePagerAdapter(supportFragmentManager, mFragments, mTitleList);
+        viewpager.setAdapter(myAdapter);
+        viewpager.setOffscreenPageLimit(mFragments.size());
+        tabs.setViewPager(viewpager);
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
-                mOffset = offset / 2;
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
-        });
-        toolbar.post(new Runnable() {
-            @Override
-            public void run() {
-                dealWithViewPager();
-            }
-        });
-        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            int lastScrollY = 0;
-            int h = DensityUtil.dp2px(170);
-            int color = ContextCompat.getColor(mContext, R.color.colorWhite) & 0x00ffffff;
 
             @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                int[] location = new int[2];
-                tabs.getLocationOnScreen(location);
-                int yPosition = location[1];
-                if (yPosition < toolBarPositionY) {
-                    llTitle.setVisibility(View.VISIBLE);
-                    scrollView.setNeedScroll(false);
-                } else {
-                    llTitle.setVisibility(View.GONE);
-                    scrollView.setNeedScroll(true);
-                }
-                if (lastScrollY < h) {
-                    scrollY = Math.min(h, scrollY);
-                    mScrollY = scrollY > h ? h : scrollY;
-                    toolbar.setBackgroundColor(((255 * mScrollY / h) << 24) | color);
-                }
-                lastScrollY = scrollY;
+            public void onPageSelected(int position) {
+                Home1Fragment.this.position = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
-        toolbar.setBackgroundColor(0);
     }
 
-
-    private void dealWithViewPager() {
-        toolBarPositionY = toolbar.getHeight();
-        ViewGroup.LayoutParams params = viewPager.getLayoutParams();
-        params.height = ScreenUtil.getScreenHeightPx(mContext) - toolBarPositionY - tabs.getHeight() + 1;
-        viewPager.setLayoutParams(params);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
-
-    private void initViewPager(List<Fragment> mFragments, List<String> mTitles) {
-        mAdapter = new BasePagerAdapter(getChildFragmentManager(), mFragments, mTitles);
-        viewPager.setAdapter(mAdapter);
-        tabs.setViewPager(viewPager);
-        tabTitle.setViewPager(viewPager);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
-
-    private OnePlusAdapter onePlusAdapter(int type) {
-        return new OnePlusAdapter(mContext, new LinearLayoutHelper(), 1, type);
-    }
-
-    /**
-     * 菜单
-     *
-     * @param type
-     * @return
-     */
-    private MenuAdapter menuAdapter(int type) {
-        return new MenuAdapter(mContext, new LinearLayoutHelper(), 1, type);
-    }
-
 }

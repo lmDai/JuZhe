@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.juzhe.www.base.BaseActivity;
 import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.ui.activity.MemberActivity;
+import com.juzhe.www.ui.fragment.Home1Fragment;
 import com.juzhe.www.ui.fragment.HomeFragment;
 import com.juzhe.www.ui.fragment.OrderFragment;
 import com.juzhe.www.ui.fragment.SkillFragment;

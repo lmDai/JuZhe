@@ -5,179 +5,90 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/title_bar_one" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:srlEnableLoadMore="false"
-        app:srlEnablePreviewInEditMode="false"
-        app:srlEnableRefresh="false">
+        app:srlEnableLoadMore="false">
 
-        <com.juzhe.www.ui.widget.JudgeNestedScrollView
-            android:id="@+id/scrollView"
+
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:background="@color/colorBg"
+                android:elevation="@dimen/dp_10"
+                app:layout_behavior="com.juzhe.www.ui.widget.FixBounceV26Behavior">
 
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:contentScrim="?attr/colorPrimary"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                    android:paddingBottom="@dimen/dp_10"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:scrimAnimationDuration="0"
                     app:titleEnabled="false">
 
-                    <android.support.v7.widget.RecyclerView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_round_white"
+                        android:orientation="vertical"
+                        android:descendantFocusability="blocksDescendants">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycler_home"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                 </android.support.design.widget.CollapsingToolbarLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="@color/color_gray">
+                    android:layout_gravity="bottom">
 
                     <com.flyco.tablayout.SlidingTabLayout
                         android:id="@+id/tabs"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_48"
                         android:layout_weight="1"
-                        android:background="@color/color_gray"
+                        android:background="@color/colorWhite"
                         app:tl_indicator_color="@color/color_indicator"
-                        app:tl_indicator_height="@dimen/dp_2"
-                        app:tl_indicator_margin_bottom="@dimen/dp_6"
-                        app:tl_indicator_margin_top="@dimen/dp_4"
+                        app:tl_indicator_height="@dimen/dp_4"
+                        app:tl_indicator_margin_top="@dimen/dp_2"
                         app:tl_indicator_width_equal_title="true"
                         app:tl_tab_padding="@dimen/dp_10"
                         app:tl_tab_space_equal="false"
-                        app:tl_textSelectColor="@color/color_indicator"
+                        app:tl_textSelectColor="@color/colorBlack"
                         app:tl_textUnselectColor="@color/colorBlack"
                         app:tl_textsize="@dimen/sp_16" />
 
-                    <View
-                        android:layout_width="@dimen/dp_2"
-                        android:layout_height="@dimen/dp_25"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bg_white_round" />
-
                     <ImageButton
+                        android:id="@+id/btn_select"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:background="@null"
+                        android:background="@color/colorWhite"
                         android:padding="@dimen/dp_10"
                         android:src="@drawable/ic_more_classify" />
                 </LinearLayout>
 
+            </android.support.design.widget.AppBarLayout>
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/view_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-        </com.juzhe.www.ui.widget.JudgeNestedScrollView>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBg"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </android.support.design.widget.CoordinatorLayout>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginBottom="0dp"
-            android:background="@drawable/bg_toolbar"
-            app:layout_collapseMode="pin">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_me" />
-
-
-                <android.support.v7.widget.ButtonBarLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:maxLines="1"
-                        android:text="SiberiaDante" />
-
-
-                </android.support.v7.widget.ButtonBarLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:src="@drawable/ic_message" />
-            </LinearLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-        <LinearLayout
-            android:id="@+id/ll_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:layout_gravity="bottom"
-            android:background="@color/color_gray"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            app:layout_collapseMode="pin">
-
-            <com.flyco.tablayout.SlidingTabLayout
-                android:id="@+id/tabs_title"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp_48"
-                android:layout_weight="1"
-                android:background="@color/color_gray"
-                app:tl_indicator_color="@color/color_indicator"
-                app:tl_indicator_height="@dimen/dp_2"
-                app:tl_indicator_margin_bottom="@dimen/dp_6"
-                app:tl_indicator_margin_top="@dimen/dp_4"
-                app:tl_indicator_width_equal_title="true"
-                app:tl_tab_padding="@dimen/dp_10"
-                app:tl_tab_space_equal="false"
-                app:tl_textSelectColor="@color/color_indicator"
-                app:tl_textUnselectColor="@color/colorBlack"
-                app:tl_textsize="@dimen/sp_16" />
-
-            <View
-                android:layout_width="@dimen/dp_2"
-                android:layout_height="@dimen/dp_25"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_white_round" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:padding="@dimen/dp_10"
-                android:src="@drawable/ic_more_classify" />
-        </LinearLayout>
-    </RelativeLayout>
-
 </android.support.design.widget.CoordinatorLayout>
