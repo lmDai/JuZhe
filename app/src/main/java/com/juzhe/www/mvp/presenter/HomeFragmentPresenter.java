@@ -71,7 +71,7 @@ public class HomeFragmentPresenter extends HomeFragmentContract.Presenter {
 
     @Override
     public BaseDelegateAdapter initTitle() {
-        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_home_title, 1, Constant.viewType.typeTitle) {
+        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_home_title, 1, Constant.viewType.search_1) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -98,7 +98,7 @@ public class HomeFragmentPresenter extends HomeFragmentContract.Presenter {
         proPic.recycle();
         ColumnLayoutHelper columnLayoutHelper = new ColumnLayoutHelper();
         columnLayoutHelper.setItemCount(3);
-        return new BaseDelegateAdapter(getView().getContext(), columnLayoutHelper, R.layout.item_vp_grid_iv, 5, Constant.viewType.typeGv) {
+        return new BaseDelegateAdapter(getView().getContext(), columnLayoutHelper, R.layout.item_vp_grid_iv, 5, Constant.viewType.search_1) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, @SuppressLint("RecyclerView") final int position) {
                 super.onBindViewHolder(holder, position);
@@ -117,7 +117,7 @@ public class HomeFragmentPresenter extends HomeFragmentContract.Presenter {
 
     @Override
     public BaseDelegateAdapter initSearch() {
-        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.item_search, 1, Constant.viewType.typeTitle) {
+        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.item_search, 1, Constant.viewType.search_1) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -127,7 +127,7 @@ public class HomeFragmentPresenter extends HomeFragmentContract.Presenter {
 
     @Override
     public BaseDelegateAdapter initBanner() {
-        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_home_banner, 1, Constant.viewType.typeTitle) {
+        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_home_banner, 1, Constant.viewType.search_1) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -146,7 +146,7 @@ public class HomeFragmentPresenter extends HomeFragmentContract.Presenter {
     @Override
     public BaseDelegateAdapter initFastEntrceTitle() {
 
-        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.base_view_title, 1, Constant.viewType.typeTitle) {
+        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.base_view_title, 1, Constant.viewType.search_1) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -157,7 +157,7 @@ public class HomeFragmentPresenter extends HomeFragmentContract.Presenter {
 
     @Override
     public BaseDelegateAdapter initFastEntrace() {
-        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_home_entrace, 1, Constant.viewType.typeList) {
+        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_home_entrace, 1, Constant.viewType.search_1) {
 
             @Override
             public void onViewRecycled(BaseViewHolder holder) {

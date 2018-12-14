@@ -93,5 +93,7 @@ public class TaoBaoKeApi {
     public final static String USER_KALMAN = "app/user/kalman";
     //京东，拼多多搜索
     public final static String JD_PDD_SEARCH = "app/goods/hao-search";
+    //首页定制化
+    public final static String VIEW_INDEX = "app/view/index";
 
 }

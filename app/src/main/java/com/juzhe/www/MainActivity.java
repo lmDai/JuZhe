@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
         tabFragment = new ArrayList<>();
         userModel = UserUtils.getUser(mContext);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        tabFragment.add(new HomeFragment());//首页
+        tabFragment.add(new Home1Fragment());//首页
         tabFragment.add(new OrderFragment());//礼包中心
         tabFragment.add(new SkillFragment());//个人中心
         transaction.add(R.id.frame_container, tabFragment.get(1));

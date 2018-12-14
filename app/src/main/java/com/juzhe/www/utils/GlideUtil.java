@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -237,6 +238,38 @@ public class GlideUtil {
 
     }
 
+    public static void showImageViewLinearLayout(Context context,
+                                                 String url, final LinearLayout bgLayout) {
+        Glide.with(context).load(url).asBitmap().error(R.drawable.ic_zhanwei_message)
+                // 设置错误图片
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                // 缓存修改过的图片
+                .placeholder(R.drawable.ic_zhanwei_message)
+                // 设置占位图
+                .into(new SimpleTarget<Bitmap>() {
+
+                    @SuppressLint("NewApi")
+                    @Override
+                    public void onResourceReady(Bitmap loadedImage,
+                                                GlideAnimation<? super Bitmap> arg1) {
+                        BitmapDrawable bd = new BitmapDrawable(loadedImage);
+
+                        bgLayout.setBackground(bd);
+
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        // TODO Auto-generated method stub
+                        super.onLoadFailed(e, errorDrawable);
+
+                        bgLayout.setBackgroundDrawable(errorDrawable);
+                    }
+
+                });
+
+    }
+
     /**
      * glide 从字符串中加载图片（网络地址或者本地地址）,
      */
@@ -249,7 +282,8 @@ public class GlideUtil {
                 .priority(Priority.NORMAL) //下载的优先级
                 .into(view);
     }
-    public static void loadIntoUseFitWidth(Context context, final String imageUrl,final ImageView imageView) {
+
+    public static void loadIntoUseFitWidth(Context context, final String imageUrl, final ImageView imageView) {
         Glide.with(context)
                 .load(imageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -269,9 +303,11 @@ public class GlideUtil {
                         }
                         ViewGroup.LayoutParams params = imageView.getLayoutParams();
                         int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();
+
                         float scale = (float) vw / (float) resource.getIntrinsicWidth();
                         int vh = Math.round(resource.getIntrinsicHeight() * scale);
                         params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
+                        Log.i("single",vw+"高度："+resource.getIntrinsicHeight()+"宽度："+resource.getIntrinsicWidth());
                         imageView.setLayoutParams(params);
                         return false;
                     }
@@ -280,6 +316,7 @@ public class GlideUtil {
                 .error(R.drawable.ic_zhanwei_message)
                 .into(imageView);
     }
+
     /**
      * 加载gif
      *

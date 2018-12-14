@@ -5,6 +5,7 @@ import android.content.Context;
 import com.juzhe.www.api.TaoBaoKeService;
 import com.juzhe.www.bean.AdvertModel;
 import com.juzhe.www.bean.ClassfyModel;
+import com.juzhe.www.bean.CutomHomeModel;
 import com.juzhe.www.bean.GoodsShareModel;
 import com.juzhe.www.bean.IconModel;
 import com.juzhe.www.bean.JDProductModel;
@@ -195,7 +196,8 @@ public class MainModel {
         Observable<BaseResponse<JDProductModel>> getJDDetail = mApiService.getJDDetail(requestMap);
         return getJDDetail;
     }
-    public Observable<BaseResponse<JDProductModel>> getJDGaoYong(String couponmoney,String item_id, String discount_link, String user_id, String user_channel_id) {
+
+    public Observable<BaseResponse<JDProductModel>> getJDGaoYong(String couponmoney, String item_id, String discount_link, String user_id, String user_channel_id) {
         Map<String, Object> requestMap = InterceptUtils.getRequstMap();
         requestMap.put("couponmoney", couponmoney);
         requestMap.put("item_id", item_id);
@@ -205,7 +207,8 @@ public class MainModel {
         Observable<BaseResponse<JDProductModel>> getJDGaoYong = mApiService.getJDGaoYong(requestMap);
         return getJDGaoYong;
     }
-    public Observable<BasePageResponse<List<PddListModel>>> getPddList(String sort,String keyWord,String user_id,String page, String user_channel_id) {
+
+    public Observable<BasePageResponse<List<PddListModel>>> getPddList(String sort, String keyWord, String user_id, String page, String user_channel_id) {
         Map<String, Object> requestMap = InterceptUtils.getRequstMap();
         requestMap.put("sort", sort);
         requestMap.put("user_id", user_id);
@@ -250,5 +253,16 @@ public class MainModel {
         requestMap.put("user_level", user_level);
         Observable<BaseResponse<JdSearchModel>> getJdPddSearch = mApiService.getJdPddSearch(requestMap);
         return getJdPddSearch;
+    }
+
+
+    /**
+     * 首页定制化
+     *
+     * @return
+     */
+    public Observable<CutomHomeModel> getViewIndex() {
+        Observable<CutomHomeModel> getViewIndex = mApiService.getViewIndex();
+        return getViewIndex;
     }
 }

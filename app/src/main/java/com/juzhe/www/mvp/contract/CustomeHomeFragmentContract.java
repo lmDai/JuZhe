@@ -24,9 +24,12 @@ public interface CustomeHomeFragmentContract {
     interface View extends IBaseView {
         Context getContext();
 
+        void setUserModel(UserModel userModel);
+
         void setClassfiy(List<ClassfyModel> classfiy);
 
         void setHomeDelegateAdapter(List<DelegateAdapter.Adapter> homeDelegateAdapter);
+
     }
 
 
@@ -36,6 +39,8 @@ public interface CustomeHomeFragmentContract {
         public abstract void getIconClassify();//获取所有标签
 
         public abstract void getCutomData();
+
+        public abstract void getUserInfo(String user_id, String user_channel_id);
     }
 
 

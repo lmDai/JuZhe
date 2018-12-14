@@ -23,15 +23,29 @@ public class Constant {
     public static final int WITH_DRAW = 2;
 
     public interface viewType {
-        int typeBanner = 1;         //轮播图
-        int typeGv = 2;             //九宫格
-        int typeTitle = 3;          //标题
-        int typeList = 4;           //list
-        int typeNews = 5;           //新闻
-        int typeMarquee = 6;        //跑马灯
-        int typePlus = 7;          //不规则视图
-        int typeSticky = 8;         //指示器
-        int typeFooter = 9;         //底部
-        int typeGvSecond = 10;      //九宫格
+        int search_1 = 0;
+        int search_2 = 1;
+        int banner_1 = 2;
+        int menu_1 = 3;
+        int menu_2 = 4;
+        int menu_3 = 5;
+        int advert_1 = 6;
+        int advert_2 = 7;
+        int advert_3 = 8;
+        int advert_4 = 9;
+        int fast_entrance = 10;
+    }
+
+    public interface components {
+        String search_1 = "search_1";
+        String search_2 = "search_2";
+        String banner_1 = "banner_1";
+        String menu_1 = "menu_1";
+        String menu_2 = "menu_2";
+        String menu_3 = "menu_3";
+        String advert_1 = "advert_1";
+        String advert_2 = "advert_2";
+        String advert_3 = "advert_3";
+        String advert_4 = "advert_4";
     }
 }

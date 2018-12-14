@@ -1,6 +1,7 @@
 package com.juzhe.www.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,18 +13,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
+import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.juzhe.www.R;
 import com.juzhe.www.base.BaseMvpFragment;
 import com.juzhe.www.bean.ClassfyModel;
+import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.mvp_senior.annotaions.CreatePresenterAnnotation;
 import com.juzhe.www.mvp.contract.CustomeHomeFragmentContract;
 import com.juzhe.www.mvp.presenter.CustomHomeFragmentPresenter;
+import com.juzhe.www.ui.activity.person.IntroductionActivity;
+import com.juzhe.www.ui.activity.person.MessageActivity;
+import com.juzhe.www.ui.activity.person.PersonalActivity;
+import com.juzhe.www.ui.activity.product.SearchActivity;
 import com.juzhe.www.ui.adapter.BasePagerAdapter;
+import com.juzhe.www.ui.widget.FiltPopuWindow;
+import com.juzhe.www.utils.IntentUtils;
+import com.juzhe.www.utils.TextFontUtils;
+import com.juzhe.www.utils.UserUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,6 +45,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -56,7 +71,7 @@ public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.V
     @BindView(R.id.btn_select)
     ImageButton btnSelect;
     @BindView(R.id.appbar_layout)
-    AppBarLayout appbarLayout;
+    AppBarLayout appBarLayout;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
     @BindView(R.id.refresh_layout)
@@ -66,6 +81,8 @@ public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.V
     private BasePagerAdapter myAdapter;
     private int position;
     private DelegateAdapter delegateAdapter;
+    private List<ClassfyModel> classfiy;
+    private UserModel userModel;
 
     @Override
     protected int getLayout() {
@@ -75,8 +92,10 @@ public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.V
     @Override
     protected void initView(LayoutInflater inflater) {
         super.initView(inflater);
+        userModel = UserUtils.getUser(mContext);
         mAdapters = new LinkedList<>();
         initRecyclerView();
+        TextFontUtils.setTextTypeDTr(mContext, txtTitle);
     }
 
     @Override
@@ -92,6 +111,60 @@ public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.V
         delegateAdapter = getMvpPresenter().initRecyclerView(recyclerHome);
     }
 
+    @OnClick({R.id.img_me, R.id.img_message, R.id.btn_select})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_me://跳转个人中心
+                IntentUtils.get().goActivity(mContext, PersonalActivity.class);
+                break;
+            case R.id.img_message:
+                IntentUtils.get().goActivity(mContext, MessageActivity.class);
+                break;
+            case R.id.btn_select:
+                btnSelect.setImageResource(R.drawable.ic_close);
+                showFilterPopu();
+                break;
+        }
+    }
+
+    /**
+     * 显示筛选框
+     */
+    public void showFilterPopu() {
+        if (classfiy != null && classfiy.size() > 0) {
+            appBarLayout.setExpanded(false, false);
+            appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                    if (Math.abs(i) >= appBarLayout.getTotalScrollRange()) {
+                        FiltPopuWindow mFilter = new FiltPopuWindow.Builder(mContext, new FiltPopuWindow.Builder.OnCloseListener() {
+                            @Override
+                            public void onClick(FiltPopuWindow popupWindow, ClassfyModel confirm) {
+                                if (popupWindow.isShowing()) popupWindow.dismiss();
+                                if (classfiy.contains(confirm))
+                                    viewpager.setCurrentItem(classfiy.indexOf(confirm));
+                            }
+                        }).setColumnCount(4)//设置列数，测试2.3.4.5没问题
+                                .setDataSource(classfiy)
+                                .setColorBg(R.color.colorWhite)
+                                //所有的属性设置必须在build之前，不然无效
+                                .build()
+                                .createPop();
+                        mFilter.showAsDropDown(tabs);
+                        mFilter.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                            @Override
+                            public void onDismiss() {
+                                btnSelect.setImageResource(R.drawable.ic_more_classify);
+                            }
+                        });
+                        appBarLayout.removeOnOffsetChangedListener(this);
+                    }
+                }
+            });
+        } else {
+            ToastUtils.showShort("暂无分类信息");
+        }
+    }
 
     /**
      * 分类列表
@@ -100,11 +173,12 @@ public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.V
      */
     @Override
     public void setClassfiy(List<ClassfyModel> classfiy) {
+        this.classfiy = classfiy;
         List<Fragment> mFragments = new ArrayList<>();
         List<String> titles = new ArrayList<>();
         for (ClassfyModel classfyModel : classfiy) {
             titles.add(classfyModel.getName());
-            mFragments.add(new ProductListFragment());
+            mFragments.add(new ProductListFragment().newInstance(classfyModel.getKey()));
         }
         initTabViewPager(mFragments, titles);
     }
@@ -112,14 +186,33 @@ public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.V
     @Override
     public void setHomeDelegateAdapter(List<DelegateAdapter.Adapter> homeDelegateAdapter) {
         delegateAdapter.setAdapters(homeDelegateAdapter);
+        recyclerHome.requestLayout();
     }
 
+    @Override
+    public void setUserModel(UserModel user) {
+        txtTitle.setText("¥" + user.getTotal_income());
+        UserUtils.saveUserInfo(mContext, user);
+        refreshLayout.finishRefresh();
+    }
 
     @Override
     protected void initEvent() {
         super.initEvent();
         getMvpPresenter().getCutomData();
         getMvpPresenter().getIconClassify();
+        if (userModel != null)
+            getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                if (myAdapter != null) {
+                    ((ProductListFragment) myAdapter.getItem(position)).lazyFetchData();
+                }
+                getMvpPresenter().getUserInfo(userModel.getId(), userModel.getUser_channel_id());
+                getMvpPresenter().getCutomData();
+            }
+        });
     }
 
     private void initTabViewPager(List<Fragment> mFragments, List<String> mTitleList) {

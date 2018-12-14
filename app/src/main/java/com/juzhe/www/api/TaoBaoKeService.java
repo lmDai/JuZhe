@@ -6,6 +6,7 @@ import com.juzhe.www.bean.ArticleModel;
 import com.juzhe.www.bean.ChartModel;
 import com.juzhe.www.bean.ClassfyModel;
 import com.juzhe.www.bean.CodeModel;
+import com.juzhe.www.bean.CutomHomeModel;
 import com.juzhe.www.bean.ExtractModel;
 import com.juzhe.www.bean.GoodsShareModel;
 import com.juzhe.www.bean.IconModel;
@@ -245,10 +246,12 @@ public interface TaoBaoKeService {
     @POST(TaoBaoKeApi.JD_DETAIL)
     @FormUrlEncoded
     Observable<BaseResponse<JDProductModel>> getJDDetail(@FieldMap Map<String, Object> map);
+
     //京东商品列表
     @POST(TaoBaoKeApi.JD_GAO_YONG)
     @FormUrlEncoded
     Observable<BaseResponse<JDProductModel>> getJDGaoYong(@FieldMap Map<String, Object> map);
+
     //拼多多商品列表
     @POST(TaoBaoKeApi.PDD_LIST)
     @FormUrlEncoded
@@ -273,4 +276,8 @@ public interface TaoBaoKeService {
     @POST(TaoBaoKeApi.JD_PDD_SEARCH)
     @FormUrlEncoded
     Observable<BaseResponse<JdSearchModel>> getJdPddSearch(@FieldMap Map<String, Object> map);
+
+    //首页定制化
+    @POST(TaoBaoKeApi.VIEW_INDEX)
+    Observable<CutomHomeModel> getViewIndex();
 }

@@ -5,19 +5,12 @@
     android:layout_height="@dimen/dp_48"
     android:gravity="center">
 
-    <ImageView
-        android:id="@+id/img_left"
-        android:layout_width="@dimen/dp_25"
-        android:layout_height="@dimen/dp_25"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_zhanwei_intro" />
 
     <LinearLayout
         android:id="@+id/ll_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_40"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_weight="1"
         android:gravity="center"
