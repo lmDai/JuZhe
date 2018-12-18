@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/title_bar_one" />
+    <View
+        android:id="@+id/top_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh_layout"
@@ -39,8 +42,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_round_white"
-                        android:orientation="vertical"
-                        android:descendantFocusability="blocksDescendants">
+                        android:descendantFocusability="blocksDescendants"
+                        android:orientation="vertical">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/recycler_home"

@@ -14,6 +14,7 @@ import com.juzhe.www.bean.IncomeDetailModel;
 import com.juzhe.www.bean.JDProductModel;
 import com.juzhe.www.bean.JdSearchModel;
 import com.juzhe.www.bean.KeyWordModel;
+import com.juzhe.www.bean.NavModel;
 import com.juzhe.www.bean.OrderConfirmModel;
 import com.juzhe.www.bean.OrderModel;
 import com.juzhe.www.bean.PddDetailModel;
@@ -280,4 +281,8 @@ public interface TaoBaoKeService {
     //首页定制化
     @POST(TaoBaoKeApi.VIEW_INDEX)
     Observable<CutomHomeModel> getViewIndex();
+
+    //首页底部导航
+    @POST(TaoBaoKeApi.VIEW_NAV)
+    Observable<List<NavModel>> getViewNav();
 }

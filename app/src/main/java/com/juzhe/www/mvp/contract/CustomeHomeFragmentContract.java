@@ -38,9 +38,10 @@ public interface CustomeHomeFragmentContract {
 
         public abstract void getIconClassify();//获取所有标签
 
-        public abstract void getCutomData();
+        public abstract void getCutomData();//获取自定义首页
 
         public abstract void getUserInfo(String user_id, String user_channel_id);
+
     }
 
 

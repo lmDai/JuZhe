@@ -56,14 +56,7 @@ import butterknife.Unbinder;
  **/
 @CreatePresenterAnnotation(CustomHomeFragmentPresenter.class)
 public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.View, CustomHomeFragmentPresenter> implements CustomeHomeFragmentContract.View {
-    @BindView(R.id.img_me)
-    ImageView imgMe;
-    @BindView(R.id.txt_title)
-    TextView txtTitle;
-    @BindView(R.id.img_message)
-    ImageView imgMessage;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
     @BindView(R.id.recycler_home)
     RecyclerView recyclerHome;
     @BindView(R.id.tabs)
@@ -95,13 +88,13 @@ public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.V
         userModel = UserUtils.getUser(mContext);
         mAdapters = new LinkedList<>();
         initRecyclerView();
-        TextFontUtils.setTextTypeDTr(mContext, txtTitle);
     }
 
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
-        mImmersionBar
+        mImmersionBar.statusBarView(R.id.top_view)
+                .statusBarColor(R.color.colorWhite)
                 .statusBarDarkFont(true, 0.2f)
                 .init();
     }
@@ -110,16 +103,16 @@ public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.V
         recyclerHome.setNestedScrollingEnabled(false);
         delegateAdapter = getMvpPresenter().initRecyclerView(recyclerHome);
     }
-
-    @OnClick({R.id.img_me, R.id.img_message, R.id.btn_select})
+//R.id.img_me, R.id.img_message,
+    @OnClick({ R.id.btn_select})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_me://跳转个人中心
-                IntentUtils.get().goActivity(mContext, PersonalActivity.class);
-                break;
-            case R.id.img_message:
-                IntentUtils.get().goActivity(mContext, MessageActivity.class);
-                break;
+//            case R.id.img_me://跳转个人中心
+//                IntentUtils.get().goActivity(mContext, PersonalActivity.class);
+//                break;
+//            case R.id.img_message:
+//                IntentUtils.get().goActivity(mContext, MessageActivity.class);
+//                break;
             case R.id.btn_select:
                 btnSelect.setImageResource(R.drawable.ic_close);
                 showFilterPopu();
@@ -185,13 +178,13 @@ public class Home1Fragment extends BaseMvpFragment<CustomeHomeFragmentContract.V
 
     @Override
     public void setHomeDelegateAdapter(List<DelegateAdapter.Adapter> homeDelegateAdapter) {
+        delegateAdapter.notifyDataSetChanged();
         delegateAdapter.setAdapters(homeDelegateAdapter);
         recyclerHome.requestLayout();
     }
 
     @Override
     public void setUserModel(UserModel user) {
-        txtTitle.setText("¥" + user.getTotal_income());
         UserUtils.saveUserInfo(mContext, user);
         refreshLayout.finishRefresh();
     }

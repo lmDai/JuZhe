@@ -82,7 +82,7 @@ public class TaoBaoKeApi {
     //京东商品详情
     public final static String JD_DETAIL = "app/jingdong/detail";
     //京东高佣
-    public final static String JD_GAO_YONG="app/jingdong/gao-yong";
+    public final static String JD_GAO_YONG = "app/jingdong/gao-yong";
     //拼多多列表
     public final static String PDD_LIST = "app/pinduoduo/goods-list";
     //拼多多详情
@@ -95,5 +95,7 @@ public class TaoBaoKeApi {
     public final static String JD_PDD_SEARCH = "app/goods/hao-search";
     //首页定制化
     public final static String VIEW_INDEX = "app/view/index";
+    //首页底部导航
+    public final static String VIEW_NAV = "app/view/nav";
 
 }

@@ -34,6 +34,13 @@ public class Constant {
         int advert_3 = 8;
         int advert_4 = 9;
         int fast_entrance = 10;
+        int fast_entrance_title = 11;
+        int advert_5 = 12;
+    }
+
+    public interface mode {
+        String H5 = "h5";
+        String CATE_GORY = "category";
     }
 
     public interface components {
@@ -47,5 +54,6 @@ public class Constant {
         String advert_2 = "advert_2";
         String advert_3 = "advert_3";
         String advert_4 = "advert_4";
+        String advert_5 = "advert_5";
     }
 }

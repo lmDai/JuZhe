@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -240,32 +242,43 @@ public class GlideUtil {
 
     public static void showImageViewLinearLayout(Context context,
                                                  String url, final LinearLayout bgLayout) {
-        Glide.with(context).load(url).asBitmap().error(R.drawable.ic_zhanwei_message)
-                // 设置错误图片
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+//        Glide.with(context).load(url).asBitmap().error(R.drawable.ic_zhanwei_message)
+//                // 缓存修改过的图片
+//                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+//                // 设置错误图片
+//                .placeholder(R.drawable.ic_zhanwei_message)
+//                // 设置占位图
+//                .into(new SimpleTarget<Bitmap>() {
+//
+//                    @SuppressLint("NewApi")
+//                    @Override
+//                    public void onResourceReady(Bitmap loadedImage,
+//                                                GlideAnimation<? super Bitmap> arg1) {
+//                        BitmapDrawable bd = new BitmapDrawable(loadedImage);
+//
+//                        bgLayout.setBackground(bd);
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+//                        // TODO Auto-generated method stub
+//                        super.onLoadFailed(e, errorDrawable);
+//
+//                        bgLayout.setBackgroundDrawable(errorDrawable);
+//                    }
+//
+//                });
+        Glide.with(context).load(url)
+                .error(R.drawable.ic_zhanwei_message)
                 // 缓存修改过的图片
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .placeholder(R.drawable.ic_zhanwei_message)
-                // 设置占位图
-                .into(new SimpleTarget<Bitmap>() {
-
-                    @SuppressLint("NewApi")
+                .into(new ViewTarget<View, GlideDrawable>(bgLayout) {
                     @Override
-                    public void onResourceReady(Bitmap loadedImage,
-                                                GlideAnimation<? super Bitmap> arg1) {
-                        BitmapDrawable bd = new BitmapDrawable(loadedImage);
-
-                        bgLayout.setBackground(bd);
-
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        this.view.setBackground(resource.getCurrent());
                     }
-
-                    @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        // TODO Auto-generated method stub
-                        super.onLoadFailed(e, errorDrawable);
-
-                        bgLayout.setBackgroundDrawable(errorDrawable);
-                    }
-
                 });
 
     }
@@ -307,7 +320,6 @@ public class GlideUtil {
                         float scale = (float) vw / (float) resource.getIntrinsicWidth();
                         int vh = Math.round(resource.getIntrinsicHeight() * scale);
                         params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
-                        Log.i("single",vw+"高度："+resource.getIntrinsicHeight()+"宽度："+resource.getIntrinsicWidth());
                         imageView.setLayoutParams(params);
                         return false;
                     }

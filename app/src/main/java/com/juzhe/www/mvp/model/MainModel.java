@@ -11,6 +11,7 @@ import com.juzhe.www.bean.IconModel;
 import com.juzhe.www.bean.JDProductModel;
 import com.juzhe.www.bean.JdSearchModel;
 import com.juzhe.www.bean.KeyWordModel;
+import com.juzhe.www.bean.NavModel;
 import com.juzhe.www.bean.OrderConfirmModel;
 import com.juzhe.www.bean.PddDetailModel;
 import com.juzhe.www.bean.PddListModel;
@@ -264,5 +265,10 @@ public class MainModel {
     public Observable<CutomHomeModel> getViewIndex() {
         Observable<CutomHomeModel> getViewIndex = mApiService.getViewIndex();
         return getViewIndex;
+    }
+
+    public Observable<List<NavModel>> getViewNav() {
+        Observable<List<NavModel>> getViewNav = mApiService.getViewNav();
+        return getViewNav;
     }
 }

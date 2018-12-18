@@ -14,7 +14,6 @@ import java.util.List;
 public class Data {
 
     private String key;
-    private Compts compts;
     private List<ComponentsBean> components;
 
     public List<ComponentsBean> getComponents() {
@@ -32,13 +31,4 @@ public class Data {
     public String getKey() {
         return key;
     }
-
-    public void setCompts(Compts compts) {
-        this.compts = compts;
-    }
-
-    public Compts getCompts() {
-        return compts;
-    }
-
 }

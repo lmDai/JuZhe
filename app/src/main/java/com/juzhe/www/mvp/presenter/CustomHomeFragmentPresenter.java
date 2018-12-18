@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
-import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -24,9 +23,9 @@ import com.juzhe.www.Constant;
 import com.juzhe.www.R;
 import com.juzhe.www.bean.ClassfyModel;
 import com.juzhe.www.bean.ComponentsBean;
-import com.juzhe.www.bean.Compts;
 import com.juzhe.www.bean.CutomHomeModel;
 import com.juzhe.www.bean.Data;
+import com.juzhe.www.bean.Mode;
 import com.juzhe.www.bean.SubItemBean;
 import com.juzhe.www.bean.UserModel;
 import com.juzhe.www.common.https.ProgressObserver;
@@ -36,12 +35,16 @@ import com.juzhe.www.mvp.contract.CustomeHomeFragmentContract;
 import com.juzhe.www.mvp.model.MainModel;
 import com.juzhe.www.mvp.model.PersonModule;
 import com.juzhe.www.ui.activity.XWebViewActivity;
+import com.juzhe.www.ui.activity.product.ProductListActivity;
+import com.juzhe.www.ui.activity.product.SearchActivity;
+import com.juzhe.www.ui.adapter.Advert5Adapter;
 import com.juzhe.www.ui.adapter.BaseDelegateAdapter;
 import com.juzhe.www.ui.adapter.FastEntranceAdapter;
 import com.juzhe.www.ui.adapter.MenuAdapter;
 import com.juzhe.www.ui.adapter.MenuSubItemAdapter;
 import com.juzhe.www.ui.widget.GlideImageLoader;
 import com.juzhe.www.ui.widget.MyLinearLayoutManager;
+import com.juzhe.www.utils.Advert5ItemDecoration;
 import com.juzhe.www.utils.GlideUtil;
 import com.juzhe.www.utils.IntentUtils;
 import com.juzhe.www.utils.SpacesItemDecoration;
@@ -84,7 +87,7 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
     }
 
     //搜索样式一
-    public BaseDelegateAdapter initSearch1(Compts searchBar) {
+    public BaseDelegateAdapter initSearch1(List<ComponentsBean> searchBar) {
         return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.item_search, 1, Constant.viewType.search_1) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
@@ -93,22 +96,76 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                 ImageView imgRight = holder.getView(R.id.img_right);
                 LinearLayout llSearch = holder.getView(R.id.ll_search);
                 LinearLayout llMainSearch = holder.getView(R.id.ll_main_search);
-                GlideUtil.into(getView().getContext(), searchBar.getLeft().getImage(), imgLeft);
-                GlideUtil.into(getView().getContext(), searchBar.getRight().getImage(), imgRight);
-                GlideUtil.showImageViewLinearLayout(getView().getContext(),
-                        searchBar.getBackground().getImage(), llMainSearch);
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ToastUtils.showShort("searchbar");
-                    }
-                });
+                ComponentsBean componentsLeft = searchBar.get(0);//左
+                ComponentsBean componentsCenter = searchBar.get(1);//中
+                ComponentsBean componentsRight = searchBar.get(2);//右
+                if (componentsLeft != null) {
+                    GlideUtil.into(getView().getContext(), componentsLeft.getImage(), imgLeft);
+                    imgLeft.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            Mode mode = componentsLeft.getMode();
+                            if (mode != null) {
+                                if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                    bundle.putString("name", componentsLeft.getTitle());
+                                    bundle.putString("key", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                    bundle.putString("link", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                }
+                            }
+                        }
+                    });
+                }
+                if (componentsRight != null) {
+                    GlideUtil.into(getView().getContext(), componentsRight.getImage(), imgRight);
+                    imgRight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            Mode mode = componentsRight.getMode();
+                            if (mode != null) {
+                                if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                    bundle.putString("name", componentsRight.getTitle());
+                                    bundle.putString("key", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                    bundle.putString("link", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                }
+                            }
+                        }
+                    });
+                }
+                if (componentsCenter != null) {
+                    GlideUtil.showImageViewLinearLayout(getView().getContext(),
+                            componentsCenter.getImage(), llMainSearch);
+                    llSearch.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            Mode mode = componentsCenter.getMode();
+                            if (mode != null) {
+                                if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                    bundle.putString("name", componentsCenter.getTitle());
+                                    bundle.putString("key", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                    bundle.putString("link", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                }
+                            }
+                        }
+                    });
+                }
             }
         };
     }
 
     //搜索样式二
-    public BaseDelegateAdapter initSearch2(Compts searchBar) {
+    public BaseDelegateAdapter initSearch2(List<ComponentsBean> searchBar) {
         return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.item_search_2, 1, Constant.viewType.search_2) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
@@ -116,15 +173,49 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                 ImageView imgRight = holder.getView(R.id.img_right);
                 LinearLayout llSearch = holder.getView(R.id.ll_search);
                 LinearLayout llMainSearch = holder.getView(R.id.ll_main_search);
-                GlideUtil.into(getView().getContext(), searchBar.getRight().getImage(), imgRight);
-                GlideUtil.showImageViewLinearLayout(getView().getContext(),
-                        searchBar.getBackground().getImage(), llMainSearch);
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ToastUtils.showShort("searchbar");
-                    }
-                });
+                ComponentsBean componentsRight = searchBar.get(1);
+                ComponentsBean componentsCenter = searchBar.get(0);
+                if (componentsRight != null) {
+                    GlideUtil.into(getView().getContext(), componentsRight.getImage(), imgRight);
+                    imgRight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            Mode mode = componentsRight.getMode();
+                            if (mode != null) {
+                                if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                    bundle.putString("name", componentsRight.getTitle());
+                                    bundle.putString("key", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                    bundle.putString("link", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                }
+                            }
+                        }
+                    });
+                }
+                if (componentsCenter != null) {
+                    GlideUtil.showImageViewLinearLayout(getView().getContext(),
+                            componentsCenter.getImage(), llMainSearch);
+                    llSearch.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            Mode mode = componentsCenter.getMode();
+                            if (mode != null) {
+                                if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                    bundle.putString("name", componentsCenter.getTitle());
+                                    bundle.putString("key", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                    bundle.putString("link", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                }
+                            }
+                        }
+                    });
+                }
             }
         };
     }
@@ -145,10 +236,21 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                 banner.setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
-                        ToastUtils.showShort(position + urls.get(position).getImage());
-                        Bundle bundle = new Bundle();
-                        bundle.putString("link", urls.get(position).getImage());
-                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                        ComponentsBean componentsBean = urls.get(position);
+                        if (componentsBean != null) {
+                            Mode mode = componentsBean.getMode();
+                            if (mode != null) {
+                                Bundle bundle = new Bundle();
+                                if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                    bundle.putString("name", componentsBean.getTitle());
+                                    bundle.putString("key", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                    bundle.putString("link", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                }
+                            }
+                        }
                     }
                 });
                 banner.setImages(images)
@@ -158,54 +260,49 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
         };
     }
 
-
-    public BaseDelegateAdapter initFastEntrace() {
-        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_home_entrace, 1, Constant.viewType.fast_entrance) {
-
+    public BaseDelegateAdapter initFastEntrceTitle() {
+        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.base_view_title, 1, Constant.viewType.fast_entrance_title) {
             @Override
-            public void onViewRecycled(BaseViewHolder holder) {
-                if (holder.itemView instanceof ViewPager) {
-                    ((ViewPager) holder.itemView).setAdapter(null);
-                }
+            public void onBindViewHolder(BaseViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                holder.setText(R.id.tv_title, "快速入口");
             }
+        };
+    }
 
-            @Override
-            public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                if (viewType == 1)
-                    return new BaseViewHolder(
-                            LayoutInflater.from(getView().getContext()).inflate(R.layout.layout_home_entrace, parent, false));
-
-                return super.onCreateViewHolder(parent, viewType);
-            }
-
-            @Override
-            public int getItemViewType(int position) {
-                return 1;
-            }
-
-            @Override
-            protected void onBindViewHolderWithOffset(BaseViewHolder holder, int position, int offsetTotal) {
-
-            }
-
+    public BaseDelegateAdapter initFastEntrace(List<ComponentsBean> advert5) {
+        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_home_entrace, 1, Constant.viewType.advert_5) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 if (holder.itemView instanceof RecyclerView) {
                     RecyclerView recyclerView = (RecyclerView) holder.itemView;
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getView().getContext());
-                    linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    recyclerView.addItemDecoration(new SpacesItemDecoration(0));
-                    List<String> fruitList = new ArrayList<>();
-                    for (int i = 0; i < 10; i++) {
-                        fruitList.add(i + "");
+                    if (recyclerView.getLayoutManager() == null) {
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getView().getContext());
+                        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        recyclerView.setLayoutManager(linearLayoutManager);
+                        recyclerView.addItemDecoration(new Advert5ItemDecoration(20));
                     }
-                    FastEntranceAdapter adapter = new FastEntranceAdapter(fruitList);
-                    recyclerView.setAdapter(adapter);
-                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    Advert5Adapter advert5Adapter = new Advert5Adapter(R.layout.item_advert5);
+                    recyclerView.setAdapter(advert5Adapter);
+                    advert5Adapter.setNewData(advert5);
+                    advert5Adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            ToastUtils.showShort(adapter.getData().get(position).toString() + "initFastEntrace");
+                            ComponentsBean componentsBean = advert5Adapter.getData().get(position);
+                            if (componentsBean != null) {
+                                Mode mode = componentsBean.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", componentsBean.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
                         }
                     });
                 }
@@ -216,7 +313,7 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
 
     //菜单样式一
     public BaseDelegateAdapter initMenu1(List<ComponentsBean> menu) {
-        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_menu1, 1, Constant.viewType.menu_3) {
+        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_menu1, 1, Constant.viewType.menu_1) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 if (holder.itemView instanceof LinearLayout) {
@@ -233,7 +330,22 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                     iconAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            ToastUtils.showShort(iconAdapter.getData().get(position).getTitle());
+                            ComponentsBean menuItem = iconAdapter.getData().get(position);
+                            if (menuItem != null) {
+                                Bundle bundle = new Bundle();
+                                Mode mode = menuItem.getMode();
+                                if (mode != null) {
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", menuItem.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+
                         }
                     });
                 }
@@ -243,7 +355,7 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
 
     //菜单样式一
     public BaseDelegateAdapter initMenu2(List<ComponentsBean> menu) {
-        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_menu1, 1, Constant.viewType.menu_3) {
+        return new BaseDelegateAdapter(getView().getContext(), new LinearLayoutHelper(), R.layout.layout_menu1, 1, Constant.viewType.menu_2) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 if (holder.itemView instanceof LinearLayout) {
@@ -262,7 +374,21 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                     iconAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            ToastUtils.showShort(iconAdapter.getData().get(position).getTitle());
+                            ComponentsBean menuItem = iconAdapter.getData().get(position);
+                            if (menuItem != null) {
+                                Bundle bundle = new Bundle();
+                                Mode mode = menuItem.getMode();
+                                if (mode != null) {
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", menuItem.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
                         }
                     });
                 }
@@ -299,8 +425,45 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                     iconAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            ToastUtils.showShort(iconAdapter.getData().get(position).getTitle());
-                            setChildRecyclerview(position, recyclerChild, childAdapter, iconAdapter.getData().get(position).getSubItem());
+                            ComponentsBean menuItem = iconAdapter.getData().get(position);
+                            if (menuItem != null) {
+                                List<SubItemBean> subItemList = menuItem.getSubItem();
+                                if (subItemList != null && subItemList.size() > 0) {
+                                    setChildRecyclerview(position, recyclerChild, childAdapter, iconAdapter.getData().get(position).getSubItem());
+                                } else {
+                                    setChildRecyclerview(position, recyclerChild, childAdapter, iconAdapter.getData().get(position).getSubItem());
+                                    Mode mode = menuItem.getMode();
+                                    if (mode != null) {
+                                        Bundle bundle = new Bundle();
+                                        if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                            bundle.putString("name", menuItem.getTitle());
+                                            bundle.putString("key", mode.getValue());
+                                            IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                        } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                            bundle.putString("link", mode.getValue());
+                                            IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    childAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            SubItemBean subItemBean = childAdapter.getData().get(position);
+                            Mode mode = subItemBean.getMode();
+                            if (mode != null) {
+                                Bundle bundle = new Bundle();
+                                if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                    bundle.putString("name", subItemBean.getTitle());
+                                    bundle.putString("key", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                    bundle.putString("link", mode.getValue());
+                                    IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                }
+                            }
                         }
                     });
                 }
@@ -325,8 +488,29 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
                 ImageView imgaview = holder.getView(R.id.img);
-                GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert.get(0).getImage(), imgaview);
-
+                if (advert != null && advert.size() > 0) {
+                    ComponentsBean advertBean = advert.get(0);
+                    if (advertBean != null) {
+                        GlideUtil.loadIntoUseFitWidth(getView().getContext(), advertBean.getImage(), imgaview);
+                        imgaview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Mode mode = advertBean.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", advertBean.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
             }
         };
     }
@@ -339,8 +523,48 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                 super.onBindViewHolder(holder, position);
                 ImageView imgaview = holder.getView(R.id.img);
                 ImageView imgTwo = holder.getView(R.id.img_two);
-                GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert.get(0).getImage(), imgaview);
-                GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert.get(1).getImage(), imgTwo);
+                if (advert != null && advert.size() > 1) {
+                    ComponentsBean advertBean = advert.get(0);
+                    ComponentsBean advert2 = advert.get(1);
+                    if (advertBean != null) {
+                        GlideUtil.loadIntoUseFitWidth(getView().getContext(), advertBean.getImage(), imgaview);
+                        GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert2.getImage(), imgTwo);
+                        imgaview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Mode mode = advertBean.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", advertBean.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+                        });
+                        imgTwo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Mode mode = advert2.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", advert2.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
             }
         };
     }
@@ -354,9 +578,67 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                 ImageView imgaview = holder.getView(R.id.img);
                 ImageView imgTwo = holder.getView(R.id.img_two);
                 ImageView imgThree = holder.getView(R.id.img_three);
-                GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert.get(0).getImage(), imgaview);
-                GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert.get(1).getImage(), imgTwo);
-                GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert.get(2).getImage(), imgThree);
+                if (advert != null && advert.size() > 2) {
+                    ComponentsBean advertBean = advert.get(0);
+                    ComponentsBean advert2 = advert.get(1);
+                    ComponentsBean advert3 = advert.get(2);
+                    if (advertBean != null) {
+                        GlideUtil.loadIntoUseFitWidth(getView().getContext(), advertBean.getImage(), imgaview);
+                        GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert2.getImage(), imgTwo);
+                        GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert3.getImage(), imgThree);
+                        imgaview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Mode mode = advertBean.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", advertBean.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+                        });
+                        imgTwo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Mode mode = advert2.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", advert2.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+                        });
+                        imgThree.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Mode mode = advert3.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", advert3.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
             }
         };
     }
@@ -370,9 +652,67 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                 ImageView imgaview = holder.getView(R.id.img);
                 ImageView imgTwo = holder.getView(R.id.img_two);
                 ImageView imgThree = holder.getView(R.id.img_three);
-                GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert.get(0).getImage(), imgaview);
-                GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert.get(1).getImage(), imgTwo);
-                GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert.get(2).getImage(), imgThree);
+                if (advert != null && advert.size() > 2) {
+                    ComponentsBean advertBean = advert.get(0);
+                    ComponentsBean advert2 = advert.get(1);
+                    ComponentsBean advert3 = advert.get(2);
+                    if (advertBean != null) {
+                        GlideUtil.loadIntoUseFitWidth(getView().getContext(), advertBean.getImage(), imgaview);
+                        GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert2.getImage(), imgTwo);
+                        GlideUtil.loadIntoUseFitWidth(getView().getContext(), advert3.getImage(), imgThree);
+                        imgaview.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Mode mode = advertBean.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", advertBean.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+                        });
+                        imgTwo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Mode mode = advert2.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", advert2.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+                        });
+                        imgThree.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Mode mode = advert3.getMode();
+                                if (mode != null) {
+                                    Bundle bundle = new Bundle();
+                                    if (TextUtils.equals(mode.getType(), Constant.mode.CATE_GORY)) {
+                                        bundle.putString("name", advert3.getTitle());
+                                        bundle.putString("key", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), ProductListActivity.class, bundle);//商品列表
+                                    } else if (TextUtils.equals(mode.getType(), Constant.mode.H5)) {
+                                        bundle.putString("link", mode.getValue());
+                                        IntentUtils.get().goActivity(getView().getContext(), XWebViewActivity.class, bundle);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
             }
         };
     }
@@ -393,7 +733,9 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                 });
     }
 
-
+    /**
+     * 获取自定义首页
+     */
     @Override
     public void getCutomData() {
         List<DelegateAdapter.Adapter> mAdapter = new LinkedList<>();
@@ -406,10 +748,10 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                         for (Data dataBean : result.getData()) {
                             switch (dataBean.getKey()) {
                                 case Constant.components.search_1:
-                                    mAdapter.add(initSearch1(dataBean.getCompts()));
+                                    mAdapter.add(initSearch1(dataBean.getComponents()));
                                     break;
                                 case Constant.components.search_2:
-                                    mAdapter.add(initSearch2(dataBean.getCompts()));
+                                    mAdapter.add(initSearch2(dataBean.getComponents()));
                                     break;
                                 case Constant.components.banner_1:
                                     mAdapter.add(initBanner(dataBean.getComponents()));
@@ -435,22 +777,32 @@ public class CustomHomeFragmentPresenter extends CustomeHomeFragmentContract.Pre
                                 case Constant.components.advert_4:
                                     mAdapter.add(initAdvert4(dataBean.getComponents()));
                                     break;
+                                case Constant.components.advert_5:
+                                    mAdapter.add(initFastEntrace(dataBean.getComponents()));
                             }
                         }
-                        mAdapter.add(initFastEntrace());
+//                        mAdapter.add(initFastEntrceTitle());
+//                        mAdapter.add(initFastEntrace());
                         getView().setHomeDelegateAdapter(mAdapter);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         super.onError(e);
-                        List<DelegateAdapter.Adapter> mAdapter = new LinkedList<>();
-                        mAdapter.add(initFastEntrace());
-                        getView().setHomeDelegateAdapter(mAdapter);
+//                        List<DelegateAdapter.Adapter> mAdapter = new LinkedList<>();
+//                        mAdapter.add(initFastEntrceTitle());
+//                        mAdapter.add(initFastEntrace());
+//                        getView().setHomeDelegateAdapter(mAdapter);
                     }
                 });
     }
 
+    /**
+     * 获取用户数据
+     *
+     * @param user_id
+     * @param user_channel_id
+     */
     @Override
     public void getUserInfo(String user_id, String user_channel_id) {
         PersonModule.getInstance(Utils.getContext()).getUserInfo(user_id, user_channel_id)

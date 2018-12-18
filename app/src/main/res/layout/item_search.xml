@@ -2,46 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_main_search"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_48"
-    android:gravity="center">
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:minHeight="@dimen/dp_48">
 
     <ImageView
         android:id="@+id/img_left"
         android:layout_width="@dimen/dp_25"
         android:layout_height="@dimen/dp_25"
         android:layout_marginLeft="@dimen/dp_10"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_zhanwei_intro" />
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:id="@+id/ll_search"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_weight="1"
         android:gravity="center"
-        android:minHeight="@dimen/dp_36">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp_5"
-            android:src="@drawable/ic_search" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="粘贴宝贝标题.先领券再购买"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/sp_12" />
-    </LinearLayout>
+        android:minHeight="@dimen/dp_36"
+        android:orientation="horizontal" />
 
     <ImageView
         android:id="@+id/img_right"
         android:layout_width="@dimen/dp_25"
         android:layout_height="@dimen/dp_25"
         android:layout_marginRight="@dimen/dp_10"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_card_pwd" />
+        android:scaleType="fitXY" />
 </LinearLayout>
